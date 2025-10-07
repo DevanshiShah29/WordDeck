@@ -1,0 +1,78 @@
+:root {
+  --pink: #ff69b4;
+  --main: #4a90e2;
+  --white: #ffffff;
+  --fontSemiBold: 600;
+  --fontSizeMd: 1rem;
+  --radiusMd: 0.5rem;
+  --fontSizeLg: 1.25rem;
+}
+
+.generate-ai-btn {
+  background: linear-gradient(270deg, #ff69b4, #4a90e2);
+  color: var(--white);
+  font-weight: var(--fontSemiBold);
+  border: none;
+  padding: 0.6rem 1.5rem;
+  font-size: var(--fontSizeMd);
+  border-radius: var(--radiusMd);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.generate-ai-btn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(270deg, #ff69b4, #4a90e2) !important;
+  color: var(--white) !important;
+}
+
+.generate-ai-btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  transform: skewX(-20deg);
+}
+
+.generate-ai-btn:hover::after {
+  animation: shimmer 2.5s infinite;
+}
+
+.generate-ai-btn .ai-icon {
+  font-size: var(--fontSizeLg);
+  display: inline-block;
+  animation: sparkle 1.8s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -75%;
+  }
+  100% {
+    left: 125%;
+  }
+}
+
+@keyframes sparkle {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+}
