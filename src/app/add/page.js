@@ -1,3 +1,4 @@
+// src/app/add/page.js
 "use client";
 
 import React, { useCallback, useState } from "react";
@@ -142,7 +143,7 @@ const VocabularyForm = () => {
         onSubmit={handleSubmit}
       >
         {({ isSubmitting, values, handleSubmit, setFieldValue }) => (
-          <div className="bg-slate-50 min-h-screen pb-20">
+          <div className="bg-slate-50 min-h-screen pb-10">
             <form onSubmit={handleSubmit} className="space-y-8 container mx-auto p-8">
               {/* Basic Information Section */}
               <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-100">

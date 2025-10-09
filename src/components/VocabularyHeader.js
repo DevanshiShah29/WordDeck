@@ -37,7 +37,6 @@ export default function VocabularyHeader({
   } = filters;
 
   const handleSearch = (e) => {
-    // Call onSearch only if the handler is provided
     onSearch?.(e.target.value);
   };
 
@@ -58,7 +57,7 @@ export default function VocabularyHeader({
   return (
     <>
       <header className="bg-white backdrop-blur-sm shadow-sm border-b border-slate-200/50 sticky top-0 z-40">
-        <div className="container mx-auto p-6 lg:p-8">
+        <div className="container mx-auto p-6">
           <div className="flex flex-wrap items-center justify-between gap-4">
             {/* Title & Count */}
             <div>
@@ -102,7 +101,7 @@ export default function VocabularyHeader({
           </div>
 
           {/* Search Bar */}
-          <div className="flex items-center mt-6">
+          <div className="flex items-center mt-3">
             <div className="flex items-center w-full bg-white border border-slate-300 rounded-lg px-4 py-3 shadow-inner">
               <Search size={20} className="text-slate-400 mr-3" />
               <input
