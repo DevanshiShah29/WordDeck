@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 
 // Library Imports
 import Link from "next/link";
 import { Formik } from "formik";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 // Assets & Icons
 import { BookIcon, GlobeIcon, LightbulbIcon, ImageIcon, TagsIcon, SaveIcon } from "@/assets/svgs";
@@ -15,7 +16,7 @@ import { ArrowLeft } from "lucide-react";
 import FormField from "@/components/formItems/FormField";
 import TextareaField from "@/components/formItems/TextareaField";
 import SelectField from "@/components/formItems/SelectField";
-import GenerateWithAIButton from "@/components/GenerateWithAI";
+import GenerateWithAIButton from "@/components/buttons/GenerateWithAI";
 import Button from "@/components/buttons/Button";
 
 // Data Imports
@@ -62,6 +63,7 @@ const FormHeader = () => (
 
 const VocabularyForm = () => {
   const router = useRouter();
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const handleSubmit = useCallback(
     async (values, { setSubmitting }) => {
@@ -77,18 +79,16 @@ const VocabularyForm = () => {
         if (!response.ok) {
           // Handle non-200 responses (e.g., 400, 500)
           const errorMessage = result.error || "Failed to add word.";
-          console.error("API Error:", errorMessage);
-          alert(`Failed to add word: ${errorMessage}`);
+
+          toast.error(`Failed to add word: ${errorMessage}`);
           return;
         }
 
         // Success
-        alert(`Word "${values.word}" added successfully!`);
-        // Redirect to the main vocabulary list
+        toast.success(`Word "${values.word}" added successfully!`);
         router.push("/word");
       } catch (error) {
-        console.error("Network Error submitting form:", error);
-        alert("Failed to add word due to a network or connection error.");
+        toast.error("Failed to add word due to a network or connection error.");
       } finally {
         setSubmitting(false);
       }
@@ -96,10 +96,43 @@ const VocabularyForm = () => {
     [router]
   );
 
-  const handleGenerateAnswer = (word) => {
-    console.log(`AI generation triggered for: ${word}`);
-  };
+  const handleGenerateAnswer = async (word, setFieldValue) => {
+    // 1. Validation check
+    if (!word || word.trim() === "") {
+      toast.info("Please enter a word in the 'Word' field first.");
+      return;
+    }
 
+    setIsGenerating(true);
+
+    try {
+      const response = await fetch("/api/generate-word-data", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ word: word.trim() }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        toast.error(`AI Generation Failed: ${result.error || "Server error."}`);
+        return;
+      }
+
+      // 2. Success: Use Formik's setFieldValue to populate the form
+      // The keys in the result object must match your initialValues keys!
+      Object.keys(result).forEach((key) => {
+        // Ensure you don't overwrite the user's input word
+        if (key !== "word") {
+          setFieldValue(key, result[key], false); // The third arg (false) prevents validation run
+        }
+      });
+    } catch (error) {
+      toast.error("AI generation failed due to a network error.");
+    } finally {
+      setIsGenerating(false);
+    }
+  };
   return (
     <>
       <FormHeader />
@@ -108,7 +141,7 @@ const VocabularyForm = () => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ isSubmitting, values, handleSubmit }) => (
+        {({ isSubmitting, values, handleSubmit, setFieldValue }) => (
           <div className="bg-slate-50 min-h-screen pb-20">
             <form onSubmit={handleSubmit} className="space-y-8 container mx-auto p-8">
               {/* Basic Information Section */}
@@ -231,7 +264,10 @@ const VocabularyForm = () => {
               {/* Action Buttons */}
               <div className="flex items-center justify-between pt-4">
                 {/* AI Generation Button: Needs the current word value */}
-                <GenerateWithAIButton onGenerate={() => handleGenerateAnswer(values.word)} />
+                <GenerateWithAIButton
+                  onGenerate={() => handleGenerateAnswer(values.word, setFieldValue)}
+                  loading={isGenerating}
+                />
 
                 <div className="flex items-center gap-4">
                   <Link
@@ -240,7 +276,12 @@ const VocabularyForm = () => {
                   >
                     Cancel
                   </Link>
-                  <Button type="submit" size="lg" loading={isSubmitting} disabled={isSubmitting}>
+                  <Button
+                    type="submit"
+                    size="lg"
+                    loading={isSubmitting}
+                    disabled={isSubmitting || isGenerating}
+                  >
                     <SaveIcon className="w-5 h-5 mr-3" />
                     {isSubmitting ? "Saving..." : "Add Word"}
                   </Button>

@@ -50,7 +50,10 @@ export default function Button({
   return (
     <button className={mergedClasses} type={type} disabled={loading || props.disabled} {...props}>
       {loading ? (
-        <Loader2 className={`animate-spin ${size === "sm" ? "w-4 h-4" : "w-5 h-5"}`} />
+        <div className="flex items-center">
+          <Loader2 className={`animate-spin mr-2 ${size === "sm" ? "w-4 h-4" : "w-5 h-5"}`} />
+          {children}
+        </div>
       ) : (
         children
       )}

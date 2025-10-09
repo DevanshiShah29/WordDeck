@@ -5,6 +5,7 @@ import { Volume2, Languages, Bookmark, BookOpen } from "lucide-react";
 import Image from "next/image";
 import { speakWord } from "@/utils/helper";
 import { typeColorMap, difficultyColorMap } from "@/utils/constants";
+import { capitalizeFirstLetter } from "@/utils/helper";
 import Button from "./buttons/Button";
 
 /**
@@ -150,7 +151,7 @@ export default function VocabCard({
             <span
               className={`inline-flex items-center px-2.5 py-1 rounded-lg border text-xs font-medium ${difficultyClasses}`}
             >
-              🎯 {difficulty}
+              🎯 {capitalizeFirstLetter(difficulty)}
             </span>
 
             {/* Origin */}

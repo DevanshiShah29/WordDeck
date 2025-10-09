@@ -12,6 +12,7 @@ import { fetchAllWords } from "./helper";
 // Component Imports
 import VocabCard from "@/components/VocabCard";
 import VocabularyHeader from "@/components/VocabularyHeader";
+import Loader from "@/components/Loader";
 
 export default function HomePage() {
   const searchParams = useSearchParams();
@@ -71,7 +72,7 @@ export default function HomePage() {
   );
 
   if (loading) {
-    return <p className="p-8 text-xl text-slate-600">Loading vocabulary list...</p>;
+    return <Loader message="Loading vocabulary list..." />;
   }
 
   const headerFilters = { ...filters, searchTerm: searchTerm };

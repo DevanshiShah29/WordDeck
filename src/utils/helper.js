@@ -7,15 +7,12 @@ export const speakWord = (word) => {
 };
 
 export function formattedDate(dateString) {
-  // 1. 🎯 FIX: Check for a valid, truthy string.
   if (!dateString) {
     return "N/A";
   }
 
-  // 2. Attempt to create the Date object.
   const date = new Date(dateString);
 
-  // 3. 🎯 FIX: Check if the Date object is valid.
   // The getTime() method returns NaN for an "Invalid Date" object.
   if (isNaN(date.getTime())) {
     // If the input string was invalid, return a safe fallback.
@@ -61,4 +58,9 @@ export const parseCommaSeparatedString = (input) => {
     .split(",")
     .map((item) => item.trim().replace(/^['"]|['"]$/g, "")) // Trim and remove surrounding single/double quotes
     .filter((item) => item.length > 0);
+};
+
+export const capitalizeFirstLetter = (string) => {
+  if (!string) return "";
+  return string.charAt(0).toUpperCase() + string.slice(1);
 };

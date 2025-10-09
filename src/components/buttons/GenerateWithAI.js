@@ -28,7 +28,7 @@ const GenerateWithAIButton = ({ onGenerate }) => {
   };
 
   const buttonClasses = `
-    generate-ai-btn
+    generate-ai-btn cursor-pointer
     ${loading ? "opacity-70 cursor-not-allowed pointer-events-none" : "hover:opacity-90"}
   `;
 

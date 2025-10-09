@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@google/genai": "^1.23.0",
     "@tailwindcss/line-clamp": "^0.4.4",
     "formik": "^2.4.6",
     "lucide-react": "^0.538.0",
@@ -17,6 +18,7 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-select": "^5.10.2",
+    "react-toastify": "^11.0.5",
     "yup": "^1.7.1"
   },
   "devDependencies": {

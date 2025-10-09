@@ -31,6 +31,8 @@ import Card from "@/components/CommonCard";
 import InfoCard from "@/components/InfoCard";
 import InfoRow from "@/components/InfoRow";
 import Button from "@/components/buttons/Button";
+import Loader from "@/components/Loader";
+import NotFound from "@/components/NotFound";
 
 const DetailHeader = ({ word, onSpeak, onToggleBookmark, isBookmarked }) => {
   const { word: title, pronunciation } = word;
@@ -105,19 +107,11 @@ export default function VocabDetail({ params }) {
   }, [slug]);
 
   if (loading) {
-    return (
-      <div className="min-h-screen p-8 text-center text-xl text-slate-500 bg-slate-50">
-        Loading details for "{slug}"...
-      </div>
-    );
+    return <Loader message={`Loading details for "${slug}"...`} />;
   }
 
   if (!word) {
-    return (
-      <div className="min-h-screen p-8 text-center text-xl font-semibold text-red-600 bg-slate-50">
-        Word with slug "{slug}" not found.
-      </div>
-    );
+    return <NotFound message={`Word with slug "${slug}" not found.`} />;
   }
 
   const {
@@ -181,9 +175,9 @@ export default function VocabDetail({ params }) {
             <Card
               icon={<BookOpen className="h-5 w-5" />}
               title="Definition"
-              iconColors="from-blue-500 to-blue-600"
-              bgColors="from-blue-50 to-indigo-50"
-              borderColor="border-blue-100"
+              iconGradient="from-blue-500 to-blue-600"
+              contentBackground="from-blue-50 to-indigo-50"
+              contentBorderColor="border-blue-100"
             >
               <p className="text-slate-800 text-lg leading-relaxed font-medium">{definition}</p>
             </Card>
@@ -191,9 +185,9 @@ export default function VocabDetail({ params }) {
             <Card
               icon={<Quote className="h-5 w-5" />}
               title="Usage Example"
-              iconColors="from-purple-500 to-purple-600"
-              bgColors="from-purple-50 to-pink-50"
-              borderColor="border-purple-100"
+              iconGradient="from-purple-500 to-purple-600"
+              contentBackground="from-purple-50 to-pink-50"
+              contentBorderColor="border-purple-100"
             >
               <blockquote className="text-lg leading-relaxed text-slate-800 italic">
                 "{usage}"
@@ -203,9 +197,9 @@ export default function VocabDetail({ params }) {
             <Card
               icon={<Globe className="h-5 w-5" />}
               title="Etymology Story"
-              iconColors="from-indigo-500 to-indigo-600"
-              bgColors="from-indigo-50 to-blue-50"
-              borderColor="border-indigo-100"
+              iconGradient="from-indigo-500 to-indigo-600"
+              contentBackground="from-indigo-50 to-blue-50"
+              contentBorderColor="border-indigo-100"
             >
               <p className="text-blue-800 text-lg font-semibold mb-2">{mini_etymology}</p>
               <p className="text-slate-700 leading-relaxed text-lg">{etymology_story}</p>
@@ -214,9 +208,9 @@ export default function VocabDetail({ params }) {
             <Card
               icon={<Lightbulb className="h-5 w-5" />}
               title="Memory Aid"
-              iconColors="from-yellow-500 to-yellow-600"
-              bgColors="from-yellow-50 to-orange-50"
-              borderColor="border-yellow-200"
+              iconGradient="from-yellow-500 to-yellow-600"
+              contentBackground="from-yellow-50 to-orange-50"
+              contentBorderColor="border-yellow-200"
             >
               <p className="text-yellow-800 text-lg leading-relaxed font-medium">{memory_aid}</p>
             </Card>
@@ -226,7 +220,7 @@ export default function VocabDetail({ params }) {
             <InfoCard
               icon={<Sparkles className="h-5 w-5" />}
               title="Word Information"
-              iconColors="from-blue-500 to-indigo-600"
+              iconGradient="from-blue-500 to-indigo-600"
             >
               <InfoRow label="Difficulty" value={difficulty} type="difficulty" />
               <InfoRow label="Origin" value={origin} icon={<Languages className="w-4 h-4 " />} />
