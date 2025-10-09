@@ -3,6 +3,7 @@ import { useState, useMemo } from "react";
 import { Search, Bookmark, Plus, ListFilter } from "lucide-react";
 import { useRouter } from "next/navigation";
 import FilterModal from "./FilterModal";
+import Button from "./buttons/Button";
 
 /**
  * Header component for the vocabulary page, including search and filtering controls.
@@ -67,17 +68,17 @@ export default function VocabularyHeader({
 
             {/* Action Buttons */}
             <div className="flex flex-wrap gap-3">
-              <button
+              <Button
                 onClick={onBookmarkClick}
-                className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition shadow-md"
+                className="flex items-center gap-2 bg-green-500 text-white hover:bg-green-600"
               >
                 <Bookmark size={18} />
                 Bookmarks ({bookmarkCount})
-              </button>
+              </Button>
 
-              <button
+              <Button
                 onClick={() => setIsFilterModalOpen(true)}
-                className="flex items-center gap-2 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition relative shadow-md"
+                className="flex items-center gap-2 bg-purple-600 text-white hover:bg-purple-700 relative"
               >
                 <ListFilter size={18} />
                 Filters
@@ -87,15 +88,16 @@ export default function VocabularyHeader({
                     {activeFilterCount}
                   </span>
                 )}
-              </button>
+              </Button>
 
-              <button
+              <Button
                 onClick={() => router.push("/add")}
                 className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition shadow-md"
+                variant="transparent"
               >
                 <Plus size={18} />
                 Add Word
-              </button>
+              </Button>
             </div>
           </div>
 

@@ -5,6 +5,7 @@ import { Volume2, Languages, Bookmark, BookOpen } from "lucide-react";
 import Image from "next/image";
 import { speakWord } from "@/utils/helper";
 import { typeColorMap, difficultyColorMap } from "@/utils/constants";
+import Button from "./buttons/Button";
 
 /**
  * Renders a visually appealing card for a vocabulary word, linking to its detail page.
@@ -71,14 +72,14 @@ export default function VocabCard({
 
           {/* Bookmark Button */}
           <div className="absolute top-4 right-4 z-10">
-            <button
+            <Button
               className="p-2.5 cursor-pointer bg-white/90 backdrop-blur-sm text-slate-600 rounded-xl hover:bg-white hover:text-blue-600 transition-all duration-300 shadow-lg"
               title="Add bookmark"
               onClick={(e) => handleActionClick(e, "bookmark")}
-              type="button"
+              variant="transparent"
             >
               <Bookmark className="w-5 h-5 text-slate-600 drop-shadow-md" />
-            </button>
+            </Button>
           </div>
 
           {/* Type Badge */}
@@ -99,14 +100,14 @@ export default function VocabCard({
               {word}
             </h3>
 
-            <button
+            <Button
               onClick={(e) => handleActionClick(e, "speak")}
-              className="p-2 hover:bg-blue-100 rounded-xl cursor-pointer transition-all duration-300 text-slate-600 hover:text-blue-600 transform hover:scale-110"
+              variant="transparent"
               title="Play pronunciation"
-              type="button"
+              className="p-2 hover:bg-blue-100 rounded-xl cursor-pointer transition-all duration-300 text-slate-600 hover:text-blue-600 transform hover:scale-110"
             >
               <Volume2 className="w-5 h-5" />
-            </button>
+            </Button>
           </div>
 
           {/* Phonetic */}

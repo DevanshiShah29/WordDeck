@@ -27,8 +27,6 @@ const GenerateWithAIButton = ({ onGenerate }) => {
     }
   };
 
-  // Determine the dynamic class list.
-  // You can add Tailwind classes for disabled/loading state here if they override your CSS.
   const buttonClasses = `
     generate-ai-btn
     ${loading ? "opacity-70 cursor-not-allowed pointer-events-none" : "hover:opacity-90"}
@@ -41,20 +39,14 @@ const GenerateWithAIButton = ({ onGenerate }) => {
       disabled={loading} // Crucial: Disables the native button click handler
       aria-live="polite" // Announces state changes to screen readers
     >
-      {/* The icon slot should conditionally render the spinner or the AI icon.
-        The 'ai-icon' class is preserved here.
-      */}
       <span className="ai-icon">
         {loading ? (
-          // Use an inline Tailwind class to make the Lucide icon spin
           <Loader2 className="w-5 h-5 animate-spin" aria-label="Generating..." />
         ) : (
-          // Preserve the original AI symbol/icon
           <>✨</>
         )}
       </span>
 
-      {/* Button text changes based on state */}
       <span>{loading ? "Generating..." : "Generate with AI"}</span>
     </button>
   );

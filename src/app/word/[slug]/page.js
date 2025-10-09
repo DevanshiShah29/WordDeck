@@ -30,6 +30,7 @@ import TagList from "@/components/TagList";
 import Card from "@/components/CommonCard";
 import InfoCard from "@/components/InfoCard";
 import InfoRow from "@/components/InfoRow";
+import Button from "@/components/buttons/Button";
 
 const DetailHeader = ({ word, onSpeak, onToggleBookmark, isBookmarked }) => {
   const { word: title, pronunciation } = word;
@@ -57,16 +58,17 @@ const DetailHeader = ({ word, onSpeak, onToggleBookmark, isBookmarked }) => {
 
           {/* Actions */}
           <div className="flex items-center gap-2">
-            <button
+            <Button
+              variant="transparent"
               onClick={onSpeak}
-              className="p-2 hover:bg-blue-100 rounded-lg transition-all duration-300 text-slate-600 hover:text-blue-600 transform hover:scale-110 cursor-pointer"
               title="Play pronunciation"
-              type="button"
+              className="p-2 hover:bg-blue-100 rounded-lg transition-all duration-300 text-slate-600 hover:text-blue-600 transform hover:scale-110 cursor-pointer"
             >
               <Volume2 className="w-5 h-5" />
-            </button>
+            </Button>
 
-            <button
+            <Button
+              variant="transparent"
               title={isBookmarked ? "Remove bookmark" : "Add bookmark"}
               onClick={onToggleBookmark}
               className={`p-2 cursor-pointer rounded-lg transition transform hover:scale-105 ${
@@ -76,7 +78,7 @@ const DetailHeader = ({ word, onSpeak, onToggleBookmark, isBookmarked }) => {
               }`}
             >
               <Bookmark className="w-5 h-5" fill={isBookmarked ? "currentColor" : "none"} />
-            </button>
+            </Button>
           </div>
         </div>
       </div>

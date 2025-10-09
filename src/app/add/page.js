@@ -12,10 +12,11 @@ import { BookIcon, GlobeIcon, LightbulbIcon, ImageIcon, TagsIcon, SaveIcon } fro
 import { ArrowLeft } from "lucide-react";
 
 // Component Imports
-import FormField from "@/components/FormField";
-import TextareaField from "@/components/TextareaField";
-import SelectField from "@/components/SelectField";
+import FormField from "@/components/formItems/FormField";
+import TextareaField from "@/components/formItems/TextareaField";
+import SelectField from "@/components/formItems/SelectField";
 import GenerateWithAIButton from "@/components/GenerateWithAI";
+import Button from "@/components/buttons/Button";
 
 // Data Imports
 import { LEVEL_OPTIONS_DROPDOWN, TYPE_OPTIONS_DROPDOWN } from "@/utils/constants";
@@ -239,14 +240,10 @@ const VocabularyForm = () => {
                   >
                     Cancel
                   </Link>
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="inline-flex items-center cursor-pointer gap-2 px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:bg-blue-400 disabled:cursor-not-allowed font-semibold shadow-md"
-                  >
-                    <SaveIcon className="w-5 h-5" />
+                  <Button type="submit" size="lg" loading={isSubmitting} disabled={isSubmitting}>
+                    <SaveIcon className="w-5 h-5 mr-3" />
                     {isSubmitting ? "Saving..." : "Add Word"}
-                  </button>
+                  </Button>
                 </div>
               </div>
             </form>
