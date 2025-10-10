@@ -99,3 +99,18 @@ export const LEVEL_OPTIONS_DROPDOWN = [
   { value: "intermediate", label: "Intermediate" },
   { value: "advanced", label: "Advanced" },
 ];
+
+export const SORT_OPTIONS = [
+  { value: "date_desc", label: "Newest First" },
+  { value: "date_asc", label: "Oldest First" },
+  { value: "word_asc", label: "Word (A-Z)" },
+  { value: "word_desc", label: "Word (Z-A)" },
+  { value: "level_asc", label: "Easy to Hard" },
+  { value: "level_desc", label: "Hard to Easy" },
+];
+
+export const LEVEL_ORDER = {
+  beginner: 1,
+  intermediate: 2,
+  advanced: 3,
+};

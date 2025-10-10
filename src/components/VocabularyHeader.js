@@ -1,9 +1,17 @@
 "use client";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
+
+// Library Imports
 import { Search, Bookmark, Plus, ListFilter } from "lucide-react";
 import { useRouter } from "next/navigation";
+
+// Component Imports
 import FilterModal from "./FilterModal";
 import Button from "./buttons/Button";
+import SortSelect from "./formItems/SortSelect";
+
+// Utility Imports
+import { SORT_OPTIONS } from "@/utils/constants";
 
 /**
  * Header component for the vocabulary page, including search and filtering controls.
@@ -22,10 +30,13 @@ export default function VocabularyHeader({
   onSearch,
   onFilterChange,
   onBookmarkClick,
+  onSortChange,
+  currentSort = "date_desc",
   filters = {},
 }) {
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const router = useRouter();
+  const sortRef = useRef(null);
 
   // Destructure filters for direct use in logic and JSX
   const {
@@ -40,18 +51,24 @@ export default function VocabularyHeader({
     onSearch?.(e.target.value);
   };
 
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (sortRef.current && !sortRef.current.contains(event.target)) {
+        setIsSortMenuOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [sortRef]);
+
   // Memoize the count of active filters for the badge logic
   const activeFilterCount = useMemo(() => {
     const isDateRangeActive = !!dateRange.from || !!dateRange.to;
     const isSearchActive = !!searchTerm.trim();
 
-    return (
-      type.length +
-      tag.length +
-      level.length +
-      (isDateRangeActive ? 1 : 0) +
-      (isSearchActive ? 1 : 0)
-    );
+    return type.length + tag.length + level.length + (isDateRangeActive ? 1 : 0);
   }, [type, tag, level, dateRange, searchTerm]);
 
   return (
@@ -101,8 +118,8 @@ export default function VocabularyHeader({
           </div>
 
           {/* Search Bar */}
-          <div className="flex items-center mt-3">
-            <div className="flex items-center w-full bg-white border border-slate-300 rounded-lg px-4 py-3 shadow-inner">
+          <div className="flex items-center mt-3 gap-4">
+            <div className="flex items-center w-full bg-white border border-slate-300 rounded-lg px-4 py-3  hover:border-slate-400 ">
               <Search size={20} className="text-slate-400 mr-3" />
               <input
                 type="text"
@@ -112,6 +129,12 @@ export default function VocabularyHeader({
                 className="w-full outline-none text-base text-slate-700 placeholder-slate-400"
               />
             </div>
+
+            <SortSelect
+              currentSort={currentSort}
+              onSortChange={onSortChange}
+              options={SORT_OPTIONS}
+            />
           </div>
         </div>
       </header>
