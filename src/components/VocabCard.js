@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
  * @param {string} props.imageUrl - URL for the card background image.
  * @param {string} props.phonetic - The phonetic spelling.
  * @param {string} props.definition - The word's definition.
- * @param {string[]} props.tags - Array of related tags.
+ * @param {string[]} props.synonyms - Array of related synonyms.
  * @param {string} props.difficulty - The difficulty level (e.g., "Easy").
  * @param {string} props.origin - The word's origin language.
  * @param {string} props.slug - The URL slug for the detail page.
@@ -29,7 +29,7 @@ export default function VocabCard({
   imageUrl,
   phonetic,
   definition,
-  tags,
+  synonyms,
   difficulty,
   origin,
   slug,
@@ -129,19 +129,22 @@ export default function VocabCard({
             </span>
           </div>
           <div className="border-l-3 border-blue-200">
-            <p className="text-md text-slate-800 leading-relaxed line-clamp-3 bg-blue-50 rounded-lg px-4 py-2">
+            <p
+              className="text-md text-slate-800 line-clamp-3 bg-blue-50 rounded-r-lg px-4 py-2.5
+              leading-6 max-h-[87px] overflow-hidden"
+            >
               {definition}
             </p>
           </div>
 
           {/* Tags */}
           <div className="flex flex-wrap gap-1.5">
-            {tags?.map((tag, index) => (
+            {synonyms?.map((synonym, index) => (
               <span
                 key={index}
                 className="px-2.5 py-1 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 rounded-lg text-sm font-medium"
               >
-                #{tag}
+                {capitalizeFirstLetter(synonym)}
               </span>
             ))}
           </div>

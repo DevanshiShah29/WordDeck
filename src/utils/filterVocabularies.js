@@ -9,7 +9,6 @@ export function filterVocabularies(vocabularies, filters) {
 
   return vocabularies.filter((vocab) => {
     // --- 1. SEARCH TERM CHECK (No Change) ---
-    // ... (Your existing SEARCH TERM CHECK is fine)
 
     const {
       word = "",
@@ -17,7 +16,7 @@ export function filterVocabularies(vocabularies, filters) {
       origin = "",
       difficulty = "",
       type: vocabType = "",
-      tags = [],
+      synonyms = [],
     } = vocab;
 
     const matchesSearchTerm =
@@ -26,7 +25,7 @@ export function filterVocabularies(vocabularies, filters) {
       origin.toLowerCase().includes(lowerSearchTerm) ||
       vocabType.toLowerCase().includes(lowerSearchTerm) ||
       difficulty.toLowerCase().includes(lowerSearchTerm) ||
-      tags.some((t) => t?.toLowerCase().includes(lowerSearchTerm));
+      synonyms.some((t) => t?.toLowerCase().includes(lowerSearchTerm));
 
     if (searchTerm.length > 0 && !matchesSearchTerm) {
       return false;
@@ -34,7 +33,6 @@ export function filterVocabularies(vocabularies, filters) {
 
     // --- 2. INDIVIDUAL FILTER CHECKS (The Fixes) ---
 
-    // ✅ FIX 1: Type filter - Convert vocab.type to lowercase before checking inclusion
     if (
       lowerCaseTypeFilters.length > 0 &&
       !lowerCaseTypeFilters.includes(vocab.type?.toLowerCase())
@@ -42,7 +40,6 @@ export function filterVocabularies(vocabularies, filters) {
       return false;
     }
 
-    // ✅ FIX 2: Level filter - Convert vocab.difficulty to lowercase before checking inclusion
     if (
       lowerCaseLevelFilters.length > 0 &&
       !lowerCaseLevelFilters.includes(vocab.difficulty?.toLowerCase())

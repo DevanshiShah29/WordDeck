@@ -66,7 +66,6 @@ export default function VocabularyHeader({
   // Memoize the count of active filters for the badge logic
   const activeFilterCount = useMemo(() => {
     const isDateRangeActive = !!dateRange.from || !!dateRange.to;
-    const isSearchActive = !!searchTerm.trim();
 
     return type.length + tag.length + level.length + (isDateRangeActive ? 1 : 0);
   }, [type, tag, level, dateRange, searchTerm]);
