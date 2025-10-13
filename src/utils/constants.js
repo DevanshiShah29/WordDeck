@@ -12,45 +12,6 @@ export const difficultyColorMap = {
   advanced: "bg-rose-100 text-rose-600 border-rose-200",
 };
 
-export const TYPE_OPTIONS = [
-  "Noun",
-  "Verb",
-  "Adjective",
-  "Adverb",
-  "Pronoun",
-  "Preposition",
-  "Conjunction",
-  "Interjection",
-  "Idiom",
-  "Phrase",
-  "Proverb",
-  "Expression",
-  "Slang",
-  "Phrasal Verb",
-];
-
-export const TAG_OPTIONS = [
-  "emotions",
-  "nature",
-  "philosophy",
-  "",
-  "technology",
-  "culture",
-  "science",
-  "art",
-  "history",
-  "sports",
-  "food",
-  "luck",
-  "travel",
-  "music",
-  "language",
-  "education",
-  "health",
-  "business",
-  "politics",
-  "entertainment",
-];
 export const LEVEL_OPTIONS = ["Beginner", "Intermediate", "Advanced"];
 
 // constants.js
@@ -137,4 +98,4 @@ export const ORIGIN_OPTIONS = [
   "Japanese",
   "Hebrew",
 ];
-export const WORD_LENGTH_OPTIONS = ["Short", "Medium", "Long"];
+export const WORD_LENGTH_OPTIONS = ["Short (1-5)", "Medium (6-10)", "Long (11+)"];

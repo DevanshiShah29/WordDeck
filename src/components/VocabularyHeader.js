@@ -6,7 +6,7 @@ import { Search, Bookmark, Plus, ListFilter } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 // Component Imports
-import FilterModal from "./FilterModal";
+import FilterModal from "./filters/FilterModal";
 import Button from "./buttons/Button";
 import SortSelect from "./formItems/SortSelect";
 
