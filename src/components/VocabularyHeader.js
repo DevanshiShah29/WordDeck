@@ -44,6 +44,9 @@ export default function VocabularyHeader({
     tag = [],
     level = [],
     dateRange = { from: "", to: "" },
+    origin = [],
+    wordLength = [],
+    isBookmarked = false,
     searchTerm = "",
   } = filters;
 
@@ -66,9 +69,18 @@ export default function VocabularyHeader({
   // Memoize the count of active filters for the badge logic
   const activeFilterCount = useMemo(() => {
     const isDateRangeActive = !!dateRange.from || !!dateRange.to;
+    const isBookmarkedActive = isBookmarked ? 1 : 0;
 
-    return type.length + tag.length + level.length + (isDateRangeActive ? 1 : 0);
-  }, [type, tag, level, dateRange, searchTerm]);
+    return (
+      type.length +
+      tag.length +
+      level.length +
+      origin.length +
+      wordLength.length +
+      isBookmarkedActive +
+      (isDateRangeActive ? 1 : 0)
+    );
+  }, [type, tag, level, dateRange, origin, wordLength, isBookmarked]);
 
   return (
     <>
@@ -146,6 +158,12 @@ export default function VocabularyHeader({
           onFilterChange={onFilterChange}
           // Pass the entire filters object down
           currentFilters={filters}
+          typeFilter={type}
+          levelFilter={level}
+          originFilter={origin}
+          wordLengthFilter={wordLength}
+          isBookmarked={isBookmarked}
+          dateRangeFilter={dateRange}
         />
       )}
     </>

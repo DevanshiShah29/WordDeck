@@ -27,6 +27,9 @@ export default function HomePage() {
     type: [],
     tag: [],
     level: [],
+    origin: [],
+    wordLength: [],
+    isBookmarked: false,
     dateRange: { from: undefined, to: undefined },
   });
 
@@ -39,6 +42,9 @@ export default function HomePage() {
       type: searchParams.getAll("type"),
       tag: searchParams.getAll("tag"),
       level: searchParams.getAll("level"),
+      origin: searchParams.getAll("origin"),
+      wordLength: searchParams.getAll("wordLength"),
+      isBookmarked: searchParams.get("isBookmarked") === "true",
       dateRange: { from: dateRangeFrom, to: dateRangeTo },
     };
 

@@ -122,3 +122,19 @@ export const LEVEL_ORDER = {
   intermediate: 2,
   advanced: 3,
 };
+
+export const ORIGIN_OPTIONS = [
+  "Latin",
+  "Greek",
+  "French",
+  "German",
+  "Old English",
+  "Spanish",
+  "Italian",
+  "Dutch",
+  "Arabic",
+  "Sanskrit",
+  "Japanese",
+  "Hebrew",
+];
+export const WORD_LENGTH_OPTIONS = ["Short", "Medium", "Long"];
