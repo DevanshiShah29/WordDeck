@@ -56,20 +56,28 @@ export const LEVEL_OPTIONS = ["Beginner", "Intermediate", "Advanced"];
 // constants.js
 
 export const TYPE_OPTIONS_DROPDOWN = [
-  { value: "noun", label: "Noun" },
-  { value: "verb", label: "Verb" },
-  { value: "adjective", label: "Adjective" },
-  { value: "adverb", label: "Adverb" },
-  { value: "pronoun", label: "Pronoun" },
-  { value: "preposition", label: "Preposition" },
-  { value: "conjunction", label: "Conjunction" },
-  { value: "interjection", label: "Interjection" },
-  { value: "idiom", label: "Idiom" },
-  { value: "phrase", label: "Phrase" },
-  { value: "proverb", label: "Proverb" },
+  // Core Parts of Speech
+  { value: "noun", label: "Noun" }, // Person, place, thing, or idea; "dog," "city," "happiness."
+  { value: "verb", label: "Verb" }, // Action or state of being; "run," "is," "think."
+  { value: "adjective", label: "Adjective" }, // Describes a noun; "happy," "blue," "quick."
+  { value: "adverb", label: "Adverb" }, // Modifies a verb, adjective, or other adverb; "quickly," "very," "well."
+  { value: "pronoun", label: "Pronoun" }, // Replaces a noun; "he," "they," "which."
+  { value: "preposition", label: "Preposition" }, // Shows relationship between a noun (or pronoun) and other words; "in," "on," "by."
+  { value: "conjunction", label: "Conjunction" }, // Connects words, phrases, or clauses; "and," "but," "because."
+  { value: "interjection", label: "Interjection" }, // Expresses emotion or surprise; "wow," "ouch," "hey."
+
+  // Phrases & Fixed Expressions
+  { value: "idiom", label: "Idiom" }, // Common phrases with figurative meanings; "break the ice" means to initiate social interactions.
+  { value: "phrase", label: "Phrase" }, // Group of words acting as a single part of speech; "in a nutshell" means briefly.
+  { value: "proverb", label: "Proverb" }, // Teaches wisdom; "A stitch in time saves nine."
   { value: "expression", label: "Expression" },
-  { value: "slang", label: "Slang" },
-  { value: "phrasal-verb", label: "Phrasal Verb" },
+
+  // Style, Origin, and Modern Use
+  { value: "slang", label: "Slang" }, // Informal words or phrases; "cool" for "great."
+  { value: "euphemism", label: "Euphemism" }, // Soften the impact of an unpleasant truth;"letting someone go" instead of "firing someone."
+  { value: "loanword", label: "Loanword" }, // Borrowed from another language without translation; "café" from French, Kindergarten from German, Deja vu from French.
+  { value: "archaic", label: "Archaic" }, // Outdated or old-fashioned words; "thou" for "you."
+  { value: "neologism", label: "Neologism" }, // Newly coined words or expressions; "selfie" for a self-taken photo, googling for searching online.
 ];
 
 export const TAG_OPTIONS_DROPDOWN = [
