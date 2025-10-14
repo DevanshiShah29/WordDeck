@@ -15,6 +15,7 @@ import { LEVEL_ORDER } from "@/utils/constants";
 import VocabCard from "@/components/VocabCard";
 import VocabularyHeader from "@/components/VocabularyHeader";
 import Loader from "@/components/Loader";
+import Pagination from "@/components/Pagination";
 
 export default function HomePage() {
   const searchParams = useSearchParams();
@@ -32,6 +33,8 @@ export default function HomePage() {
     isBookmarked: false,
     dateRange: { from: undefined, to: undefined },
   });
+  const [currentPage, setCurrentPage] = useState(1);
+  const wordsPerPage = 12; // Define your limit
 
   // Sync filters from URL search params
   useEffect(() => {
@@ -62,16 +65,18 @@ export default function HomePage() {
       });
   }, []);
 
+  const handleSortChange = useCallback((newSort) => {
+    setCurrentSort(newSort);
+  }, []);
+
   const handleSearch = useCallback((newSearchTerm) => {
     setSearchTerm(newSearchTerm);
+    setCurrentPage(1);
   }, []);
 
   const handleFilterChange = useCallback((newFilters) => {
     setFilters(newFilters);
-  }, []);
-
-  const handleSortChange = useCallback((newSort) => {
-    setCurrentSort(newSort);
+    setCurrentPage(1);
   }, []);
 
   const filteredVocab = useMemo(() => {
@@ -81,7 +86,7 @@ export default function HomePage() {
     return filterVocabularies(vocabData, { ...filters, searchTerm });
   }, [filters, searchTerm, vocabData]);
 
-  const displayVocab = useMemo(() => {
+  const sortedVocab = useMemo(() => {
     const wordsToSort = filteredVocab;
     if (!wordsToSort || wordsToSort.length === 0) return [];
     let sorted = [...wordsToSort];
@@ -110,6 +115,34 @@ export default function HomePage() {
     return sorted;
   }, [filteredVocab, currentSort]);
 
+  // PAGINATION LOGIC: Slice the sorted data
+  const totalPages = Math.ceil(sortedVocab.length / wordsPerPage);
+
+  const handlePageChange = useCallback(
+    (newPage) => {
+      if (newPage >= 1 && newPage <= totalPages) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        setCurrentPage(newPage);
+      }
+    },
+    [totalPages]
+  );
+
+  const displayVocab = useMemo(() => {
+    const startIndex = (currentPage - 1) * wordsPerPage;
+    const endIndex = startIndex + wordsPerPage;
+    return sortedVocab.slice(startIndex, endIndex);
+  }, [sortedVocab, currentPage, wordsPerPage]);
+
+  // Ensure current page is valid when data changes
+  useEffect(() => {
+    if (currentPage > totalPages && totalPages > 0) {
+      setCurrentPage(totalPages);
+    } else if (currentPage < 1 && sortedVocab.length > 0) {
+      setCurrentPage(1);
+    }
+  }, [sortedVocab.length, totalPages, currentPage]);
+
   const bookmarkCount = useMemo(
     () => (Array.isArray(vocabData) ? vocabData.filter((v) => v.isBookmarked).length : 0),
     [vocabData]
@@ -124,7 +157,7 @@ export default function HomePage() {
   return (
     <>
       <VocabularyHeader
-        totalWords={displayVocab.length}
+        totalWords={filteredVocab.length}
         bookmarkCount={bookmarkCount}
         onSearch={handleSearch}
         onFilterChange={handleFilterChange}
@@ -135,7 +168,7 @@ export default function HomePage() {
 
       <main className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
         <div className="container mx-auto p-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {displayVocab.length > 0 ? (
               displayVocab.map((vocab) => (
                 <VocabCard
@@ -152,6 +185,12 @@ export default function HomePage() {
           </div>
         </div>
       </main>
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </>
   );
 }

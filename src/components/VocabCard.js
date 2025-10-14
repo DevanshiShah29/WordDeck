@@ -54,7 +54,7 @@ export default function VocabCard({
     <Link href={`/word/${slug}`} className="block h-full">
       <div className="flex flex-col h-full group relative bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-500 overflow-hidden cursor-pointer transform hover:-translate-y-1 border border-slate-100">
         {/* --- Image Header Area --- */}
-        <div className="relative h-48 sm:h-52 md:h-56 overflow-hidden">
+        <div className="relative h-40 sm:h-48 md:h-50 overflow-hidden">
           <Image
             src={imageUrl || "/fallback.jpg"}
             alt={word || "Vocabulary image"}
@@ -97,10 +97,10 @@ export default function VocabCard({
         </div>
 
         {/* --- Card Body & Content --- */}
-        <div className="flex-grow p-6 space-y-4">
+        <div className="flex-grow p-5 space-y-4">
           {/* Title + Speaker */}
-          <div className="flex items-center justify-between mb-2">
-            <h3 className="text-xl sm:text-2xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors duration-300">
+          <div className="flex items-start justify-between mb-2">
+            <h3 className="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors duration-300">
               {word}
             </h3>
 
