@@ -100,7 +100,7 @@ export default function VocabCard({
         <div className="flex-grow p-5 space-y-4">
           {/* Title + Speaker */}
           <div className="flex items-start justify-between mb-2">
-            <h3 className="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors duration-300">
+            <h3 className="text-xl font-bold text-slate-900 py-1 group-hover:text-blue-600 transition-colors duration-300">
               {word}
             </h3>
 
@@ -116,13 +116,13 @@ export default function VocabCard({
 
           {/* Phonetic */}
           {phonetic && (
-            <p className="text-slate-500 text-sm font-mono bg-slate-100 px-3 py-1 rounded-lg inline-block">
+            <p className=" text-sm text-slate-500 font-mono bg-slate-100 px-3 py-1 rounded-lg inline-block">
               {phonetic}
             </p>
           )}
 
           {/* Definition */}
-          <div className="flex items-center gap-2 text-slate-700 font-semibold text-sm">
+          <div className=" text-sm flex items-center gap-2 text-slate-700 font-semibold">
             <span className="flex items-center gap-2 text-slate-700">
               <BookOpen height={18} width={18} className="text-blue-700" />
               Definition
@@ -142,7 +142,7 @@ export default function VocabCard({
             {synonyms?.map((synonym, index) => (
               <span
                 key={index}
-                className="px-2.5 py-1 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 rounded-lg text-sm font-medium"
+                className=" text-sm px-2.5 py-1 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 rounded-lg font-medium"
               >
                 {capitalizeFirstLetter(synonym)}
               </span>
@@ -150,7 +150,7 @@ export default function VocabCard({
           </div>
         </div>
 
-        {/* --- Footer Area (Difficulty & Origin) --- */}
+        {/* --- Footer Area */}
         <div className="p-6 border-t border-slate-200">
           <div className="flex flex-wrap items-center justify-between gap-2">
             {/* Difficulty */}

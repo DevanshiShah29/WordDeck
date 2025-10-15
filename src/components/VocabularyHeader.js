@@ -84,7 +84,7 @@ export default function VocabularyHeader({
 
   return (
     <>
-      <header className="bg-white backdrop-blur-sm shadow-sm border-b border-slate-200/50 sticky top-0 z-40">
+      <header className="bg-white backdrop-blur-sm shadow-sm border-b border-slate-200/50 ">
         <div className="container mx-auto p-6">
           <div className="flex flex-wrap items-center justify-between gap-4">
             {/* Title & Count */}

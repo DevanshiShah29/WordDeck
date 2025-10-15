@@ -42,7 +42,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   if (totalPages <= 1) return null;
 
   return (
-    <div className="w-full bg-white py-6 shadow-md border-t border-gray-200">
+    <div className="w-full bg-white pt-6 pb-10 shadow-md border-t border-gray-200">
       <div className="container mx-auto px-8">
         <div className=" flex justify-end items-center space-x-2">
           <Button
