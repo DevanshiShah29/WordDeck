@@ -53,6 +53,8 @@ export default async function handler(req, res) {
       // Handles inserting a new word
       let dataToInsert = req.body;
 
+      dataToInsert.word = dataToInsert.word ? dataToInsert.word.trim() : null;
+
       // FIX/IMPROVEMENT: Add the 'createdAt' timestamp to the document
       dataToInsert.createdAt = new Date();
 
@@ -69,6 +71,19 @@ export default async function handler(req, res) {
       // Filter out null or empty required fields if needed, or rely on MDB schema validation
       if (!dataToInsert.word) {
         return res.status(400).json({ error: "Word field is required for insertion." });
+      }
+
+      //  Create a RegExp for case-insensitive and exact match of the trimmed word
+
+      const wordPattern = new RegExp(`^${dataToInsert.word}$`, "i");
+      const existingWord = await collection.findOne({
+        word: { $regex: wordPattern },
+      });
+      if (existingWord) {
+        return res.status(409).json({
+          error: `The word '${dataToInsert.word}' already exists in the database.`,
+          existingSlug: existingWord.slug,
+        });
       }
 
       try {

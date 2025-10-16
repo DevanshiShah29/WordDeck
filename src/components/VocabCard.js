@@ -63,14 +63,14 @@ export default function VocabCard({
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
 
-          <div className="absolute top-4 right-16 z-10">
+          <div className="absolute top-4 right-14 z-10">
             <Button
               className="p-2.5 cursor-pointer bg-white/90 backdrop-blur-sm text-slate-600 rounded-xl hover:bg-white hover:text-indigo-600 transition-all duration-300 shadow-lg"
               title="Edit word entry"
               onClick={(e) => handleActionClick(e, "edit")}
               variant="transparent"
             >
-              <Pencil className="w-5 h-5 text-slate-600 drop-shadow-md" />
+              <Pencil className="w-4 h-4 text-slate-600 drop-shadow-md" />
             </Button>
           </div>
 
@@ -82,7 +82,7 @@ export default function VocabCard({
               onClick={(e) => handleActionClick(e, "bookmark")}
               variant="transparent"
             >
-              <Bookmark className="w-5 h-5 text-slate-600 drop-shadow-md" />
+              <Bookmark className="w-4 h-4 text-slate-600 drop-shadow-md" />
             </Button>
           </div>
 

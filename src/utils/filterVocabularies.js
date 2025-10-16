@@ -26,7 +26,7 @@ export function filterVocabularies(vocabularies, filters) {
       synonyms = [],
     } = vocab;
 
-    // --- 1. SEARCH TERM CHECK ---
+    //  SEARCH TERM CHECK
     const matchesSearchTerm =
       word.toLowerCase().includes(lowerSearchTerm) ||
       definition.toLowerCase().includes(lowerSearchTerm) ||
