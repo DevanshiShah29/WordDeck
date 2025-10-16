@@ -39,31 +39,24 @@ export function filterVocabularies(vocabularies, filters) {
       return false;
     }
 
-    // --- 2. BOOKMARKED FILTER ---
     // Only show bookmarked words if the filter is active (isBookmarked === true)
 
     if (isBookmarked && !vocabIsBookmarked) {
       return false;
     }
-    // --- 3. WORD TYPE FILTER ---
     // Check if the vocab's type is included in the list of selected types
-
     if (lowerTypeFilters.length > 0 && !lowerTypeFilters.includes(vocabType?.toLowerCase())) {
       return false;
     }
-    // --- 4. DIFFICULTY LEVEL FILTER ---
     // Check if the vocab's difficulty is included in the list of selected levels
-
     if (lowerLevelFilters.length > 0 && !lowerLevelFilters.includes(difficulty?.toLowerCase())) {
       return false;
     }
-    // --- 5. WORD ORIGIN FILTER ---
     // Check if the vocab's origin is included in the list of selected origins
-
     if (lowerOriginFilters.length > 0 && !lowerOriginFilters.includes(origin?.toLowerCase())) {
       return false;
     }
-    // --- 6. WORD LENGTH FILTER (NEW LOGIC) ---
+    // --- WORD LENGTH FILTER  ---
 
     if (wordLengthFilters.length > 0) {
       const length = word.length;
@@ -82,7 +75,7 @@ export function filterVocabularies(vocabularies, filters) {
         return false;
       }
     }
-    // --- 7. DATE RANGE FILTER (Your existing logic, cleaned up) ---
+    // --- DATE RANGE FILTER  ---
 
     if (dateRange.from || dateRange.to) {
       const vocabDate = vocab.createdAt ? new Date(vocab.createdAt) : null;
