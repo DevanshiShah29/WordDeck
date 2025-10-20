@@ -18,7 +18,6 @@ import { SORT_OPTIONS } from "@/utils/constants";
  *
  * @param {object} props
  * @param {number} [props.totalWords=0] - Total count of words in the collection.
- * @param {number} [props.bookmarkCount=0] - Count of bookmarked words.
  * @param {function} props.onSearch - Handler function for search input changes.
  * @param {function} props.onFilterChange - Handler function for when filters are applied in the modal.
  * @param {function} props.onBookmarkClick - Handler for the bookmark button (to toggle bookmark view).
@@ -26,7 +25,6 @@ import { SORT_OPTIONS } from "@/utils/constants";
  */
 export default function VocabularyHeader({
   totalWords = 0,
-  bookmarkCount = 0,
   onSearch,
   onFilterChange,
   onBookmarkClick,
@@ -100,7 +98,7 @@ export default function VocabularyHeader({
                 className="flex items-center gap-2 bg-green-500 text-white hover:bg-green-600"
               >
                 <Bookmark size={18} />
-                Bookmarks ({bookmarkCount})
+                Bookmarks
               </Button>
 
               <Button
