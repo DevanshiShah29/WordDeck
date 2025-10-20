@@ -35,6 +35,10 @@ export default async function handler(req, res) {
       "expression",
       "slang",
       "phrasal-verb",
+      "euphemism",
+      "loanword",
+      "archaic",
+      "neologism",
     ].join(", ");
 
     // --- 3. Define the Structured Output Schema (remains the same) ---

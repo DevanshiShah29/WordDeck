@@ -1,8 +1,25 @@
 export const typeColorMap = {
+  // Core Parts of Speech
   noun: "from-emerald-500 to-emerald-600",
   verb: "from-sky-500 to-sky-600",
   adjective: "from-violet-500 to-violet-600",
   adverb: "from-amber-500 to-amber-600",
+  pronoun: "from-red-500 to-red-600",
+  preposition: "from-fuchsia-500 to-fuchsia-600",
+  conjunction: "from-pink-500 to-pink-600",
+  interjection: "from-rose-500 to-rose-600",
+  // Phrases & Fixed Expression
+  idiom: "from-teal-500 to-teal-600",
+  phrase: "from-cyan-500 to-cyan-600",
+  proverb: "from-lime-500 to-lime-600",
+  expression: "from-yellow-500 to-yellow-600",
+  // Style, Origin, and Modern Use
+  slang: "from-gray-500 to-gray-600",
+  euphemism: "from-blue-500 to-blue-600",
+  loanword: "from-orange-500 to-orange-600",
+  archaic: "from-zinc-500 to-zinc-600",
+  neologism: "from-indigo-500 to-indigo-600",
+  // Fallback for missing or unknown types
   default: "from-slate-500 to-slate-600",
 };
 
