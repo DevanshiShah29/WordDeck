@@ -22,7 +22,7 @@ export function filterVocabularies(vocabularies, filters) {
       origin = "",
       difficulty = "",
       type: vocabType = "",
-      isBookmarked: vocabIsBookmarked = false,
+      bookmarked: vocabIsBookmarked = false,
       synonyms = [],
     } = vocab;
 

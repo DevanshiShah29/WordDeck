@@ -4,7 +4,7 @@
 import { useState, useMemo, useEffect, useCallback } from "react";
 
 // Library Imports
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 
 // Utility Imports
 import { filterVocabularies } from "@/utils/filterVocabularies";
@@ -19,6 +19,7 @@ import Pagination from "@/components/Pagination";
 
 export default function HomePage() {
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   const [searchTerm, setSearchTerm] = useState("");
   const [vocabData, setVocabData] = useState([]);
@@ -58,7 +59,11 @@ export default function HomePage() {
   useEffect(() => {
     fetchAllWords()
       .then((data) => {
-        setVocabData(data);
+        const normalizedData = data.map((word) => ({
+          ...word,
+          bookmarked: !!word.bookmarked,
+        }));
+        setVocabData(normalizedData);
       })
       .finally(() => {
         setLoading(false);
@@ -107,6 +112,12 @@ export default function HomePage() {
       case "level_desc":
         sorted.sort((a, b) => LEVEL_ORDER[b.difficulty] - LEVEL_ORDER[a.difficulty]);
         break;
+      case "random":
+        for (let i = sorted.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [sorted[i], sorted[j]] = [sorted[j], sorted[i]];
+        }
+        break;
       case "date_desc":
       default:
         sorted.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -127,6 +138,10 @@ export default function HomePage() {
     },
     [totalPages]
   );
+
+  const onBookmarkClick = () => {
+    router.push("/bookmarks");
+  };
 
   const displayVocab = useMemo(() => {
     const startIndex = (currentPage - 1) * wordsPerPage;
@@ -164,6 +179,7 @@ export default function HomePage() {
         filters={headerFilters}
         currentSort={currentSort}
         onSortChange={handleSortChange}
+        onBookmarkClick={onBookmarkClick}
       />
 
       <main className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
@@ -175,6 +191,7 @@ export default function HomePage() {
                   key={vocab._id || vocab.slug}
                   {...vocab}
                   phonetic={vocab.pronunciation}
+                  isBookmarked={vocab.bookmarked}
                 />
               ))
             ) : (

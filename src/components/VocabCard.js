@@ -1,28 +1,22 @@
 "use client";
 
+import { useState, useEffect } from "react";
+
+// Library Imports
 import Link from "next/link";
 import { Volume2, Languages, Bookmark, BookOpen, Pencil } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+
+// Utility Imports
 import { speakWord } from "@/utils/helper";
 import { typeColorMap, difficultyColorMap } from "@/utils/constants";
 import { capitalizeFirstLetter } from "@/utils/helper";
-import Button from "./buttons/Button";
-import { useRouter } from "next/navigation";
 
-/**
- * Renders a visually appealing card for a vocabulary word, linking to its detail page.
- *
- * @param {object} props
- * @param {string} props.word - The vocabulary word.
- * @param {string} props.type - The type of word (e.g., "Noun").
- * @param {string} props.imageUrl - URL for the card background image.
- * @param {string} props.phonetic - The phonetic spelling.
- * @param {string} props.definition - The word's definition.
- * @param {string[]} props.synonyms - Array of related synonyms.
- * @param {string} props.difficulty - The difficulty level (e.g., "Easy").
- * @param {string} props.origin - The word's origin language.
- * @param {string} props.slug - The URL slug for the detail page.
- */
+// Component Imports
+import Button from "./buttons/Button";
+import { toast } from "react-toastify";
+
 export default function VocabCard({
   word,
   type,
@@ -33,18 +27,63 @@ export default function VocabCard({
   difficulty,
   origin,
   slug,
+  isBookmarked: initialBookmarked = false,
 }) {
   const router = useRouter();
   const typeGradient = typeColorMap[type?.toLowerCase()] || typeColorMap.default;
   const difficultyClasses = difficultyColorMap[difficulty?.toLowerCase()];
 
-  const handleActionClick = (e, action) => {
+  // State to manage the UI's bookmark status, initialized from the prop
+  const [isBookmarkedState, setIsBookmarkedState] = useState(initialBookmarked);
+
+  // Sync internal state if the prop changes (e.g., parent re-fetches data)
+  useEffect(() => {
+    setIsBookmarkedState(initialBookmarked);
+  }, [initialBookmarked]);
+
+  const updateBookmarkStatus = async (wordSlug, isNowBookmarked) => {
+    const endpoint = `/api/words?slug=${wordSlug}`;
+
+    try {
+      const response = await fetch(endpoint, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          bookmarked: isNowBookmarked,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `Failed to update bookmark status: ${response.status}`);
+      }
+
+      toast.success(`Bookmark status for ${wordSlug} updated successfully.`);
+      return true;
+    } catch (error) {
+      toast.error("Bookmark API Error:", error);
+      return false;
+    }
+  };
+
+  const handleActionClick = async (e, action) => {
     e.preventDefault(); // Prevents the default button action
     e.stopPropagation(); // Prevents the click from bubbling up to the Link
     if (action === "speak") {
       speakWord(word);
     } else if (action === "bookmark") {
-      console.log("Bookmark clicked");
+      const newState = !isBookmarkedState;
+
+      setIsBookmarkedState(newState);
+
+      const success = await updateBookmarkStatus(slug, newState);
+
+      if (!success) {
+        setIsBookmarkedState(!newState);
+        toast.error("Failed to update bookmark. Please try again.");
+      }
     } else if (action === "edit") {
       router.push(`/edit/${slug}`);
     }
@@ -77,12 +116,19 @@ export default function VocabCard({
           {/* Bookmark Button */}
           <div className="absolute top-4 right-4 z-10">
             <Button
-              className="p-2.5 cursor-pointer bg-white/90 backdrop-blur-sm text-slate-600 rounded-xl hover:bg-white hover:text-blue-600 transition-all duration-300 shadow-lg"
-              title="Add bookmark"
+              className={`p-2.5 cursor-pointer bg-white/90 backdrop-blur-sm text-slate-600 rounded-xl hover:bg-white hover:text-blue-600 transition-all duration-300 shadow-lg ${
+                isBookmarkedState
+                  ? "text-red-500 hover:text-red-600"
+                  : "text-slate-600 hover:bg-white hover:text-blue-600"
+              }`}
+              title={isBookmarkedState ? "Remove bookmark" : "Add bookmark"}
               onClick={(e) => handleActionClick(e, "bookmark")}
               variant="transparent"
             >
-              <Bookmark className="w-4 h-4 text-slate-600 drop-shadow-md" />
+              <Bookmark
+                className="w-4 h-4 text-slate-600 drop-shadow-md"
+                fill={isBookmarkedState ? "currentColor" : "none"}
+              />
             </Button>
           </div>
 

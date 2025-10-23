@@ -2,12 +2,12 @@ import React from "react";
 
 // Library Imports
 import { ArrowLeft, Volume2, Bookmark, Pencil } from "lucide-react";
-import Link from "next/link";
-
+import { useRouter } from "next/navigation";
 // Component Imports
 import Button from "@/components/buttons/Button";
 
 const DetailHeader = ({ word, onSpeak, onToggleBookmark, isBookmarked, handleEditClick }) => {
+  const router = useRouter();
   const { word: title, pronunciation } = word;
 
   return (
@@ -16,13 +16,13 @@ const DetailHeader = ({ word, onSpeak, onToggleBookmark, isBookmarked, handleEdi
         <div className="flex items-center justify-between">
           {/* Title and Back Button */}
           <div className="flex items-center gap-2">
-            <Link
-              href="/word"
+            <Button
+              variant="transparent"
               className="p-2 rounded-lg transition-all duration-300 group hover:bg-slate-100"
-              aria-label="Go back to vocabulary list"
+              onClick={() => router.back()}
             >
               <ArrowLeft className="w-5 h-5 text-slate-600 group-hover:text-blue-600" />
-            </Link>
+            </Button>
             <div>
               <h1 className="text-2xl font-bold text-slate-900">{title}</h1>
               <p className="mt-1 text-slate-500 text-sm font-mono bg-slate-100 px-3 py-1 rounded-lg inline-block">

@@ -93,6 +93,7 @@ export const SORT_OPTIONS = [
   { value: "word_desc", label: "Word (Z-A)" },
   { value: "level_asc", label: "Easy to Hard" },
   { value: "level_desc", label: "Hard to Easy" },
+  { value: "random", label: "Random" },
 ];
 
 export const LEVEL_ORDER = {

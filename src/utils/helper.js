@@ -64,3 +64,17 @@ export const capitalizeFirstLetter = (string) => {
   if (!string) return "";
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
+
+export function formatWordListProp(prop) {
+  if (Array.isArray(prop)) {
+    return prop;
+  }
+  if (typeof prop === "string") {
+    // Splits by comma and trims whitespace
+    return prop
+      .split(",")
+      .map((s) => s.trim())
+      .filter((s) => s.length > 0);
+  }
+  return [];
+}
