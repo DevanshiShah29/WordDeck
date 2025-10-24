@@ -22,6 +22,7 @@ const Bookmarks = () => {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentSort, setCurrentSort] = useState("random");
+  const [isHintActive, setIsHintActive] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,6 +57,10 @@ const Bookmarks = () => {
 
   const handleSortChange = useCallback((newSort) => {
     setCurrentSort(newSort);
+  }, []);
+
+  const handleHintToggle = useCallback(() => {
+    setIsHintActive((prev) => !prev);
   }, []);
 
   const filteredWords = useMemo(
@@ -111,6 +116,8 @@ const Bookmarks = () => {
         onSearch={handleSearch}
         currentSort={currentSort}
         onSortChange={handleSortChange}
+        isHintActive={isHintActive}
+        onHintToggle={handleHintToggle}
       />
 
       <div className="container mx-auto px-4 py-8 max-w-7xl">
@@ -123,6 +130,7 @@ const Bookmarks = () => {
                 index={index}
                 isFlipped={!!flippedCards[index]}
                 toggleFlip={toggleFlip}
+                isHintActive={isHintActive}
               />
             ))}
           </div>

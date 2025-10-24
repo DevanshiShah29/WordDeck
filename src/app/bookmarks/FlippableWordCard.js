@@ -13,7 +13,7 @@ import Button from "@/components/buttons/Button";
 import { typeColorMap, difficultyColorMap } from "@/utils/constants";
 import { capitalizeFirstLetter, formatWordListProp } from "@/utils/helper";
 
-const FlippableWordCard = ({ wordData, index, isFlipped, toggleFlip }) => {
+const FlippableWordCard = ({ wordData, index, isFlipped, toggleFlip, isHintActive }) => {
   const router = useRouter();
   const getDifficultyClasses = (difficulty) => {
     return difficultyColorMap[difficulty?.toLowerCase()];
@@ -25,6 +25,19 @@ const FlippableWordCard = ({ wordData, index, isFlipped, toggleFlip }) => {
 
   const safeTags = formatWordListProp(wordData.tags);
   const safeSynonyms = formatWordListProp(wordData.synonyms);
+  const shouldShowImage = isHintActive && !!wordData.imageUrl;
+
+  const hintStyles = shouldShowImage
+    ? {
+        backgroundImage: `url(${wordData.imageUrl})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        position: "relative",
+      }
+    : {};
+
+  const textColorClass = shouldShowImage ? "text-white" : "text-gray-900";
 
   return (
     <div
@@ -44,36 +57,53 @@ const FlippableWordCard = ({ wordData, index, isFlipped, toggleFlip }) => {
           className={`absolute w-full h-full backface-hidden border-gray-200  hover:shadow-xl transition-all`}
           style={{ backfaceVisibility: "hidden" }}
         >
-          <CardContent className="flex flex-col items-center justify-center h-full p-8 relative pt-6">
+          <CardContent
+            className={`flex flex-col items-center justify-center h-full p-8 relative pt-6 rounded-xl ${
+              shouldShowImage ? "bg-gray-900" : "bg-white"
+            }`}
+            style={hintStyles}
+          >
             <div className="absolute top-4 right-14 flex gap-2  z-10">
               <Button
                 variant="transparent"
                 size="icon"
-                className="h-8 w-8 hover:scale-110 hover:bg-green-100 transition-all"
+                className={`h-8 w-8 hover:scale-110 transition-all ${
+                  shouldShowImage ? "bg-white/10 hover:bg-white/20" : "hover:bg-green-100"
+                }`}
                 onClick={(e) => {
                   e.stopPropagation();
                   router.push(`/word/${wordData.slug}`);
                 }}
               >
-                <Eye className="h-4 w-4 text-gray-400 hover:text-green-600" />
+                <Eye
+                  className={`h-4 w-4 ${
+                    shouldShowImage ? "text-white" : "text-gray-400 hover:text-green-600"
+                  }`}
+                />
               </Button>
             </div>
             <div className="absolute top-4 right-4 flex gap-2  z-10">
               <Button
                 variant="transparent"
                 size="icon"
-                className="h-8 w-8 hover:scale-110 hover:bg-red-100 transition-all"
+                className={`h-8 w-8 hover:scale-110 transition-all ${
+                  shouldShowImage ? "bg-white/10 hover:bg-white/20" : "hover:bg-red-100"
+                }`}
                 onClick={(e) => {
                   e.stopPropagation();
                   console.log("Deleting word");
                 }}
               >
-                <Trash2 className="h-4 w-4 text-gray-400 hover:text-red-600" />
+                <Trash2
+                  className={`h-4 w-4 ${
+                    shouldShowImage ? "text-white" : "text-gray-400 hover:text-red-600"
+                  }`}
+                />
               </Button>
             </div>
 
             {/* Difficulty Badge - Top Left */}
-            <div className="absolute top-4 left-4">
+            <div className={`absolute top-4 left-4 ${shouldShowImage ? "z-10 opacity-50" : ""}`}>
               <div
                 variant="secondary"
                 className={`font-semibold border ${getDifficultyClasses(
@@ -84,13 +114,22 @@ const FlippableWordCard = ({ wordData, index, isFlipped, toggleFlip }) => {
               </div>
             </div>
 
+            {shouldShowImage && (
+              <div className="absolute inset-0 bg-black/50 backdrop-blur-[0px] rounded-xl transition-opacity duration-500 z-0"></div>
+            )}
+
             {/* Main Content */}
             <div className="text-center space-y-4 flex-1 flex flex-col items-center justify-center">
-              <h3 className={`text-xl font-semibold  `}>{wordData.word}</h3>
+              <h3 className={`text-3xl font-bold ${textColorClass} drop-shadow-md`}>
+                {wordData.word}
+              </h3>
 
               <div
-                className={`inline-flex items-center rounded-full border px-3 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-sm px-4 py-1.5 font-bold shadow-md shadow-slate-900/10 transition-all
-                  bg-gradient-to-br ${getTypeGradient(wordData.type)} text-white`}
+                className={`inline-flex items-center rounded-full border px-4 py-1.5 font-bold shadow-md text-white  transition-all ${
+                  shouldShowImage
+                    ? `bg-white/20 z-10`
+                    : `shadow-slate-900/10 bg-gradient-to-br ${getTypeGradient(wordData.type)}`
+                }`}
               >
                 {capitalizeFirstLetter(wordData.type)}
               </div>
@@ -101,7 +140,11 @@ const FlippableWordCard = ({ wordData, index, isFlipped, toggleFlip }) => {
               {safeTags?.slice(0, 3).map((tag, index) => (
                 <span
                   key={index}
-                  className="text-sm px-2.5 py-1 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 rounded-lg "
+                  className={`text-sm px-2.5 py-1 rounded-lg ${
+                    shouldShowImage
+                      ? "bg-white/20 text-white shadow-md z-10"
+                      : "bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700"
+                  }`}
                 >
                   <span className="opacity-70 mr-0.5">#</span>
                   {capitalizeFirstLetter(tag)}

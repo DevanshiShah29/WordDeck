@@ -1,7 +1,7 @@
 import React from "react";
 
 // Library Imports
-import { ArrowLeft, Search } from "lucide-react";
+import { ArrowLeft, Search, Lightbulb } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 // Component Imports
@@ -11,11 +11,23 @@ import SortSelect from "@/components/formItems/SortSelect";
 // Utility Imports
 import { SORT_OPTIONS } from "@/utils/constants";
 
-const Header = ({ bookmarkedWords, onSearch, currentSort = "date_desc", onSortChange }) => {
+const Header = ({
+  bookmarkedWords,
+  onSearch,
+  currentSort = "date_desc",
+  onSortChange,
+  isHintActive,
+  onHintToggle,
+}) => {
   const router = useRouter();
 
   const handleSearch = (e) => {
     onSearch?.(e.target.value);
+  };
+
+  const handleHintClick = () => {
+    // Toggles the global state in the parent Bookmarks component
+    onHintToggle();
   };
 
   return (
@@ -50,6 +62,21 @@ const Header = ({ bookmarkedWords, onSearch, currentSort = "date_desc", onSortCh
             onSortChange={onSortChange}
             options={SORT_OPTIONS}
           />
+
+          <Button
+            variant="transparent"
+            className={`flex items-center justify-center p-3 ${
+              isHintActive
+                ? "bg-yellow-500 hover:bg-yellow-600 text-white"
+                : "bg-gray-100 hover:bg-gray-200 text-gray-700"
+            }`}
+            onClick={handleHintClick}
+          >
+            <Lightbulb
+              className={`h-4 w-4 mr-2 ${isHintActive ? "text-white" : "text-yellow-500"}`}
+            />
+            Hint
+          </Button>
         </div>
       </div>
     </header>
