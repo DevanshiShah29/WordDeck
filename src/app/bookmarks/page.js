@@ -5,6 +5,7 @@ import Link from "next/link";
 
 // Library Imports
 import { Bookmark, BookOpen } from "lucide-react";
+import { toast } from "react-toastify";
 
 // Component Imports
 import Button from "@/components/buttons/Button";
@@ -30,7 +31,7 @@ const Bookmarks = () => {
         const data = await getBookmarkedWords();
         setBookmarkedWords(data);
       } catch (error) {
-        console.error(error);
+        toast.error(error);
       } finally {
         setLoading(false);
       }
@@ -47,7 +48,7 @@ const Bookmarks = () => {
       await removeBookmark(wordId);
       setBookmarkedWords((prev) => prev.filter((word) => word._id !== wordId));
     } catch (error) {
-      console.error(error);
+      toast.error(error);
     }
   };
 
@@ -131,6 +132,7 @@ const Bookmarks = () => {
                 isFlipped={!!flippedCards[index]}
                 toggleFlip={toggleFlip}
                 isHintActive={isHintActive}
+                handleDeleteBookmark={handleDeleteBookmark}
               />
             ))}
           </div>

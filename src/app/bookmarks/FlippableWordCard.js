@@ -13,7 +13,14 @@ import Button from "@/components/buttons/Button";
 import { typeColorMap, difficultyColorMap } from "@/utils/constants";
 import { capitalizeFirstLetter, formatWordListProp } from "@/utils/helper";
 
-const FlippableWordCard = ({ wordData, index, isFlipped, toggleFlip, isHintActive }) => {
+const FlippableWordCard = ({
+  wordData,
+  index,
+  isFlipped,
+  toggleFlip,
+  isHintActive,
+  handleDeleteBookmark,
+}) => {
   const router = useRouter();
   const getDifficultyClasses = (difficulty) => {
     return difficultyColorMap[difficulty?.toLowerCase()];
@@ -91,7 +98,7 @@ const FlippableWordCard = ({ wordData, index, isFlipped, toggleFlip, isHintActiv
                 }`}
                 onClick={(e) => {
                   e.stopPropagation();
-                  console.log("Deleting word");
+                  handleDeleteBookmark(wordData._id);
                 }}
               >
                 <Trash2
