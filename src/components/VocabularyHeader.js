@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import FilterModal from "./filters/FilterModal";
 import Button from "./buttons/Button";
 import SortSelect from "./formItems/SortSelect";
+import { useDebounce } from "@/components/hooks/useDebounce";
 
 // Utility Imports
 import { SORT_OPTIONS } from "@/utils/constants";
@@ -45,12 +46,27 @@ export default function VocabularyHeader({
     origin = [],
     wordLength = [],
     isBookmarked = false,
-    searchTerm = "",
+    searchTerm: externalSearchTerm = "",
   } = filters;
 
-  const handleSearch = (e) => {
-    onSearch?.(e.target.value);
+  const [localSearchTerm, setLocalSearchTerm] = useState(externalSearchTerm);
+  const debouncedSearchTerm = useDebounce(localSearchTerm, 1000);
+
+  useEffect(() => {
+    if (debouncedSearchTerm !== externalSearchTerm) {
+      onSearch?.(debouncedSearchTerm);
+    }
+  }, [debouncedSearchTerm, externalSearchTerm, onSearch]);
+
+  const handleInputChange = (e) => {
+    setLocalSearchTerm(e.target.value);
   };
+
+  useEffect(() => {
+    if (externalSearchTerm !== localSearchTerm) {
+      setLocalSearchTerm(externalSearchTerm);
+    }
+  }, [externalSearchTerm]);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -132,8 +148,8 @@ export default function VocabularyHeader({
               <Search size={20} className="text-slate-400 mr-3" />
               <input
                 type="text"
-                value={searchTerm}
-                onChange={handleSearch}
+                value={localSearchTerm}
+                onChange={handleInputChange}
                 placeholder="Search words, definitions, or synonyms..."
                 className="w-full outline-none text-base text-slate-700 placeholder-slate-400"
               />
