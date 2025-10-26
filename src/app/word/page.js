@@ -119,7 +119,7 @@ export default function HomePage() {
         dateRangeFrom: newFilters.dateRange.from,
         dateRangeTo: newFilters.dateRange.to,
       };
-      updateAppState(filterUpdates, false);
+      updateAppState(filterUpdates, true);
     },
     [updateAppState]
   );
@@ -220,9 +220,21 @@ export default function HomePage() {
         return res.json();
       })
       .then((response) => {
+        // Extract data and pagination from the response
+        const responseData = response.data || [];
+        const responsePagination = response.pagination || DEFAULT_PAGINATION;
+        // If there's no data or totalWords is 0, ensure totalPages is 1
+        let newTotalPages = responsePagination.totalPages;
+        if (responseData.length === 0 || responsePagination.totalWords === 0) {
+          newTotalPages = 1;
+        }
+
         setVocabResponse({
-          data: (response.data || []).map((word) => ({ ...word, bookmarked: !!word.bookmarked })),
-          pagination: response.pagination || DEFAULT_PAGINATION,
+          data: responseData.map((word) => ({ ...word, bookmarked: !!word.bookmarked })),
+          pagination: {
+            ...responsePagination,
+            totalPages: newTotalPages,
+          },
         });
       })
       .catch((error) => {

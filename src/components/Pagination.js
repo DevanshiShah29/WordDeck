@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "./buttons/Button";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   const getPageNumbers = () => {
     const delta = 2; // Number of pages to show around the current page
@@ -39,8 +39,6 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
     return finalPages;
   };
 
-  if (totalPages <= 1) return null;
-
   return (
     <div className="w-full bg-white pt-6 pb-10 shadow-md border-t border-gray-200">
       <div className="container mx-auto px-8">
@@ -49,10 +47,9 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
             variant="transparent"
             onClick={() => onPageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150"
+            className="flex items-center px-3 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150"
           >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Previous
+            <ChevronLeft className="w-5 h-5 " />
           </Button>
 
           <div className="hidden sm:flex space-x-1">
@@ -86,10 +83,9 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
             variant="transparent"
             onClick={() => onPageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150"
+            className="flex items-center px-3 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150"
           >
-            Next
-            <ArrowRight className="w-4 h-4 ml-2" />
+            <ChevronRight className="w-5 h-5 " />
           </Button>
         </div>
       </div>
