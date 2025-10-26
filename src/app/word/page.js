@@ -95,7 +95,7 @@ export default function HomePage() {
 
   const handleSortChange = useCallback(
     (newSort) => {
-      updateAppState({ sort: newSort }, true);
+      updateAppState({ sort: newSort }, false);
     },
     [updateAppState]
   );
@@ -119,7 +119,7 @@ export default function HomePage() {
         dateRangeFrom: newFilters.dateRange.from,
         dateRangeTo: newFilters.dateRange.to,
       };
-      updateAppState(filterUpdates, true);
+      updateAppState(filterUpdates, false);
     },
     [updateAppState]
   );
@@ -286,13 +286,11 @@ export default function HomePage() {
         </main>
       )}
 
-      {totalPages > 1 && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-        />
-      )}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </>
   );
 }
