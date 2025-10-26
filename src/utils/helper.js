@@ -78,3 +78,32 @@ export function formatWordListProp(prop) {
   }
   return [];
 }
+
+/**
+ * Custom function to build a URL query string, ensuring array values are
+ * comma-separated in a single key (e.g., type=noun,verb).
+ */
+export function buildQueryString(params) {
+  const parts = [];
+
+  for (const key in params) {
+    let value = params[key];
+
+    // Skip falsy values (null, undefined, empty string) except for 0/false if needed
+    if (value === undefined || value === null || value === "") {
+      continue;
+    }
+
+    if (Array.isArray(value)) {
+      value = value.join(",");
+    }
+
+    if (value === "") {
+      continue;
+    }
+
+    parts.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+  }
+
+  return parts.join("&");
+}
