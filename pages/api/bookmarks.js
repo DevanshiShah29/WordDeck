@@ -73,25 +73,6 @@ async function handlePatch(req, res, collection) {
 }
 
 /**
- * (Optional) Remove all bookmarks.
- */
-async function handleDelete(req, res, collection) {
-  try {
-    const result = await collection.updateMany(
-      { bookmarked: true },
-      { $set: { bookmarked: false } }
-    );
-
-    return res.status(200).json({
-      message: `Removed ${result.modifiedCount} bookmarks successfully.`,
-    });
-  } catch (error) {
-    console.error("MongoDB Bookmark Delete Failed:", error);
-    return res.status(500).json({ error: "Failed to clear bookmarks." });
-  }
-}
-
-/**
  * Main API handler
  */
 export default async function handler(req, res) {
@@ -104,8 +85,6 @@ export default async function handler(req, res) {
         return handleGet(req, res, collection);
       case "PATCH":
         return handlePatch(req, res, collection);
-      case "DELETE":
-        return handleDelete(req, res, collection);
       default:
         res.setHeader("Allow", ["GET", "PATCH", "DELETE"]);
         return res.status(405).end(`Method ${req.method} Not Allowed`);

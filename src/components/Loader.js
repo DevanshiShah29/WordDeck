@@ -12,7 +12,7 @@ import { Loader2 } from "lucide-react";
 export default function Loader({ message = "Loading content, please wait...", fullScreen = true }) {
   const containerClasses = fullScreen
     ? "flex flex-col items-center justify-center min-h-screen bg-white/95 fixed inset-0 z-50 p-8"
-    : "flex flex-col items-center justify-center w-full h-full bg-white/80 p-8";
+    : "flex flex-col items-center justify-center w-full min-h-screen h-full bg-white/95";
 
   return (
     <div className={containerClasses}>

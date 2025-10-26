@@ -1,18 +1,17 @@
-// pages/api/generate-word-data.js (CORRECT STRUCTURE FOR PAGES ROUTER)
-
+// pages/api/generate-word-data.js
 import { GoogleGenAI } from "@google/genai";
 
 // Initialize the Google Gen AI client
 const ai = new GoogleGenAI({});
 
 export default async function handler(req, res) {
-  // 1. Check for correct HTTP method
+  // Check for correct HTTP method
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method Not Allowed" });
   }
 
   try {
-    // 2. Extract the payload from the request body
+    // Extract the payload from the request body
     const { word } = req.body; // In Pages Router, the body is automatically parsed
 
     if (!word) {
@@ -41,7 +40,7 @@ export default async function handler(req, res) {
       "neologism",
     ].join(", ");
 
-    // --- 3. Define the Structured Output Schema (remains the same) ---
+    // Define the Structured Output Schema (remains the same)
     const generationSchema = {
       type: "object",
       properties: {
@@ -90,10 +89,10 @@ export default async function handler(req, res) {
       ],
     };
 
-    // --- 4. Create the Detailed Prompt (remains the same) ---
+    // Create the Detailed Prompt (remains the same)
     const prompt = `Generate a complete, comprehensive, and highly engaging vocabulary entry for the English word: "${word}". All output must strictly adhere to the provided JSON schema. Do not include any text outside the JSON object.`;
 
-    // --- 5. Call the Gemini API with Structured Output ---
+    // Call the Gemini API with Structured Output
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
       contents: prompt,
