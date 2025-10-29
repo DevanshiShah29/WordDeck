@@ -107,3 +107,30 @@ export function buildQueryString(params) {
 
   return parts.join("&");
 }
+/**
+ * Manages an array of strings in localStorage, adding a new item
+ * to the front of the array and removing any duplicates.
+ * * @param {string} key - The localStorage key to manage (e.g., 'current_words').
+ * @param {string} newItem - The new string item to add (e.g., the word or origin).
+ */
+export const localStorageArray = (key, newItem) => {
+  if (typeof window === "undefined" || !newItem || newItem.trim() === "") {
+    // Exit if not in the browser, or if the item is empty
+    return;
+  }
+
+  const cleanedItem = newItem.trim();
+
+  //  Retrieve existing array (or default to empty array)
+  const existingJSON = localStorage.getItem(key);
+  const existingArray = existingJSON ? JSON.parse(existingJSON) : [];
+
+  // Remove the item if it already exists (to prevent duplicates)
+  const filteredArray = existingArray.filter((item) => item !== cleanedItem);
+
+  // Add the new item to the front (most recent)
+  filteredArray.unshift(cleanedItem);
+
+  // Save the updated array back as a JSON string
+  localStorage.setItem(key, JSON.stringify(filteredArray));
+};

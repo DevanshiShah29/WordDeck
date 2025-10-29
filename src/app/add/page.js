@@ -23,6 +23,7 @@ import Button from "@/components/buttons/Button";
 // Data Imports
 import { LEVEL_OPTIONS_DROPDOWN, TYPE_OPTIONS_DROPDOWN } from "@/utils/constants";
 import { validationSchema } from "./helper";
+import { localStorageArray } from "@/utils/helper";
 
 const initialValues = {
   word: "",
@@ -87,6 +88,9 @@ const VocabularyForm = () => {
 
         // Success
         toast.success(`Word "${values.word}" added successfully!`);
+        localStorageArray("current_words", values.word);
+        localStorageArray("origin", values.origin);
+
         router.push("/word");
       } catch (error) {
         toast.error("Failed to add word due to a network or connection error.");
