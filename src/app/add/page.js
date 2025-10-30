@@ -124,7 +124,7 @@ const VocabularyForm = () => {
         return;
       }
 
-      // 2. Success: Use Formik's setFieldValue to populate the form
+      // Success: Use Formik's setFieldValue to populate the form
       // The keys in the result object must match your initialValues keys!
       Object.keys(result).forEach((key) => {
         // Ensure you don't overwrite the user's input word
