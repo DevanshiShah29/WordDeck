@@ -12,7 +12,7 @@ const LEVEL_ORDER = {
 };
 
 const DB_NAME = "vocabdb";
-const COLLECTION_NAME = "words";
+const WORDS_COLLECTION = "words";
 
 /**
  * Builds the MongoDB query filter object based on request query parameters.
@@ -389,7 +389,7 @@ export default async function handler(req, res) {
   try {
     client = await clientPromise;
     const db = client.db(DB_NAME);
-    const collection = db.collection(COLLECTION_NAME);
+    const collection = db.collection(WORDS_COLLECTION);
 
     switch (req.method) {
       case "GET":
