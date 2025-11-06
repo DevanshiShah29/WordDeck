@@ -81,7 +81,6 @@ const VocabularyForm = () => {
         if (!response.ok) {
           // Handle non-200 responses (e.g., 400, 500)
           const errorMessage = result.error || "Failed to add word.";
-
           toast.error(`Failed to add word: ${errorMessage}`);
           return;
         }
@@ -138,6 +137,7 @@ const VocabularyForm = () => {
       setIsGenerating(false);
     }
   };
+
   return (
     <>
       <FormHeader />

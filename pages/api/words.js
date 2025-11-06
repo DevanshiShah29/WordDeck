@@ -35,7 +35,10 @@ function buildMongoFilter(query) {
 
   // Search Filter (remains the same)
   if (search) {
-    filter.word = { $regex: new RegExp(search, "i") };
+    filter.$or = [
+      { word: { $regex: new RegExp(search, "i") } },
+      { synonyms: { $regex: new RegExp(search, "i") } },
+    ];
   }
 
   // Multi-Value Filters (type, tag, level, origin)
@@ -149,7 +152,7 @@ function buildMongoSort(sortParam = "date_desc") {
  * Handles fetching all words (paginated/filtered/sorted) or a single word by slug.
  */
 async function handleGet(req, res, collection) {
-  const { slug, page = 1, limit = 12, sort } = req.query;
+  const { slug, page = 1, limit = 16, sort } = req.query;
   const pageNumber = parseInt(page, 10);
   const wordsPerPage = parseInt(limit, 10);
 

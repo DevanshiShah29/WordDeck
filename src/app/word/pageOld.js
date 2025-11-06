@@ -35,7 +35,7 @@ export default function HomePage() {
     dateRange: { from: undefined, to: undefined },
   });
   const [currentPage, setCurrentPage] = useState(1);
-  const wordsPerPage = 12; // Define your limit
+  const wordsPerPage = 16;
 
   // Sync filters from URL search params
   useEffect(() => {

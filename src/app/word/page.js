@@ -17,7 +17,7 @@ const LOCAL_STORAGE_KEY = "vocab_app_state";
 // Application State - Source of Truth for all parameters
 const DEFAULT_APP_STATE = {
   page: 1,
-  limit: 12,
+  limit: 16,
   sort: "date_desc",
   search: "",
   type: [],
@@ -33,7 +33,7 @@ const DEFAULT_APP_STATE = {
 // Default Pagination State
 const DEFAULT_PAGINATION = {
   currentPage: 1,
-  wordsPerPage: 12,
+  wordsPerPage: 16,
   totalWords: 0,
   totalPages: 1,
 };
