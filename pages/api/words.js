@@ -3,13 +3,7 @@
 import clientPromise from "../../lib/mongodb";
 import { parseCommaSeparatedString, slugify } from "@/utils/helper";
 import { ObjectId } from "mongodb";
-
-// Custom order for difficulty levels
-const LEVEL_ORDER = {
-  beginner: 1,
-  intermediate: 2,
-  advanced: 3,
-};
+import { LEVEL_ORDER } from "@/utils/constants";
 
 const DB_NAME = "vocabdb";
 const WORDS_COLLECTION = "words";
@@ -22,23 +16,24 @@ function buildMongoFilter(query) {
     query;
 
   const filter = {};
+  const AND_conditions = []; // All non-toplevel filters will be pushed here
 
   // Helper function to handle single string, comma-separated string, or array of strings
   const normalizeValues = (value) => {
     if (Array.isArray(value)) {
-      // If it's an array (e.g., from '?type=noun&type=verb') flatten it
       return value.flatMap((v) => parseCommaSeparatedString(v));
     }
-    // If it's a string, use the existing parser (handles '?type=noun,verb')
     return parseCommaSeparatedString(value);
   };
 
-  // Search Filter (remains the same)
+  // Search Filter (pushes an $or block into AND_conditions)
   if (search) {
-    filter.$or = [
-      { word: { $regex: new RegExp(search, "i") } },
-      { synonyms: { $regex: new RegExp(search, "i") } },
-    ];
+    AND_conditions.push({
+      $or: [
+        { word: { $regex: new RegExp(search, "i") } },
+        { synonyms: { $regex: new RegExp(search, "i") } },
+      ],
+    });
   }
 
   // Multi-Value Filters (type, tag, level, origin)
@@ -49,37 +44,46 @@ function buildMongoFilter(query) {
       const values = normalizeValues(rawValue);
 
       if (values.length > 0) {
-        // Map query key 'level' to DB field 'difficulty', 'tag' to 'tags'
         const dbKey = key === "level" ? "difficulty" : key === "tag" ? "tags" : key;
-        const lowerCaseValues = values.map((v) => v.toLowerCase());
-        filter[dbKey] = { $in: lowerCaseValues };
+
+        if (key === "origin") {
+          const originRegexQueries = values.map((v) => ({
+            [dbKey]: { $regex: new RegExp(v, "i") },
+          }));
+
+          // Add this OR block to the main AND conditions
+          AND_conditions.push({ $or: originRegexQueries });
+        } else {
+          // Standard $in filter for type, tag, level (difficulty)
+          const lowerCaseValues = values.map((v) => v.toLowerCase());
+          AND_conditions.push({ [dbKey]: { $in: lowerCaseValues } });
+        }
       }
     }
   }
 
-  //  Bookmark Filter
+  // Bookmark Filter (pushes condition into AND_conditions)
   if (isBookmarked === "true") {
-    filter.bookmarked = true;
+    AND_conditions.push({ bookmarked: true });
   } else if (isBookmarked === "false") {
-    filter.bookmarked = false;
+    AND_conditions.push({ bookmarked: false });
   }
 
-  //  Date Range Filter (remains the same)
+  // Date Range Filter (pushes condition into AND_conditions)
   if (dateRangeFrom || dateRangeTo) {
-    filter.createdAt = {};
+    const dateFilter = { createdAt: {} };
     if (dateRangeFrom) {
-      // Ensure it's treated as a Date object for $gte
-      filter.createdAt.$gte = new Date(dateRangeFrom);
+      dateFilter.createdAt.$gte = new Date(dateRangeFrom);
     }
     if (dateRangeTo) {
-      // FIX: Add one day to include the entire 'to' day
       const dateTo = new Date(dateRangeTo);
       dateTo.setDate(dateTo.getDate() + 1);
-      filter.createdAt.$lt = dateTo;
+      dateFilter.createdAt.$lt = dateTo;
     }
+    AND_conditions.push(dateFilter);
   }
 
-  //  Word Length Filter (remains the same)
+  // Word Length Filter (pushes $expr block into AND_conditions)
   if (wordLength) {
     const rangeArray = normalizeValues(wordLength);
     let range = rangeArray.length > 0 ? rangeArray[0] : null;
@@ -96,25 +100,30 @@ function buildMongoFilter(query) {
 
       // Step 2: Extract numeric boundaries
       const [minStr, maxStr] = range.split("-");
-
       const minLength = parseInt(minStr, 10);
 
-      // Final guard clause: ensure we have a valid starting number
-      if (isNaN(minLength)) return filter;
+      if (!isNaN(minLength)) {
+        const maxLength = maxStr ? parseInt(maxStr, 10) : 9999;
 
-      // Max length is the parsed number or a very large number for "11+"
-      const maxLength = maxStr ? parseInt(maxStr, 10) : 9999;
-
-      // Step 3: Apply the $expr filter
-      filter.$expr = {
-        $and: [
-          // $strLenCP calculates length in code points (safest for strings)
-          { $gte: [{ $strLenCP: "$word" }, minLength] },
-          { $lte: [{ $strLenCP: "$word" }, maxLength] },
-        ],
-      };
+        // Step 3: Apply the $expr filter
+        const lengthFilter = {
+          $expr: {
+            $and: [
+              { $gte: [{ $strLenCP: "$word" }, minLength] },
+              { $lte: [{ $strLenCP: "$word" }, maxLength] },
+            ],
+          },
+        };
+        AND_conditions.push(lengthFilter);
+      }
     }
   }
+
+  // Combine all conditions under a single top-level $and
+  if (AND_conditions.length > 0) {
+    filter.$and = AND_conditions;
+  }
+
   return filter;
 }
 

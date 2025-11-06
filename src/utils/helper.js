@@ -1,7 +1,7 @@
 export const speakWord = (word) => {
   if (typeof window !== "undefined") {
     const utterance = new SpeechSynthesisUtterance(word);
-    utterance.lang = "en-US"; // you can change based on origin
+    utterance.lang = "en-US";
     speechSynthesis.speak(utterance);
   }
 };

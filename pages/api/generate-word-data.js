@@ -57,7 +57,8 @@ export default async function handler(req, res) {
         },
         origin: {
           type: "string",
-          description: "The primary origin language (e.g., Latin, Old English).",
+          description:
+            "The primary origin language (e.g., Latin, English, French, Greek, Sanskrit).",
         },
         synonyms: { type: "string", description: "A comma-separated list of 3-5 synonyms." },
         etymology: {

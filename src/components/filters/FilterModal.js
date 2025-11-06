@@ -1,12 +1,11 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 // Library Imports
 import { X } from "lucide-react";
 
 // Utility Imports
-import { fetchWordOrigins } from "./helper";
 import { LEVEL_OPTIONS, difficultyColorMap, WORD_LENGTH_OPTIONS } from "@/utils/constants";
 
 // Component Imports
@@ -33,19 +32,6 @@ export default function FilterModal({
   const [selectedWordLengths, setSelectedWordLengths] = useState(wordLengthFilter || []);
   const [isBookmarkedOnly, setIsBookmarkedOnly] = useState(isBookmarked || false);
   const [dateRange, setDateRange] = useState(dateRangeFilter || { from: "", to: "" });
-  const [allOrigins, setAllOrigins] = useState([]);
-  const [loadingOrigins, setLoadingOrigins] = useState(true);
-
-  useEffect(() => {
-    async function loadOrigins() {
-      setLoadingOrigins(true);
-      const origins = await fetchWordOrigins();
-      setAllOrigins(origins);
-      setLoadingOrigins(false);
-    }
-
-    loadOrigins();
-  }, []);
 
   // --- Actions ---
   const applyFilters = () => {
@@ -114,12 +100,7 @@ export default function FilterModal({
             selected={selectedWordLengths}
             setSelected={setSelectedWordLengths}
           />
-          <OriginFilter
-            selectedOrigins={selectedOrigins}
-            setSelectedOrigins={setSelectedOrigins}
-            allOrigins={allOrigins}
-            isLoading={loadingOrigins}
-          />
+          <OriginFilter selectedOrigins={selectedOrigins} setSelectedOrigins={setSelectedOrigins} />
           {/* Date Range */}
           <FilterSection
             title="Date Added"
