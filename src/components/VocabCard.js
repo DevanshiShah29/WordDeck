@@ -7,6 +7,7 @@ import Link from "next/link";
 import { Volume2, Languages, Bookmark, BookOpen, Pencil } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 // Utility Imports
 import { speakWord } from "@/utils/helper";
@@ -15,7 +16,7 @@ import { capitalizeFirstLetter } from "@/utils/helper";
 
 // Component Imports
 import Button from "./buttons/Button";
-import { toast } from "react-toastify";
+import ImageWithFallback from "./ImageWithFallback";
 
 export default function VocabCard({
   word,
@@ -94,11 +95,11 @@ export default function VocabCard({
       <div className="flex flex-col h-full group relative bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-500 overflow-hidden cursor-pointer transform hover:-translate-y-1 border border-slate-100">
         {/* --- Image Header Area --- */}
         <div className="relative h-40 sm:h-48 md:h-50 overflow-hidden">
-          <Image
-            src={imageUrl || "/fallback.jpg"}
-            alt={word || "Vocabulary image"}
-            fill
-            className="object-cover group-hover:scale-110 transition-transform duration-700"
+          <ImageWithFallback
+            src={imageUrl}
+            alt={`Illustration for ${word}`}
+            fill={true}
+            style={{ objectFit: "cover" }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
 
