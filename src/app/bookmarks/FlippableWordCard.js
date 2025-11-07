@@ -1,7 +1,7 @@
 import React from "react";
 
 // Library Imports
-import { RotateCcw, Trash2, Eye } from "lucide-react";
+import { RotateCcw, BookmarkMinus, Eye } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 // Component Imports
@@ -101,7 +101,7 @@ const FlippableWordCard = ({
                   handleDeleteBookmark(wordData._id);
                 }}
               >
-                <Trash2
+                <BookmarkMinus
                   className={`h-4 w-4 ${
                     shouldShowImage ? "text-white" : "text-gray-400 hover:text-red-600"
                   }`}
@@ -169,7 +169,11 @@ const FlippableWordCard = ({
             transform: "rotateY(180deg)",
           }}
         >
-          <div className="h-full flex flex-col overflow-y-auto hidden-scrollbar">
+          <div
+            className={`h-full flex flex-col hidden-scrollbar ${
+              isFlipped ? "overflow-y-auto" : "overflow-hidden"
+            }`}
+          >
             <div className="flex items-center justify-between border-b border-blue-100 pb-4 mb-4">
               <div>
                 <h4 className="text-xl font-extrabold text-gray-900">{wordData.word}</h4>
