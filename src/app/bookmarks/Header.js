@@ -35,7 +35,7 @@ const Header = ({
       <div className="container mx-auto p-6">
         <div className="flex items-center gap-4 ">
           <Button variant="transparent" size="icon" onClick={() => router.back()}>
-            <ArrowLeft className="h-5 w-5" />
+            <ArrowLeft className="h-11 w-11 py-3" />
           </Button>
           <div className="flex items-center gap-3">
             <div>
@@ -64,8 +64,8 @@ const Header = ({
           />
 
           <Button
-            variant="transparent"
-            className={`flex items-center justify-center p-3 ${
+            variant="secondary"
+            className={`!py-3 ${
               isHintActive
                 ? "bg-yellow-500 hover:bg-yellow-600 text-white"
                 : "bg-gray-100 hover:bg-gray-200 text-gray-700"

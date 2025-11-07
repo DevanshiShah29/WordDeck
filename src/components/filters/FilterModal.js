@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 
 // Library Imports
-import { X } from "lucide-react";
+import { X, RotateCcw } from "lucide-react";
 
 // Utility Imports
 import { LEVEL_OPTIONS, difficultyColorMap, WORD_LENGTH_OPTIONS } from "@/utils/constants";
@@ -86,7 +86,6 @@ export default function FilterModal({
 
         {/* Body (scrollable content) */}
         <div className="flex-1 overflow-y-auto p-6 bg-slate-50">
-          <TypeFilter selectedTypes={selectedTypes} setSelectedTypes={setSelectedTypes} />
           <FilterDifficulty
             title="Difficulty Level"
             options={LEVEL_OPTIONS}
@@ -128,11 +127,13 @@ export default function FilterModal({
             isBookmarkedOnly={isBookmarkedOnly}
             setIsBookmarkedOnly={setIsBookmarkedOnly}
           />
+          <TypeFilter selectedTypes={selectedTypes} setSelectedTypes={setSelectedTypes} />
         </div>
 
         {/* Footer */}
         <div className="flex justify-between items-center p-6 border-t border-slate-200 bg-white">
           <Button variant="secondary" onClick={clearAllFilters}>
+            <RotateCcw className="mr-2 h-4 w-4" />
             Clear All
           </Button>
 
