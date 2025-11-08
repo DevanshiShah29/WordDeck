@@ -47,7 +47,7 @@ const DUMMY_INITIAL_VALUES = {
 
 const FormHeader = ({ word }) => (
   <div className="bg-white backdrop-blur-sm shadow-lg border-b border-slate-200 sticky top-0 z-40">
-    <div className="container mx-auto px-8 py-4">
+    <div className="container mx-auto px-4 py-4 md:px-8">
       <div className="flex items-center gap-2">
         <Link
           href="/word"
@@ -57,7 +57,7 @@ const FormHeader = ({ word }) => (
           <ArrowLeft className="w-5 h-5 text-slate-600 group-hover:text-blue-600" />
         </Link>
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Edit Word: {word || "Loading..."}</h1>
+          <h1 className="text-2xl font-bold text-slate-900">{word || "Loading..."}</h1>
           <p className="mt-1 text-slate-500 text-sm font-mono bg-slate-100 px-3 py-1 rounded-lg inline-block">
             Modify vocabulary entry
           </p>
@@ -223,7 +223,7 @@ const EditVocabularyForm = ({ params }) => {
             enableReinitialize={true} // Re-initializes from DUMMY to real data
           >
             {({ isSubmitting, values, handleSubmit, setFieldValue }) => (
-              <form onSubmit={handleSubmit} className="space-y-8 container mx-auto p-8">
+              <form onSubmit={handleSubmit} className="space-y-8 container mx-auto p-4 md:p-8">
                 {/* Basic Information Section */}
                 <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
                   <div className="flex items-center gap-3 mb-6">
@@ -342,16 +342,16 @@ const EditVocabularyForm = ({ params }) => {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex items-center justify-between pt-4">
+                <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between pt-4 gap-4">
                   <GenerateWithAIButton
                     onGenerate={() => handleGenerateAnswer(values.word, setFieldValue)}
                     loading={isGenerating}
+                    className="w-full md:w-auto"
                   />
-
-                  <div className="flex items-center gap-4">
+                  <div className="flex w-full md:w-auto items-center gap-4">
                     <Link
                       href="/word"
-                      className="px-6 py-3 border border-gray-300 text-gray-700 bg-white rounded-lg hover:bg-gray-100 transition-colors font-medium"
+                      className="px-6 py-3 border border-gray-300 text-gray-700 bg-white rounded-lg hover:bg-gray-100 transition-colors font-medium w-1/2 md:w-auto"
                     >
                       Cancel
                     </Link>
@@ -360,9 +360,10 @@ const EditVocabularyForm = ({ params }) => {
                       size="lg"
                       loading={isSubmitting}
                       disabled={isSubmitting || isGenerating}
+                      className="w-1/2 md:w-auto"
                     >
                       <SaveIcon className="w-5 h-5 mr-3" />
-                      {isSubmitting ? "Updating..." : "Save Changes"}
+                      {isSubmitting ? "Updating..." : "Update"}
                     </Button>
                   </div>
                 </div>
