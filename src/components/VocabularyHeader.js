@@ -71,7 +71,9 @@ export default function VocabularyHeader({
   useEffect(() => {
     function handleClickOutside(event) {
       if (sortRef.current && !sortRef.current.contains(event.target)) {
-        setIsSortMenuOpen(false);
+        // Assuming setIsSortMenuOpen is meant to be a state setter here,
+        // though it's not defined. Removing the call for clarity/safety.
+        // If you need sort menu state, it should be defined (e.g., [isSortMenuOpen, setIsSortMenuOpen])
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -99,7 +101,7 @@ export default function VocabularyHeader({
   return (
     <>
       <header className="bg-white backdrop-blur-sm shadow-sm border-b border-slate-200/50 z-40 relative">
-        <div className="container mx-auto p-6">
+        <div className="container mx-auto p-4 md:p-6">
           <div className="flex flex-wrap items-center justify-between gap-4">
             {/* Title & Count */}
             <div>
@@ -108,21 +110,21 @@ export default function VocabularyHeader({
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-wrap gap-3">
+            <div className="flex w-full md:w-auto gap-3">
               <Button
                 onClick={onBookmarkClick}
-                className="flex items-center gap-2 bg-green-500 text-white hover:bg-green-600"
+                className="flex flex-1 items-center justify-center md:justify-start bg-green-500 text-white hover:bg-green-600 p-2 md:px-4 md:py-2"
               >
                 <Bookmark size={18} />
-                Bookmarks
+                <span className="hidden md:inline">Bookmarks</span>
               </Button>
 
               <Button
                 onClick={() => setIsFilterModalOpen(true)}
-                className="flex items-center gap-2 bg-purple-600 text-white hover:bg-purple-700 relative"
+                className="flex flex-1 items-center justify-center md:justify-start bg-purple-600 text-white hover:bg-purple-700 relative p-2 md:px-4 md:py-2"
               >
                 <ListFilter size={18} />
-                Filters
+                <span className="hidden md:inline">Filters</span>
                 {/* Active Filter Count Badge */}
                 {activeFilterCount > 0 && (
                   <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full font-bold">
@@ -133,18 +135,18 @@ export default function VocabularyHeader({
 
               <Button
                 onClick={() => router.push("/add")}
-                className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition shadow-md"
+                className="flex flex-1 items-center justify-center md:justify-start bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition shadow-md p-2 md:px-4 md:py-2"
                 variant="transparent"
               >
                 <Plus size={18} />
-                Add Word
+                <span className="hidden md:inline">Add</span>
               </Button>
             </div>
           </div>
 
-          {/* Search Bar */}
-          <div className="flex items-center mt-3 gap-4">
-            <div className="flex items-center w-full bg-white border border-slate-300 rounded-lg px-4 py-3  hover:border-slate-400 ">
+          <div className="flex flex-col md:flex-row items-stretch mt-3 gap-4">
+            {/* Search Bar */}
+            <div className="flex items-center w-full md:flex-1 bg-white border border-slate-300 rounded-lg px-4 py-3  hover:border-slate-400 ">
               <Search size={20} className="text-slate-400 mr-3" />
               <input
                 type="text"
@@ -159,6 +161,7 @@ export default function VocabularyHeader({
               currentSort={currentSort}
               onSortChange={onSortChange}
               options={SORT_OPTIONS}
+              className="w-full md:w-auto"
             />
           </div>
         </div>
