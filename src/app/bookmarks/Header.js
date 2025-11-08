@@ -46,8 +46,8 @@ const Header = ({
             </div>
           </div>
         </div>
-        <div className="flex items-center mt-3 gap-4">
-          <div className="flex items-center w-full bg-white border border-slate-300 rounded-lg px-4 py-3  hover:border-slate-400 ">
+        <div className="flex flex-col md:flex-row items-stretch mt-3 gap-4">
+          <div className="flex items-center w-full md:flex-1 bg-white border border-slate-300 rounded-lg px-4 py-3  hover:border-slate-400 ">
             <Search size={20} className="text-slate-400 mr-3" />
             <input
               type="text"
@@ -57,26 +57,28 @@ const Header = ({
             />
           </div>
 
-          <SortSelect
-            currentSort={currentSort}
-            onSortChange={onSortChange}
-            options={SORT_OPTIONS}
-          />
-
-          <Button
-            variant="secondary"
-            className={`!py-3 ${
-              isHintActive
-                ? "bg-yellow-500 hover:bg-yellow-600 text-white"
-                : "bg-gray-100 hover:bg-gray-200 text-gray-700"
-            }`}
-            onClick={handleHintClick}
-          >
-            <Lightbulb
-              className={`h-4 w-4 mr-2 ${isHintActive ? "text-white" : "text-yellow-500"}`}
+          <div className="flex gap-4 w-full md:w-auto">
+            <SortSelect
+              currentSort={currentSort}
+              onSortChange={onSortChange}
+              options={SORT_OPTIONS}
+              className="w-1/2"
             />
-            Hint
-          </Button>
+            <Button
+              variant="secondary"
+              className={`!py-3 w-1/2 md:w-auto ${
+                isHintActive
+                  ? "bg-yellow-500 hover:bg-yellow-600 text-white"
+                  : "bg-gray-100 hover:bg-gray-200 text-gray-700"
+              }`}
+              onClick={handleHintClick}
+            >
+              <Lightbulb
+                className={`h-4 w-4 mr-2 ${isHintActive ? "text-white" : "text-yellow-500"}`}
+              />
+              Hint
+            </Button>
+          </div>
         </div>
       </div>
     </header>
