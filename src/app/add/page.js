@@ -43,7 +43,7 @@ const initialValues = {
 
 const FormHeader = () => (
   <div className="bg-white backdrop-blur-sm shadow-lg border-b border-slate-200 sticky top-0 z-40">
-    <div className="container mx-auto px-8 py-4">
+    <div className="container mx-auto py-4 px-4 md:px-8">
       <div className="flex items-center gap-2">
         <Link
           href="/word"
@@ -87,9 +87,6 @@ const VocabularyForm = () => {
 
         // Success
         toast.success(`Word "${values.word}" added successfully!`);
-        localStorageArray("current_words", values.word);
-        localStorageArray("origin", values.origin);
-
         router.push("/word");
       } catch (error) {
         toast.error("Failed to add word due to a network or connection error.");
@@ -148,7 +145,7 @@ const VocabularyForm = () => {
       >
         {({ isSubmitting, values, handleSubmit, setFieldValue }) => (
           <div className="bg-slate-50 min-h-screen pb-10">
-            <form onSubmit={handleSubmit} className="space-y-8 container mx-auto p-8">
+            <form onSubmit={handleSubmit} className="space-y-8 container mx-auto p-4 md:p-8">
               {/* Basic Information Section */}
               <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
                 <div className="flex items-center gap-3 mb-6">
@@ -267,17 +264,17 @@ const VocabularyForm = () => {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex items-center justify-between pt-4">
-                {/* AI Generation Button: Needs the current word value */}
+              <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between pt-4 gap-4">
                 <GenerateWithAIButton
                   onGenerate={() => handleGenerateAnswer(values.word, setFieldValue)}
                   loading={isGenerating}
+                  className="w-full md:w-auto"
                 />
 
-                <div className="flex items-center gap-4">
+                <div className="flex w-full md:w-auto items-center gap-4">
                   <Link
                     href="/word"
-                    className="px-6 py-3 border border-gray-300 text-gray-700 bg-white rounded-lg hover:bg-gray-100 transition-colors font-medium"
+                    className="px-6 py-3 border border-gray-300 text-gray-700 bg-white rounded-lg hover:bg-gray-100 transition-colors font-medium w-1/2 md:w-auto"
                   >
                     Cancel
                   </Link>
@@ -286,6 +283,7 @@ const VocabularyForm = () => {
                     size="lg"
                     loading={isSubmitting}
                     disabled={isSubmitting || isGenerating}
+                    className="w-1/2 md:w-auto"
                   >
                     <SaveIcon className="w-5 h-5 mr-3" />
                     {isSubmitting ? "Saving..." : "Add Word"}
