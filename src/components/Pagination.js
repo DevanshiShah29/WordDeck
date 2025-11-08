@@ -41,8 +41,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 
   return (
     <div className="w-full bg-white pt-6 pb-10 shadow-md border-t border-gray-200">
-      <div className="container mx-auto px-8">
-        <div className=" flex justify-end items-center space-x-2">
+      <div className="container mx-auto px-4 sm:px-8">
+        <div className=" flex justify-center sm:justify-end items-center space-x-2">
           <Button
             variant="transparent"
             onClick={() => onPageChange(currentPage - 1)}
@@ -52,6 +52,12 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
             <ChevronLeft className="w-5 h-5 " />
           </Button>
 
+          {/* Mobile View: Page X of Y (Hidden on sm and up) */}
+          <span className="sm:hidden text-sm font-semibold text-gray-700 px-3 py-2.5">
+            {currentPage} / {totalPages}
+          </span>
+
+          {/* Tablet/Desktop View: Full page numbers (Hidden on mobile) */}
           <div className="hidden sm:flex space-x-1">
             {getPageNumbers().map((page, index) =>
               page === "..." ? (
@@ -64,13 +70,13 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
                   key={index}
                   onClick={() => onPageChange(page)}
                   className={`
-                            px-4 py-2 text-sm font-medium rounded-lg transition duration-150 
-                            ${
-                              page === currentPage
-                                ? "bg-indigo-600 text-white shadow-md"
-                                : "bg-white text-gray-700 border border-gray-300 hover:bg-indigo-50 hover:text-indigo-600"
-                            }
-                        `}
+                    px-4 py-2 text-sm font-medium rounded-lg transition duration-150 
+                    ${
+                      page === currentPage
+                        ? "bg-indigo-600 text-white shadow-md"
+                        : "bg-white text-gray-700 border border-gray-300 hover:bg-indigo-50 hover:text-indigo-600"
+                    }
+                  `}
                   aria-current={page === currentPage ? "page" : undefined}
                 >
                   {page}
