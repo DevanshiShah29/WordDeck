@@ -97,7 +97,7 @@ export default function VocabDetail({ params }) {
         handleEditClick={handleEditClick}
       />
 
-      <div className="container mx-auto p-8">
+      <div className="container mx-auto p-4 md:p-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Column: Core Content */}
           <div className="lg:col-span-2 space-y-8">
