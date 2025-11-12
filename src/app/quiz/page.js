@@ -13,51 +13,15 @@ import {
   ArrowLeft,
 } from "lucide-react";
 
-import { useRouter } from "next/navigation";
-
 import Card from "@/components/Card";
 import Button from "@/components/buttons/Button";
 import Loader from "@/components/Loader";
+import { fetchWithBackoff, selectRandomWords } from "./helper";
 
 // --- Configuration ---
 const QUIZ_LENGTH = 10;
-const PRIMARY_COLOR_CLASS = "text-indigo-600"; // Primary color class for Tailwind
-const PRIMARY_BG_CLASS = "bg-indigo-600"; // Primary background class for Tailwind
-
-/**
- * Implements exponential backoff for API retries.
- */
-async function fetchWithBackoff(url, options, maxRetries = 5) {
-  for (let attempt = 0; attempt < maxRetries; attempt++) {
-    try {
-      const response = await fetch(url, options);
-      if (response.status !== 429) {
-        return response;
-      }
-    } catch (error) {
-      if (attempt === maxRetries - 1) throw error;
-    }
-
-    const delay = Math.pow(2, attempt) * 1000 + Math.random() * 1000;
-    await new Promise((resolve) => setTimeout(resolve, delay));
-  }
-  throw new Error("Maximum retries exceeded.");
-}
-
-/**
- * Shuffles an array and selects a specified count of elements.
- */
-const selectRandomWords = (words, count) => {
-  if (words.length <= count) return words;
-  let shuffled = [...words];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  return shuffled.slice(0, count);
-};
-
-// --- Custom Components (Simplified from inspiration) ---
+const PRIMARY_COLOR_CLASS = "text-indigo-600";
+const PRIMARY_BG_CLASS = "bg-indigo-600";
 
 const Progress = ({ value, className = "" }) => {
   return (
@@ -70,10 +34,7 @@ const Progress = ({ value, className = "" }) => {
   );
 };
 
-// --- Review Screen Component ---
 const ReviewScreen = ({ quizHistory, totalScore, totalQuestions, onReviewSelect, onRestart }) => {
-  const router = useRouter();
-
   const scorePercentage = ((totalScore / totalQuestions) * 100).toFixed(0);
 
   const getReviewItemClass = (quiz) => {
@@ -93,7 +54,7 @@ const ReviewScreen = ({ quizHistory, totalScore, totalQuestions, onReviewSelect,
         </div>
         <h2 className="text-2xl font-bold mb-4 text-gray-900">Quiz Complete!</h2>
         <div className="inline-flex items-baseline gap-2 mb-6">
-          <span className={`text-3xl  font-bold ${PRIMARY_COLOR_CLASS}`}>{totalScore}</span>
+          <span className={`text-3xl font-bold ${PRIMARY_COLOR_CLASS}`}>{totalScore}</span>
           <span className="text-2xl text-gray-500">/ {totalQuestions}</span>
         </div>
         <p className="text-xl font-medium text-gray-500 mb-8">
@@ -107,7 +68,7 @@ const ReviewScreen = ({ quizHistory, totalScore, totalQuestions, onReviewSelect,
         </p>
         <Button
           onClick={onRestart}
-          className={`inline-flex items-center justify-center px-6 py-3  ${PRIMARY_BG_CLASS} gap-2`}
+          className={`inline-flex items-center justify-center px-6 py-3 ${PRIMARY_BG_CLASS} gap-2`}
         >
           <RotateCw className="w-5 h-5" /> Start New Quiz
         </Button>
@@ -163,7 +124,6 @@ const ReviewScreen = ({ quizHistory, totalScore, totalQuestions, onReviewSelect,
   );
 };
 
-// --- Main Quiz Generator Component ---
 const QuizGenerator = () => {
   const [allWords, setAllWords] = useState([]);
   const [quizWords, setQuizWords] = useState([]);
@@ -175,7 +135,9 @@ const QuizGenerator = () => {
   const [error, setError] = useState(null);
   const [isWordsLoading, setIsWordsLoading] = useState(true);
   const [isReviewing, setIsReviewing] = useState(false);
+  const [wordBeingFetched, setWordBeingFetched] = useState(null);
 
+  // --- Derived State ---
   const currentQuiz = useMemo(() => quizHistory[currentIndex], [quizHistory, currentIndex]);
   const isAnswered = currentQuiz?.isAnswered;
   const isLastGeneratedQuestion = currentIndex === quizHistory.length - 1;
@@ -189,10 +151,14 @@ const QuizGenerator = () => {
   }, [quizHistory]);
 
   const progressPercentage =
-    quizWords.length === 0 ? 0 : Math.round((totalQuestionsAnswered / quizWords.length) * 100); // --- Data Fetching and Selection Logic ---
+    quizWords.length === 0 ? 0 : Math.round((totalQuestionsAnswered / quizWords.length) * 100);
 
+  // Checks if we are transitioning from word loading to first question generation
+  const isFirstQuestionGenerating =
+    !isWordsLoading && quizWords.length > 0 && quizHistory.length === 0 && loading;
+
+  // --- Data Fetching and Selection Logic ---
   const fetchAllWords = useCallback(async () => {
-    // Reset states before fetch
     setQuizWords([]);
     setAllWords([]);
     setIsWordsLoading(true);
@@ -237,15 +203,28 @@ const QuizGenerator = () => {
         const errorMessage = result.error?.message || "Failed to generate quiz content.";
         throw new Error(errorMessage);
       }
+
       const parsedData = result;
       const newQuestion = { ...parsedData, userAnswer: null, isAnswered: false, word: word };
-      setQuizHistory((prev) => [...prev, newQuestion]);
-      setCurrentIndex((prev) => prev + 1);
+
+      // FIX: Update history AND index synchronously on success
+      setQuizHistory((prev) => {
+        const newHistory = [...prev, newQuestion];
+        // If this is the very first question, set index to 0
+        if (prev.length === 0) {
+          setCurrentIndex(0);
+        } else {
+          // Otherwise, move to the newly added index
+          setCurrentIndex(prev.length);
+        }
+        return newHistory;
+      });
     } catch (err) {
       console.error("API Error:", err);
       setError(err.message || "An unexpected error occurred during quiz generation.");
     } finally {
       setLoading(false);
+      setWordBeingFetched(null);
     }
   }, []);
 
@@ -260,6 +239,7 @@ const QuizGenerator = () => {
     const nextWord = availableWords[randomIndex];
 
     setUsedWords((prev) => [...prev, nextWord]);
+    setWordBeingFetched(nextWord);
     fetchQuizQuestion(nextWord);
   }, [usedWords, quizWords, fetchQuizQuestion]);
 
@@ -270,10 +250,16 @@ const QuizGenerator = () => {
   }, [allWords.length, error, fetchAllWords, isWordsLoading]);
 
   useEffect(() => {
-    if (quizHistory.length === 0 && quizWords.length > 0 && !loading && !error && !isWordsLoading) {
+    // Condition 1: Word list must be loaded and available.
+    // Condition 2: No errors, no current loading.
+    // Condition 3: Crucial: quizHistory is empty (meaning we are at the very start).
+    if (!isWordsLoading && quizWords.length > 0 && quizHistory.length === 0 && !loading && !error) {
+      // This will fetch the *first* question (word 1 of 10)
       generateNewQuestion();
     }
-  }, [quizHistory.length, quizWords.length, loading, error, isWordsLoading, generateNewQuestion]); // --- Interaction Handlers ---
+  }, [isWordsLoading, quizWords.length, quizHistory.length, loading, error, generateNewQuestion]);
+
+  // --- Interaction Handlers ---
 
   const handleRestart = () => {
     setUsedWords([]);
@@ -318,9 +304,12 @@ const QuizGenerator = () => {
   };
 
   const getOptionClass = (option) => {
+    // If not answered, use hover/default styling
     if (!isAnswered && isLastGeneratedQuestion) {
-      return "bg-white border-gray-300 text-gray-800 hover:bg-indigo-50 hover:border-indigo-400 shadow-sm transition-all hover:scale-[1.02]";
+      return "bg-white border-gray-300 text-gray-800 hover:bg-indigo-50 hover:border-indigo-400 shadow-sm transition-all hover:scale-[1.01]";
     }
+
+    // Review/Answered Mode (Show feedback colors)
     if (option === currentQuiz.correct_option) {
       return "border-green-500 bg-green-500/20 text-green-700 shadow-md transition-all";
     }
@@ -328,27 +317,6 @@ const QuizGenerator = () => {
       return "border-red-500 bg-red-500/20 text-red-700 shadow-md transition-all";
     }
     return "bg-gray-100 border-gray-200 text-gray-500 cursor-default transition-all";
-  };
-
-  const isTotalLoading = loading || isWordsLoading;
-
-  const actionButtonText = isQuizCompleted
-    ? "View Results"
-    : currentIndex < quizHistory.length - 1
-    ? "Next Question"
-    : "Generate Next Word";
-
-  const isActionButtonDisabled =
-    isTotalLoading ||
-    !currentQuiz ||
-    (!isAnswered && isLastGeneratedQuestion && !isGenerationComplete);
-
-  const handleMainButtonClick = () => {
-    if (isQuizCompleted || (isGenerationComplete && isLastGeneratedQuestion && isAnswered)) {
-      setIsReviewing(true);
-      return;
-    }
-    handleNext();
   };
 
   if (isReviewing) {
@@ -365,13 +333,33 @@ const QuizGenerator = () => {
     );
   }
 
+  const actionButtonText = isQuizCompleted
+    ? "View Results"
+    : currentIndex < quizHistory.length - 1
+    ? "Next Question"
+    : "Generate Next Word";
+
+  const isTotalLoading = loading || isWordsLoading || isFirstQuestionGenerating;
+
+  const isActionButtonDisabled =
+    isTotalLoading ||
+    !currentQuiz ||
+    (!isAnswered && isLastGeneratedQuestion && !isGenerationComplete);
+
+  const handleMainButtonClick = () => {
+    if (isQuizCompleted || (isGenerationComplete && isLastGeneratedQuestion && isAnswered)) {
+      setIsReviewing(true);
+      return;
+    }
+    handleNext();
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-50 to-indigo-50/20 font-sans">
-      {/* Sticky Header (Inspired by the provided layout) */}
+      {/* Sticky Header */}
       <header className="border-b border-gray-200/50 backdrop-blur-sm bg-white/80 sticky top-0 z-10 shadow-sm">
-        <div className="container mx-auto px-6 py-4">
+        <div className="container mx-auto px-6 py-4 max-w-5xl">
           <div className="flex items-center justify-between">
-            {/* Back Button Placeholder - keeping the layout structure */}
             <button className="rounded-full w-10 h-10 flex items-center justify-center text-gray-400 hover:bg-gray-100 transition">
               <ArrowLeft className="h-4 w-4" />
             </button>
@@ -381,7 +369,6 @@ const QuizGenerator = () => {
                 AI Vocabulary Quiz
               </h1>
             </div>
-            {/* Restart Button */}
             <button
               onClick={handleRestart}
               className={`text-sm text-gray-500 hover:${PRIMARY_COLOR_CLASS} transition flex items-center gap-1 w-10 h-10 justify-center rounded-full hover:bg-gray-100`}
@@ -402,13 +389,22 @@ const QuizGenerator = () => {
           </div>
         )}
 
+        {/*  Loading Vocabulary List (Below header) */}
         {isWordsLoading && (
-          <Card className="text-center py-20 w-full">
+          <Card className="text-center py-20 w-full mb-8">
             <Loader message="Loading vocabulary list..." fullScreen={false} />
           </Card>
         )}
 
-        {currentQuiz && (
+        {/* Generating First Question (Below header, after words loaded but before first question generated) */}
+        {isFirstQuestionGenerating && (
+          <Card className="text-center py-20 w-full mb-8">
+            <Loader message="Generating first question..." fullScreen={false} />
+          </Card>
+        )}
+
+        {/* Main Quiz Content (Only renders if a question is available AND not in the initial loading states) */}
+        {currentQuiz && !isWordsLoading && !isFirstQuestionGenerating && (
           <>
             {/* Progress & Score Metrics */}
             <div className="mb-8 space-y-4">
@@ -428,14 +424,17 @@ const QuizGenerator = () => {
               </div>
               <Progress value={progressPercentage} className="h-3" />
             </div>
+
+            {/* Generating Subsequent Question (Below progress bar) */}
             {loading ? (
-              <Card className="text-center">
+              <Card className="text-center py-16 mb-8">
                 <Loader
-                  message={`Generating question for ${usedWords.slice(-1)[0]} ...`}
+                  message={`Generating question for ${wordBeingFetched} ...`}
                   fullScreen={false}
                 />
               </Card>
             ) : (
+              // Main Quiz Card
               <Card className="p-8 md:p-12 mb-6 shadow-xl">
                 {/* Question section */}
                 <div className="mb-8">
@@ -450,9 +449,11 @@ const QuizGenerator = () => {
                       key={index}
                       onClick={() => handleAnswerClick(option)}
                       disabled={!isLastGeneratedQuestion || isAnswered}
-                      className={`w-full justify-between h-auto py-5 px-6 text-left text-md font-medium rounded-xl border-2 flex items-center ${getOptionClass(
-                        option
-                      )}`}
+                      className={`
+                        w-full justify-between h-auto py-5 px-6 text-left text-md font-medium rounded-xl border-2 
+                        flex items-center text-left
+                        ${getOptionClass(option)}
+                      `}
                     >
                       <span className="flex items-center gap-3">
                         <span
@@ -478,11 +479,11 @@ const QuizGenerator = () => {
                     </button>
                   ))}
                 </div>
+
                 {/* Navigation Section */}
                 <div className="mt-10 pt-6 border-t border-gray-100 flex justify-between gap-3">
                   {/* Previous Button */}
                   <Button
-                    //   varient="transparent"
                     onClick={handlePrevious}
                     disabled={currentIndex === 0 || isTotalLoading}
                     className="flex items-center px-4 py-2 bg-gray-100 border-gray-300 text-gray-700 hover:bg-gray-200 "
@@ -495,7 +496,7 @@ const QuizGenerator = () => {
                     varient="primary"
                     onClick={handleMainButtonClick}
                     disabled={isActionButtonDisabled}
-                    className={`flex-1 max-w-xs inline-flex px-6 py-3 gap-2`}
+                    className={`flex-1 max-w-xs inline-flex px-6 py-3`}
                   >
                     {actionButtonText}
                     {actionButtonText.includes("Next") ? (
