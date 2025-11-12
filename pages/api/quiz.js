@@ -2,7 +2,6 @@
 import { GoogleGenAI } from "@google/genai";
 
 // Initialize the Google Gen AI client.
-// It automatically picks up the API key from process.env.GEMINI_API_KEY
 const ai = new GoogleGenAI({});
 
 /**
@@ -30,22 +29,20 @@ export default async function handler(req, res) {
   }
 
   try {
-    // CORRECT: Expecting only 'word' from the request body
     const { word } = req.body;
 
     if (!word) {
-      // This is the error message you were receiving
       return res.status(400).json({ error: "Missing 'word' payload in request body." });
     }
 
     const systemInstruction =
       "You are a professional quiz master. Your task is to generate a single-choice vocabulary question for the given word. The question must test the user's understanding of the word's meaning, synonym, antonym, or usage context. Provide the output strictly as a JSON object matching the provided schema.";
-    const userQuery = `Generate a quiz question for the word: ${word}.`;
+    const prompt = `Generate a quiz question for the word: ${word}.`;
 
     // Call the Gemini API with Structured Output
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
-      contents: userQuery,
+      contents: prompt,
       config: {
         systemInstruction: systemInstruction,
         responseMimeType: "application/json",
