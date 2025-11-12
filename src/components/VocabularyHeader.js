@@ -2,7 +2,7 @@
 import { useState, useMemo, useRef, useEffect } from "react";
 
 // Library Imports
-import { Search, Bookmark, Plus, ListFilter } from "lucide-react";
+import { Search, Bookmark, Plus, ListFilter, Brain } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 // Component Imports
@@ -131,6 +131,15 @@ export default function VocabularyHeader({
                     {activeFilterCount}
                   </span>
                 )}
+              </Button>
+
+              <Button
+                onClick={() => router.push("/quiz")}
+                className="flex flex-1 items-center justify-center md:justify-start bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition shadow-md p-2 md:px-4 md:py-2"
+                variant="transparent"
+              >
+                <Brain size={18} className="mr-0 md:mr-2" />
+                <span className="hidden md:inline">Quiz</span>
               </Button>
 
               <Button
