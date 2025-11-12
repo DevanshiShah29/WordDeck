@@ -115,7 +115,7 @@ export default function VocabularyHeader({
                 onClick={onBookmarkClick}
                 className="flex flex-1 items-center justify-center md:justify-start bg-green-500 text-white hover:bg-green-600 p-2 md:px-4 md:py-2"
               >
-                <Bookmark size={18} />
+                <Bookmark size={18} className="mr-0 md:mr-2" />
                 <span className="hidden md:inline">Bookmarks</span>
               </Button>
 
@@ -123,7 +123,7 @@ export default function VocabularyHeader({
                 onClick={() => setIsFilterModalOpen(true)}
                 className="flex flex-1 items-center justify-center md:justify-start bg-purple-600 text-white hover:bg-purple-700 relative p-2 md:px-4 md:py-2"
               >
-                <ListFilter size={18} />
+                <ListFilter size={18} className="mr-0 md:mr-2" />
                 <span className="hidden md:inline">Filters</span>
                 {/* Active Filter Count Badge */}
                 {activeFilterCount > 0 && (
@@ -138,7 +138,7 @@ export default function VocabularyHeader({
                 className="flex flex-1 items-center justify-center md:justify-start bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition shadow-md p-2 md:px-4 md:py-2"
                 variant="transparent"
               >
-                <Plus size={18} />
+                <Plus size={18} className="mr-0 md:mr-2" />
                 <span className="hidden md:inline">Add</span>
               </Button>
             </div>

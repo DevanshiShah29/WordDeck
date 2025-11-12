@@ -74,7 +74,7 @@ const FlippableWordCard = ({
               <Button
                 variant="transparent"
                 size="icon"
-                className={`h-8 w-8 hover:scale-110 transition-all ${
+                className={`h-8 w-8 hover:scale-110 ${
                   shouldShowImage ? "bg-white/10 hover:bg-white/20" : "hover:bg-green-100"
                 }`}
                 onClick={(e) => {
@@ -93,7 +93,7 @@ const FlippableWordCard = ({
               <Button
                 variant="transparent"
                 size="icon"
-                className={`h-8 w-8 hover:scale-110 transition-all ${
+                className={`h-8 w-8 hover:scale-110  ${
                   shouldShowImage ? "bg-white/10 hover:bg-white/20" : "hover:bg-red-100"
                 }`}
                 onClick={(e) => {
