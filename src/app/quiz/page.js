@@ -1,5 +1,7 @@
 "use client";
 import React, { useState, useEffect, useCallback, useMemo } from "react";
+
+// Library Imports
 import {
   RotateCw,
   ChevronLeft,
@@ -8,14 +10,17 @@ import {
   XCircle,
   ListTodo,
   Eye,
-  Brain,
   Trophy,
-  ArrowLeft,
 } from "lucide-react";
+import { toast } from "react-toastify";
 
+// Component Imports
 import Card from "@/components/Card";
 import Button from "@/components/buttons/Button";
 import Loader from "@/components/Loader";
+import Header from "./Header";
+
+// Utility Imports
 import { fetchWithBackoff, selectRandomWords } from "./helper";
 
 // --- Configuration ---
@@ -170,7 +175,7 @@ const QuizGenerator = () => {
       if (response.ok && Array.isArray(wordsArray)) {
         setAllWords(wordsArray);
         if (wordsArray.length === 0) {
-          setError("The vocabulary database is empty. Please add words to start the quiz.");
+          toast.error("The vocabulary database is empty. Please add words to start the quiz.");
           setQuizWords([]);
         } else {
           const selected = selectRandomWords(wordsArray, QUIZ_LENGTH);
@@ -180,8 +185,7 @@ const QuizGenerator = () => {
         throw new Error(wordsArray.error || "Failed to fetch word list from server.");
       }
     } catch (err) {
-      console.error("Word Fetch Error:", err);
-      setError(err.message || "Could not load vocabulary list.");
+      toast.error(err.message || "Could not load vocabulary list.");
     } finally {
       setIsWordsLoading(false);
     }
@@ -220,8 +224,7 @@ const QuizGenerator = () => {
         return newHistory;
       });
     } catch (err) {
-      console.error("API Error:", err);
-      setError(err.message || "An unexpected error occurred during quiz generation.");
+      toast.error(err.message || "An unexpected error occurred during quiz generation.");
     } finally {
       setLoading(false);
       setWordBeingFetched(null);
@@ -250,9 +253,6 @@ const QuizGenerator = () => {
   }, [allWords.length, error, fetchAllWords, isWordsLoading]);
 
   useEffect(() => {
-    // Condition 1: Word list must be loaded and available.
-    // Condition 2: No errors, no current loading.
-    // Condition 3: Crucial: quizHistory is empty (meaning we are at the very start).
     if (!isWordsLoading && quizWords.length > 0 && quizHistory.length === 0 && !loading && !error) {
       // This will fetch the *first* question (word 1 of 10)
       generateNewQuestion();
@@ -356,39 +356,9 @@ const QuizGenerator = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-50 to-indigo-50/20 font-sans">
-      {/* Sticky Header */}
-      <header className="border-b border-gray-200/50 backdrop-blur-sm bg-white/80 sticky top-0 z-10 shadow-sm">
-        <div className="container mx-auto px-6 py-4 max-w-5xl">
-          <div className="flex items-center justify-between">
-            <button className="rounded-full w-10 h-10 flex items-center justify-center text-gray-400 hover:bg-gray-100 transition">
-              <ArrowLeft className="h-4 w-4" />
-            </button>
-            <div className="flex items-center gap-2">
-              <Brain className={`h-5 w-5 ${PRIMARY_COLOR_CLASS}`} />
-              <h1 className="text-sm font-semibold tracking-wide uppercase text-gray-700">
-                AI Vocabulary Quiz
-              </h1>
-            </div>
-            <button
-              onClick={handleRestart}
-              className={`text-sm text-gray-500 hover:${PRIMARY_COLOR_CLASS} transition flex items-center gap-1 w-10 h-10 justify-center rounded-full hover:bg-gray-100`}
-            >
-              <RotateCw className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-      </header>
+      <Header handleRestart={handleRestart} />
 
       <div className="container mx-auto p-4 sm:p-8 pt-12">
-        {error && (
-          <div
-            className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-lg shadow-md mb-8"
-            role="alert"
-          >
-            <p className="font-bold">Error/Status</p> <p>{error}</p>
-          </div>
-        )}
-
         {/*  Loading Vocabulary List (Below header) */}
         {isWordsLoading && (
           <Card className="text-center py-20 w-full mb-8">
