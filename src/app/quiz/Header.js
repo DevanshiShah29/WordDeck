@@ -9,7 +9,7 @@ const Header = ({ handleRestart }) => {
   const router = useRouter();
   return (
     <header className="bg-white backdrop-blur-sm shadow-sm border-b border-slate-200/50 z-40 relative">
-      <div className="container mx-auto py-6">
+      <div className="container mx-auto py-4 px-4 md:px-8">
         <div className="flex items-center gap-4 ">
           <Button variant="transparent" size="icon" onClick={() => router.back()}>
             <ArrowLeft className="h-11 w-11 py-3" />

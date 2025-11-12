@@ -256,7 +256,7 @@ const QuizGenerator = () => {
           />
         </div>
       ) : (
-        <div className="container mx-auto p-4 sm:p-8 pt-12">
+        <div className="container mx-auto py-4 px-4 md:px-8">
           {/*  Loading Vocabulary List  */}
           {isWordsLoading && (
             <Card className="text-center py-20 w-full mb-8">

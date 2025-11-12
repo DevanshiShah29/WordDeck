@@ -17,7 +17,7 @@ const ReviewScreen = ({ quizHistory, totalScore, totalQuestions, onReviewSelect,
 
   return (
     <>
-      <div className="container mx-auto space-y-6 w-full">
+      <div className="container mx-auto py-4 px-4 md:px-8">
         {/* Completion Card */}
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
