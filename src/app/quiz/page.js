@@ -246,15 +246,13 @@ const QuizGenerator = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-50 to-indigo-50/20 font-sans">
       <Header handleRestart={handleRestart} />
       {isReviewing ? (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-50 to-indigo-50/20 font-sans p-4 sm:p-8 flex items-start justify-center pt-12">
-          <ReviewScreen
-            quizHistory={quizHistory}
-            totalScore={totalScore}
-            totalQuestions={quizWords.length}
-            onReviewSelect={handleReviewSelect}
-            onRestart={handleRestart}
-          />
-        </div>
+        <ReviewScreen
+          quizHistory={quizHistory}
+          totalScore={totalScore}
+          totalQuestions={quizWords.length}
+          onReviewSelect={handleReviewSelect}
+          onRestart={handleRestart}
+        />
       ) : (
         <div className="container mx-auto py-4 px-4 md:px-8">
           {/*  Loading Vocabulary List  */}

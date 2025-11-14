@@ -20,7 +20,7 @@ const ReviewScreen = ({ quizHistory, totalScore, totalQuestions, onReviewSelect,
       <div className="container mx-auto py-4 px-4 md:px-8">
         {/* Completion Card */}
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-4">
           <Card className="p-6 flex flex-col items-center justify-center space-y-3">
             <div className="relative w-24 h-24">
               <svg className="w-full h-full transform -rotate-90">
@@ -51,7 +51,7 @@ const ReviewScreen = ({ quizHistory, totalScore, totalQuestions, onReviewSelect,
           </Card>
 
           <Card className="p-6 flex flex-col justify-center space-y-3 text-center">
-            <h3 className="text-lg font-semibold text-gray-800">Performance Summary</h3>
+            <h3 className="text-xl font-semibold text-gray-800">Performance Summary</h3>
 
             <div className="space-y-1 text-sm text-gray-600">
               <p>
@@ -102,7 +102,7 @@ const ReviewScreen = ({ quizHistory, totalScore, totalQuestions, onReviewSelect,
 
         {/* Review Answers Card */}
         <Card className="p-8 md:p-10">
-          <h3 className={`text-2xl font-bold mb-6 flex items-center gap-2 text-gray-800 pb-3`}>
+          <h3 className={`text-xl font-bold mb-6 flex items-center gap-2 text-gray-800 pb-3`}>
             <ListTodo className={`w-6 h-6 text-blue-700`} /> Review Your Answers
           </h3>
           <div className="space-y-4">
