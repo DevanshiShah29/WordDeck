@@ -139,7 +139,7 @@ export default function VocabDetail({ params }) {
               contentBorderColor="border-purple-100"
             >
               <blockquote className="text-lg leading-relaxed text-slate-800 italic">
-                "{usage}"
+                {usage}
               </blockquote>
             </Card>
 

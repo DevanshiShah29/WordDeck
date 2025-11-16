@@ -62,6 +62,7 @@ export default function VocabularyHeader({
     setLocalSearchTerm(e.target.value);
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (externalSearchTerm !== localSearchTerm) {
       setLocalSearchTerm(externalSearchTerm);

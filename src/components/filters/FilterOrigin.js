@@ -73,7 +73,9 @@ const OriginFilter = ({ selectedOrigins, setSelectedOrigins, allOrigins }) => {
           })}
         </div>
         {searchTerm && filteredOptions.length === 0 && (
-          <p className="text-sm text-slate-500 p-2">No origins found matching {searchTerm}</p>
+          <p className="text-sm text-slate-500 p-2">
+            No origins found matching &quot;{searchTerm} &quot;
+          </p>
         )}
       </div>
     </FilterSection>
