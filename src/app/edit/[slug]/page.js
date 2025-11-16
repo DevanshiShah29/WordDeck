@@ -141,7 +141,7 @@ const EditVocabularyForm = ({ params }) => {
           return;
         }
 
-        toast.success(`Word "${values.word}" updated successfully!`);
+        toast.success(`Word ${values.word} updated successfully!`);
 
         const newSlug = result.slug || values.slug;
         if (newSlug && newSlug !== slug) {
