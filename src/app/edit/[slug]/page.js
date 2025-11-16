@@ -52,14 +52,14 @@ const FormHeader = ({ word }) => (
         <Link
           href="/word"
           className="p-2 rounded-lg transition-all duration-300 group hover:bg-slate-100"
-          aria-label="Go back to vocabulary list"
+          aria-label="Go back to the list"
         >
           <ArrowLeft className="w-5 h-5 text-slate-600 group-hover:text-blue-600" />
         </Link>
         <div>
           <h1 className="text-2xl font-bold text-slate-900">{word || "Loading..."}</h1>
           <p className="mt-1 text-slate-500 text-sm font-mono bg-slate-100 px-3 py-1 rounded-lg inline-block">
-            Modify vocabulary entry
+            Modify entry
           </p>
         </div>
       </div>

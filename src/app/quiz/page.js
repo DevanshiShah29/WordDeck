@@ -77,7 +77,7 @@ const QuizGenerator = () => {
       if (response.ok && Array.isArray(wordsArray)) {
         setAllWords(wordsArray);
         if (wordsArray.length === 0) {
-          toast.error("The vocabulary database is empty. Please add words to start the quiz.");
+          toast.error("The database is empty. Please add words to start the quiz.");
           setQuizWords([]);
         } else {
           const selected = selectRandomWords(wordsArray, QUIZ_LENGTH);
@@ -87,7 +87,7 @@ const QuizGenerator = () => {
         throw new Error(wordsArray.error || "Failed to fetch word list from server.");
       }
     } catch (err) {
-      toast.error(err.message || "Could not load vocabulary list.");
+      toast.error(err.message || "Could not load the list.");
     } finally {
       setIsWordsLoading(false);
     }
@@ -255,7 +255,7 @@ const QuizGenerator = () => {
         />
       ) : (
         <div className="container mx-auto py-4 px-4 md:px-8">
-          {/*  Loading Vocabulary List  */}
+          {/*  Loading List  */}
           {isWordsLoading && (
             <Card className="text-center py-20 w-full mb-8">
               <Loader message="Loading vocabulary list..." fullScreen={false} />

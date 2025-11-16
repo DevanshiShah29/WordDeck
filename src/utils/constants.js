@@ -35,14 +35,14 @@ export const LEVEL_OPTIONS = ["Beginner", "Intermediate", "Advanced"];
 
 export const TYPE_OPTIONS_DROPDOWN = [
   // Core Parts of Speech
-  { value: "noun", label: "Noun - Name" }, // Person, place, thing, or idea; "dog," "city," "happiness."
-  { value: "verb", label: "Verb - Action" }, // Action or state of being; "run," "is," "think."
-  { value: "adjective", label: "Adjective - Description" }, // Describes a noun; "happy," "blue," "quick."
-  { value: "adverb", label: "Adverb - Modified verb/adjective" }, // Modifies a verb, adjective, or other adverb; "quickly," "very," "well."
-  { value: "pronoun", label: "Pronoun - Call me by" }, // Replaces a noun; "he," "they," "which."
+  { value: "noun", label: "Noun " }, // Person, place, thing, or idea; "dog," "city," "happiness."
+  { value: "verb", label: "Verb " }, // Action or state of being; "run," "is," "think."
+  { value: "adjective", label: "Adjective " }, // Describes a noun; "happy," "blue," "quick."
+  { value: "adverb", label: "Adverb " }, // Modifies a verb, adjective, or other adverb; "quickly," "very," "well."
+  { value: "pronoun", label: "Pronoun " }, // Replaces a noun; "he," "they," "which."
   { value: "preposition", label: "Preposition" }, // Shows relationship between a noun (or pronoun) and other words; "in," "on," "by."
-  { value: "conjunction", label: "Conjunction - connecting words" }, // Connects words, phrases, or clauses; "and," "but," "because."
-  { value: "interjection", label: "Interjection - expression" }, // Expresses emotion or surprise; "wow," "ouch," "hey."
+  { value: "conjunction", label: "Conjunction " }, // Connects words, phrases, or clauses; "and," "but," "because."
+  { value: "interjection", label: "Interjection " }, // Expresses emotion or surprise; "wow," "ouch," "hey."
 
   // Phrases & Fixed Expressions
   { value: "idiom", label: "Idiom" }, // Common phrases with figurative meanings; "break the ice" means to initiate social interactions.

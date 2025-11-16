@@ -43,7 +43,7 @@ export async function fetchWordDetails(slug) {
 }
 
 /**
- * Fetches the entire vocabulary list from the API.
+ * Fetches the entire list from the API.
  * Handles errors and ensures the response is a clean array.
  * * @returns {Promise<Array>} A promise that resolves to an array of vocabulary words.
  */

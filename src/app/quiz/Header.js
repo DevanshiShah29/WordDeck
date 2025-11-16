@@ -18,7 +18,7 @@ const Header = ({ handleRestart }) => {
             <div className="flex items-center gap-3">
               <Brain className={`h-5 w-5 text-blue-700`} />
               <h1 className="text-sm font-semibold tracking-wide uppercase text-gray-700">
-                AI Vocabulary Quiz
+                AI Quiz
               </h1>
             </div>
           </div>

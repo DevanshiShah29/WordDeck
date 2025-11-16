@@ -148,7 +148,7 @@ const Bookmarks = () => {
               <p className={`text-base mb-8 leading-relaxed`}>
                 {searchQuery
                   ? "Try adjusting your search terms or clear the search to see all bookmarks."
-                  : "Start bookmarking words from your vocabulary collection to build your personalized study list."}
+                  : "Start bookmarking words from your collection to build your personalized study list."}
               </p>
               {!searchQuery && (
                 <Link href="/">

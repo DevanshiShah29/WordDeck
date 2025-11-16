@@ -4,8 +4,32 @@ import "./globals.css";
 import "./generateAI.css";
 
 export const metadata = {
-  title: "Vocab master",
-  description: "Generated with love and thought",
+  title: "WordSpark | Ignite Your Vocabulary Power",
+
+  description:
+    "WordSpark provides fast, engaging quizzes and personalized tracking to help you rapidly expand your word knowledge. Start mastering complex vocabulary today!",
+
+  keywords:
+    "vocabulary app, word quiz, learn new words, improve vocabulary, language fluency, WordSpark, word game, spaced repetition",
+
+  // OpenGraph (OG) Metadata for Social Media Sharing (e.g., Facebook, LinkedIn)
+  openGraph: {
+    title: "WordSpark: Ignite Your Vocabulary Power",
+    description:
+      "Rapidly expand your word knowledge with fast, engaging quizzes and personalized tracking.",
+    url: "https://your-app-domain.com", // REPLACE with your actual domain
+    siteName: "WordSpark",
+    images: [
+      {
+        url: "https://your-app-domain.com/og-banner.jpg", //  REPLACE with a link to your app's banner image (1200x630px recommended)
+        width: 1200,
+        height: 630,
+        alt: "WordSpark Vocabulary App Screenshot",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
 };
 
 export default function RootLayout({ children }) {
