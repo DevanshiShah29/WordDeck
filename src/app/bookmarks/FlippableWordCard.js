@@ -70,7 +70,11 @@ const FlippableWordCard = ({
             }`}
             style={hintStyles}
           >
-            <div className="absolute top-4 right-14 flex gap-2  z-10">
+            <div
+              className={`absolute top-4 right-14 flex gap-2  z-10 ${
+                isFlipped ? "opacity-0 pointer-events-none" : ""
+              }`}
+            >
               <Button
                 variant="transparent"
                 size="icon"
@@ -89,7 +93,11 @@ const FlippableWordCard = ({
                 />
               </Button>
             </div>
-            <div className="absolute top-4 right-4 flex gap-2  z-10">
+            <div
+              className={`absolute top-4 right-4 flex gap-2 z-10 ${
+                isFlipped ? "opacity-0 pointer-events-none" : ""
+              }`}
+            >
               <Button
                 variant="transparent"
                 size="icon"
@@ -110,7 +118,11 @@ const FlippableWordCard = ({
             </div>
 
             {/* Difficulty Badge - Top Left */}
-            <div className={`absolute top-4 left-4 ${shouldShowImage ? "z-10 opacity-50" : ""}`}>
+            <div
+              className={`absolute top-4 left-4 ${shouldShowImage ? "z-10 opacity-50" : ""} ${
+                isFlipped ? "opacity-0" : ""
+              }`}
+            >
               <div
                 variant="secondary"
                 className={`font-semibold border ${getDifficultyClasses(
@@ -136,14 +148,14 @@ const FlippableWordCard = ({
                   shouldShowImage
                     ? `bg-white/20 z-10`
                     : `shadow-slate-900/10 bg-gradient-to-br ${getTypeGradient(wordData.type)}`
-                }`}
+                } ${isFlipped ? "opacity-0" : ""}`}
               >
                 {capitalizeFirstLetter(wordData.type)}
               </div>
             </div>
 
             {/* Tags - Bottom */}
-            <div className="flex flex-wrap gap-2 justify-center mt-auto">
+            <div className="flex flex-wrap gap-2 justify-center mt-auto ">
               {safeTags?.slice(0, 3).map((tag, index) => (
                 <span
                   key={index}
@@ -151,7 +163,7 @@ const FlippableWordCard = ({
                     shouldShowImage
                       ? "bg-white/20 text-white shadow-md z-10"
                       : "bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700"
-                  }`}
+                  } ${isFlipped ? "opacity-0" : ""}`}
                 >
                   <span className="opacity-70 mr-0.5">#</span>
                   {capitalizeFirstLetter(tag)}

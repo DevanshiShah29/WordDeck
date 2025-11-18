@@ -28,7 +28,10 @@ const GenerateWithAIButton = ({ onGenerate }) => {
   };
 
   const buttonClasses = `
-    generate-ai-btn cursor-pointer
+    generate-ai-btn 
+    cursor-pointer 
+    text-center 
+    w-full md:w-auto flex items-center justify-center
     ${loading ? "opacity-70 cursor-not-allowed pointer-events-none" : "hover:opacity-90"}
   `;
 
