@@ -52,13 +52,13 @@ const SelectField = ({ label, id, options, required, isMulti = false, ...props }
       color: state.isSelected ? "white" : "black",
       // Using your original blue-gray color values
       backgroundColor: state.isSelected
-        ? "#ec4899"
+        ? "var(--primary)"
         : state.isFocused
         ? "rgba(239, 242, 255, 1)"
         : "white",
       cursor: "pointer",
       ":active": {
-        backgroundColor: state.isSelected ? "#ec4899" : "rgb(239, 246, 255)",
+        backgroundColor: state.isSelected ? "var(--primary)" : "rgb(239, 246, 255)",
       },
     }),
   };
@@ -68,11 +68,11 @@ const SelectField = ({ label, id, options, required, isMulti = false, ...props }
   const selectClassNames = {
     // Preserve the original class structure and logic for control styling
     control: (state) =>
-      `bg-white px-3 py-1.5 border rounded-lg custom-select transition-all ${
+      `bg-white px-3 py-1.5 border rounded-lg custom-select transition-all outline-none ${
         state.isFocused
           ? "border-[var(--primary)] ring-1 ring-[var(--primary)] shadow-md"
           : isInvalid
-          ? "border-[var(--red)] ring-1 ring-[var(--red)]" // Added ring for error state consistency
+          ? "border-[var(--red)] ring-1 ring-[var(--red)]"
           : "border-gray-300"
       }`,
     placeholder: () => "text-gray-500",
@@ -116,6 +116,13 @@ const SelectField = ({ label, id, options, required, isMulti = false, ...props }
         aria-invalid={isInvalid ? "true" : "false"}
         aria-describedby={isInvalid ? `${id}-error` : undefined}
         {...props}
+        theme={(theme) => ({
+          ...theme,
+          colors: {
+            ...theme.colors,
+            primary: "var(--primary)",
+          },
+        })}
       />
 
       {/* Error Message */}

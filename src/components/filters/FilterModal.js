@@ -106,7 +106,7 @@ export default function FilterModal({
             selectedCount={dateRange.from || dateRange.to ? 1 : 0}
             onClear={() => setDateRange({ from: "", to: "" })}
           >
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="flex flex-col gap-4 sm:flex-row">
               <input
                 type="date"
                 placeholder="From Date"

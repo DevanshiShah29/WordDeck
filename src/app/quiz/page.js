@@ -347,11 +347,22 @@ const QuizGenerator = () => {
                   </div>
 
                   {/* Navigation Section */}
-                  <div className="mt-10 pt-6 border-t border-gray-200 flex justify-between ">
+                  <div
+                    className="
+                  mt-10 pt-6 border-t border-gray-200 
+    flex flex-col gap-4
+    md:flex-row md:justify-between
+                  "
+                  >
                     <Button
                       onClick={handlePrevious}
                       disabled={currentIndex === 0 || isTotalLoading}
-                      className="px-5 py-3 bg-gray-100 border-gray-300 !text-gray-700 hover:bg-gray-200 "
+                      className="
+                      px-5 py-3 bg-gray-100 border-gray-300 !text-gray-700 hover:bg-gray-200
+
+      w-full md:w-auto 
+      flex items-center justify-center
+                       "
                     >
                       <ChevronLeft className="w-5 h-5 mr-1" />
                       Previous
@@ -360,7 +371,11 @@ const QuizGenerator = () => {
                       varient="primary"
                       onClick={handleMainButtonClick}
                       disabled={isActionButtonDisabled}
-                      className={`px-5 py-3`}
+                      className={`
+                        px-5 py-3 
+      w-full md:w-auto 
+      flex items-center justify-center
+                        `}
                     >
                       {actionButtonText}
                       {actionButtonText.includes("Next") ? (

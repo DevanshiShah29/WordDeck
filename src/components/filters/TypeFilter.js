@@ -34,7 +34,7 @@ const TypeFilter = ({ selectedTypes, setSelectedTypes }) => {
   return (
     <FilterSection title="Word Type" selectedCount={selectedTypes.length} onClear={clearTypes}>
       <div className="flex flex-col gap-2 mb-2">
-        <label className="flex items-center gap-2 cursor-pointer p-2 rounded-lg bg-blue-50 hover:bg-[var(--primary-100)] transition">
+        <label className="flex items-center gap-2 cursor-pointer p-2 rounded-lg bg-[var(--primary-50)] hover:bg-[var(--primary-100)] transition">
           <input
             type="checkbox"
             checked={selectedTypes.length === TYPE_VALUES.length}

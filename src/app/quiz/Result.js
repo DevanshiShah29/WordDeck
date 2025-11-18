@@ -21,7 +21,7 @@ const ReviewScreen = ({ quizHistory, totalScore, totalQuestions, onReviewSelect,
         {/* Completion Card */}
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-4">
-          <Card className="p-6 flex flex-col items-center justify-center space-y-3">
+          <Card className="p-8 flex flex-col items-center justify-center space-y-3">
             <div className="relative w-24 h-24">
               <svg className="w-full h-full transform -rotate-90">
                 <circle cx="48" cy="48" r="44" stroke="#E5E7EB" strokeWidth="8" fill="none" />
@@ -29,7 +29,7 @@ const ReviewScreen = ({ quizHistory, totalScore, totalQuestions, onReviewSelect,
                   cx="48"
                   cy="48"
                   r="44"
-                  stroke="#6366F1"
+                  stroke="var(--primary)"
                   strokeWidth="8"
                   strokeDasharray="276"
                   strokeDashoffset={276 - (276 * totalScore) / totalQuestions}
@@ -37,12 +37,12 @@ const ReviewScreen = ({ quizHistory, totalScore, totalQuestions, onReviewSelect,
                   fill="none"
                 />
               </svg>
-              <span className="absolute inset-0 flex items-center justify-center font-semibold text-lg text-indigo-600">
+              <span className="absolute inset-0 flex items-center justify-center font-semibold text-lg text-[var(--primary)]">
                 {totalScore}/{totalQuestions}
               </span>
             </div>
             {scorePercentage < 70 ? (
-              <p className="text-sm text-gray-600 mt-2">
+              <p className="text-sm text-gray-600 mt-2 text-center">
                 Try revising some words and take the quiz again 💡
               </p>
             ) : (
@@ -50,7 +50,7 @@ const ReviewScreen = ({ quizHistory, totalScore, totalQuestions, onReviewSelect,
             )}
           </Card>
 
-          <Card className="p-6 flex flex-col justify-center space-y-3 text-center">
+          <Card className="p-8 flex flex-col justify-center space-y-3 text-center">
             <h3 className="text-xl font-semibold text-gray-800">Performance Summary</h3>
 
             <div className="space-y-1 text-sm text-gray-600">
@@ -70,9 +70,9 @@ const ReviewScreen = ({ quizHistory, totalScore, totalQuestions, onReviewSelect,
             </div>
           </Card>
 
-          <Card className="p-6 flex flex-col justify-center items-center space-y-3 text-center">
+          <Card className="p-8 flex flex-col justify-center items-center space-y-3 text-center">
             <div className="flex items-center gap-2">
-              <Trophy className={`w-5 h-5 text-[var(--primary-700)]`} />
+              <Trophy className={`w-5 h-5 text-[var(--primary-600)]`} />
               <h2 className="text-xl font-semibold text-gray-800">Quiz Complete!</h2>
             </div>
 
@@ -89,13 +89,13 @@ const ReviewScreen = ({ quizHistory, totalScore, totalQuestions, onReviewSelect,
             <div className="flex gap-2 w-full mt-4">
               <Button
                 onClick={() => router.push("/word")}
-                className={`mt-2 px-4 py-2 w-1/2 bg-gray-200 !text-gray-700 hover:bg-gray-300`}
+                className={`mt-2 px-4 py-3 w-1/2 bg-gray-200 !text-gray-700 hover:bg-gray-300`}
               >
                 Revise words
               </Button>
               <Button
                 onClick={onRestart}
-                className={`mt-2 px-4 py-2 w-1/2 bg-[var(--primary-700)] gap-2`}
+                className={`mt-2 px-4 py-3 w-1/2 bg-[var(--primary-600)] gap-2`}
               >
                 <RotateCw className="w-4 h-4 " /> Restart
               </Button>
@@ -104,9 +104,9 @@ const ReviewScreen = ({ quizHistory, totalScore, totalQuestions, onReviewSelect,
         </div>
 
         {/* Review Answers Card */}
-        <Card className="p-8 md:p-10">
+        <Card className="p-8">
           <h3 className={`text-xl font-bold mb-6 flex items-center gap-2 text-gray-800 pb-3`}>
-            <ListTodo className={`w-6 h-6 text-[var(--primary-700)]`} /> Review Your Answers
+            <ListTodo className={`w-6 h-6 text-[var(--primary-600)]`} /> Review Your Answers
           </h3>
           <div className="space-y-4">
             {quizHistory.map((quiz, index) => (
@@ -136,7 +136,7 @@ const ReviewScreen = ({ quizHistory, totalScore, totalQuestions, onReviewSelect,
                     <XCircle className="w-5 h-5 text-red-600" />
                   )}
                   <Eye
-                    className={`w-5 h-5 text-[var(--primary)] hover:text-[var(--primary-700)]`}
+                    className={`w-5 h-5 text-[var(--primary)] hover:text-[var(--primary-600)]`}
                     onClick={(e) => {
                       e.stopPropagation();
 

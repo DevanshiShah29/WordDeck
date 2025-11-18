@@ -18,7 +18,7 @@ const BookmarkedToggle = ({ isBookmarkedOnly, setIsBookmarkedOnly }) => {
         className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition ${
           isBookmarkedOnly
             ? "bg-yellow-100 border border-yellow-300"
-            : "bg-slate-50 hover:bg-slate-100"
+            : "bg-slate-50  border border-white hover:bg-slate-100"
         }`}
       >
         <Bookmark

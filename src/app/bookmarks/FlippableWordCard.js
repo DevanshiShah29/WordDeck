@@ -148,7 +148,7 @@ const FlippableWordCard = ({
                   shouldShowImage
                     ? `bg-white/20 z-10`
                     : `shadow-slate-900/10 bg-gradient-to-br ${getTypeGradient(wordData.type)}`
-                } ${isFlipped ? "opacity-0" : ""}`}
+                } ${isFlipped ? "!opacity-0" : ""}`}
               >
                 {capitalizeFirstLetter(wordData.type)}
               </div>
