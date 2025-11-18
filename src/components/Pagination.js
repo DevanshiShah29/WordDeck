@@ -73,8 +73,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
                     px-4 py-2 text-sm font-medium rounded-lg transition duration-150 
                     ${
                       page === currentPage
-                        ? "bg-indigo-600 text-white shadow-md"
-                        : "bg-white text-gray-700 border border-gray-300 hover:bg-indigo-50 hover:text-indigo-600"
+                        ? "bg-[var(--primary)] text-white shadow-md"
+                        : "bg-white text-gray-700 border border-gray-300 hover:bg-[var(--primary-lighter)] hover:text-[var(--primary-hover)]"
                     }
                   `}
                   aria-current={page === currentPage ? "page" : undefined}
