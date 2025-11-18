@@ -15,7 +15,7 @@ const sizeClasses = {
 // --- Variant Mapping (Visual Styling) ---
 const variantClasses = {
   primary:
-    "bg-blue-600 text-white hover:bg-[var(--primary-dark)] focus:ring-[var(--primary)] px-4 py-2 rounded-lg font-medium transition",
+    "bg-[var(--primary-600)] text-white hover:bg-[var(--primary-700)] focus:ring-[var(--primary)] px-4 py-2 rounded-lg font-medium transition",
   secondary:
     "bg-slate-100 text-slate-700 hover:bg-slate-200 focus:ring-slate-300  px-4 py-2 rounded-lg font-medium transition",
   danger: "bg-red-600 text-white hover:bg-red-700 focus:ring-[var(--red)]",

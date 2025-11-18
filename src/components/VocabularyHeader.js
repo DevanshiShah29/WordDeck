@@ -145,7 +145,7 @@ export default function VocabularyHeader({
 
               <Button
                 onClick={() => router.push("/add")}
-                className="flex flex-1 items-center justify-center md:justify-start bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--primary-hover)] transition shadow-md p-2 md:px-4 md:py-2"
+                className="flex flex-1 items-center justify-center md:justify-start bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--primary-600)] transition shadow-md p-2 md:px-4 md:py-2"
                 variant="transparent"
               >
                 <Plus size={18} className="mr-0 md:mr-2" />

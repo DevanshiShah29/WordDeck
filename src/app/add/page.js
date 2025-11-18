@@ -50,7 +50,7 @@ const FormHeader = () => (
           className="p-2 rounded-lg transition-all duration-300 group hover:bg-slate-100"
           aria-label="Go back to vocabulary list"
         >
-          <ArrowLeft className="w-5 h-5 text-slate-600 group-hover:text-blue-600" />
+          <ArrowLeft className="w-5 h-5 text-slate-600 group-hover:text-[var(--primary-600)]" />
         </Link>
         <div>
           <h1 className="text-2xl font-bold text-slate-900">Add New Word</h1>
@@ -149,7 +149,7 @@ const VocabularyForm = () => {
               {/* Basic Information Section */}
               <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
                 <div className="flex items-center gap-3 mb-6">
-                  <BookIcon className="w-6 h-6 text-blue-600" />
+                  <BookIcon className="w-6 h-6 text-[var(--primary-600)]" />
                   <h2 className="text-xl font-semibold text-gray-900">1. Basic Information</h2>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

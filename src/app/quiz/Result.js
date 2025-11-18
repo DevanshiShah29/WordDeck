@@ -72,7 +72,7 @@ const ReviewScreen = ({ quizHistory, totalScore, totalQuestions, onReviewSelect,
 
           <Card className="p-6 flex flex-col justify-center items-center space-y-3 text-center">
             <div className="flex items-center gap-2">
-              <Trophy className={`w-5 h-5 text-blue-700`} />
+              <Trophy className={`w-5 h-5 text-[var(--primary-600)]`} />
               <h2 className="text-xl font-semibold text-gray-800">Quiz Complete!</h2>
             </div>
 
@@ -93,7 +93,10 @@ const ReviewScreen = ({ quizHistory, totalScore, totalQuestions, onReviewSelect,
               >
                 Revise words
               </Button>
-              <Button onClick={onRestart} className={`mt-2 px-4 py-2 w-1/2 bg-blue-700 gap-2`}>
+              <Button
+                onClick={onRestart}
+                className={`mt-2 px-4 py-2 w-1/2 bg-[var(--primary-600)] gap-2`}
+              >
                 <RotateCw className="w-4 h-4 " /> Restart
               </Button>
             </div>
@@ -103,7 +106,7 @@ const ReviewScreen = ({ quizHistory, totalScore, totalQuestions, onReviewSelect,
         {/* Review Answers Card */}
         <Card className="p-8 md:p-10">
           <h3 className={`text-xl font-bold mb-6 flex items-center gap-2 text-gray-800 pb-3`}>
-            <ListTodo className={`w-6 h-6 text-blue-700`} /> Review Your Answers
+            <ListTodo className={`w-6 h-6 text-[var(--primary-600)]`} /> Review Your Answers
           </h3>
           <div className="space-y-4">
             {quizHistory.map((quiz, index) => (
@@ -133,7 +136,7 @@ const ReviewScreen = ({ quizHistory, totalScore, totalQuestions, onReviewSelect,
                     <XCircle className="w-5 h-5 text-red-600" />
                   )}
                   <Eye
-                    className={`w-5 h-5 text-[var(--primary)] hover:text-[var(--primary-dark)]`}
+                    className={`w-5 h-5 text-[var(--primary)] hover:text-[var(--primary-700)]`}
                     onClick={(e) => {
                       e.stopPropagation();
 

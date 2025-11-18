@@ -36,7 +36,7 @@ const FilterDifficulty = ({ title, options, selected, setSelected, colorMap = {}
               : "bg-slate-100 text-slate-700 hover:bg-slate-200";
           } else {
             colorClasses = isSelected
-              ? "bg-blue-600 text-white hover:bg-blue-700"
+              ? "bg-[var(--primary-600)] text-white hover:bg-[var(--primary-700)]"
               : "bg-slate-100 text-slate-700 hover:bg-slate-200";
           }
 

@@ -39,7 +39,7 @@ const TypeFilter = ({ selectedTypes, setSelectedTypes }) => {
             type="checkbox"
             checked={selectedTypes.length === TYPE_VALUES.length}
             onChange={toggleAllTypes}
-            className="w-5 h-5  border-gray-300 rounded  cursor-pointer accent-blue-600"
+            className="w-5 h-5  border-gray-300 rounded  cursor-pointer accent-[var(--primary-600)]"
           />
           <span className="text-slate-800 font-bold">All Types</span>
         </label>
@@ -56,7 +56,7 @@ const TypeFilter = ({ selectedTypes, setSelectedTypes }) => {
               id={typeOption.value}
               checked={selectedTypes.includes(typeOption.value)}
               onChange={() => toggleSelection(typeOption.value)}
-              className="w-5 h-5  border-gray-300 rounded cursor-pointer accent-blue-600"
+              className="w-5 h-5  border-gray-300 rounded cursor-pointer accent-[var(--primary-600)]"
             />
             <span className="capitalize text-slate-700">{typeOption.label}</span>
           </label>
@@ -67,7 +67,7 @@ const TypeFilter = ({ selectedTypes, setSelectedTypes }) => {
         <Button
           variant="transparent"
           onClick={() => setShowAllTypes((prev) => !prev)}
-          className="flex items-center gap-1 mt-4 text-blue-600 hover:text-blue-800 transition text-sm font-medium outline-none "
+          className="flex items-center gap-1 mt-4 text-[var(--primary-600)] hover:text-[var(--primary-700)] transition text-sm font-medium outline-none "
         >
           {showAllTypes ? "See Less" : "See More"}
           {showAllTypes ? <ChevronUp size={16} /> : <ChevronDown size={16} />}

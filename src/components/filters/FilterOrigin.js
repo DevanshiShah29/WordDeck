@@ -58,7 +58,7 @@ const OriginFilter = ({ selectedOrigins, setSelectedOrigins, allOrigins }) => {
                         px-3 py-1 text-sm rounded-full transition 
                         ${
                           isSelected
-                            ? "bg-blue-100 text-blue-800 hover:bg-blue-200"
+                            ? "bg-blue-100 text-[var(--primary-700)] hover:bg-[var(--primary-200)]"
                             : "bg-slate-50 text-slate-700 hover:bg-blue-100"
                         }
                     `}
@@ -66,7 +66,7 @@ const OriginFilter = ({ selectedOrigins, setSelectedOrigins, allOrigins }) => {
                 {origin}
                 {/* Cross icon shown only if selected */}
                 {isSelected && (
-                  <X size={14} className="ml-1.5 text-blue-800 hover:text-blue-900 transition" />
+                  <X size={14} className="ml-1.5 text-[var(--primary-700)]  transition" />
                 )}
               </Button>
             );

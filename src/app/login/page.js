@@ -98,7 +98,7 @@ const AuthForm = () => {
                     type="submit"
                     icon={LogIn}
                     disabled={isSubmitting || !isValid}
-                    className="w-full mt-4 bg-[var(--primary)] text-white hover:bg-[var(--primary-hover)] flex items-center justify-center gap-2 p-3 rounded-lg font-semibold transition"
+                    className="w-full mt-4 bg-[var(--primary)] text-white hover:bg-[var(--primary-600)] flex items-center justify-center gap-2 p-3 rounded-lg font-semibold transition"
                   >
                     {isSubmitting ? "Signing In..." : "Sign In"}
                   </Button>

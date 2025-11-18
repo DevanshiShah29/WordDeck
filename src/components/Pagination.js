@@ -74,7 +74,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
                     ${
                       page === currentPage
                         ? "bg-[var(--primary)] text-white shadow-md"
-                        : "bg-white text-gray-700 border border-gray-300 hover:bg-[var(--primary-lighter)] hover:text-[var(--primary-hover)]"
+                        : "bg-white text-gray-700 border border-gray-300 hover:bg-[var(--primary-50)] hover:text-[var(--primary-600)]"
                     }
                   `}
                   aria-current={page === currentPage ? "page" : undefined}
