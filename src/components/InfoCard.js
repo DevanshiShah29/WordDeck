@@ -7,7 +7,7 @@ import React from "react";
  * @param {React.ReactNode} props.icon - The Lucide icon or element for the header.
  * @param {string} props.title - The title of the information card.
  * @param {React.ReactNode} props.children - The content (e.g., InfoRow components) displayed below the header.
- * @param {string} [props.iconGradient="from-blue-500 to-indigo-600"] - Tailwind class for icon background gradient.
+ * @param {string} - Tailwind class for icon background gradient.
  */
 export default function InfoCard({ icon, title, children, iconGradient }) {
   return (

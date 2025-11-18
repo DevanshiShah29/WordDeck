@@ -1,7 +1,11 @@
 "use client";
 import React from "react";
+
+// Component Imports
 import Button from "@/components/buttons/Button";
 import FormField from "@/components/formItems/FormField";
+
+// Library Imports
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
@@ -57,9 +61,9 @@ const AuthForm = () => {
       <div className="w-full max-w-sm bg-white p-8 md:p-10 rounded-xl shadow-2xl border border-gray-100">
         {/* Header */}
         <div className="flex flex-col items-center mb-8">
-          <Aperture className="w-10 h-10 text-indigo-600 mb-2" />
-          <h1 className="text-3xl font-bold text-gray-800">Sign In</h1>
-          <p className="text-gray-500 text-sm mt-1">Access the app</p>
+          <Aperture className="w-10 h-10 text-accent-500 mb-2" />
+          <h1 className="text-3xl font-bold text-neutral-900">Sign In</h1>
+          <p className="text-neutral-700 text-sm mt-1">Access the app</p>
         </div>
 
         <Formik
@@ -76,7 +80,7 @@ const AuthForm = () => {
                     id="username"
                     type="text"
                     icon={User}
-                    placeholder="Devanshi or Ninad"
+                    placeholder="Enter username"
                     required
                   />
                   <FormField
@@ -90,10 +94,11 @@ const AuthForm = () => {
 
                   {/* Submit Button */}
                   <Button
+                    variant="transparent"
                     type="submit"
                     icon={LogIn}
                     disabled={isSubmitting || !isValid}
-                    className="w-full mt-4 bg-indigo-600 text-white hover:bg-indigo-700 flex items-center justify-center gap-2 p-3 rounded-lg font-semibold transition"
+                    className="w-full mt-4 bg-[var(--primary)] text-white hover:bg-[var(--primary-hover)] flex items-center justify-center gap-2 p-3 rounded-lg font-semibold transition"
                   >
                     {isSubmitting ? "Signing In..." : "Sign In"}
                   </Button>

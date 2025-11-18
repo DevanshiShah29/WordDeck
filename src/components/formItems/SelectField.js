@@ -52,13 +52,13 @@ const SelectField = ({ label, id, options, required, isMulti = false, ...props }
       color: state.isSelected ? "white" : "black",
       // Using your original blue-gray color values
       backgroundColor: state.isSelected
-        ? "rgba(96, 125, 222, 1)"
+        ? "#ec4899"
         : state.isFocused
         ? "rgba(239, 242, 255, 1)"
         : "white",
       cursor: "pointer",
       ":active": {
-        backgroundColor: state.isSelected ? "rgba(96, 125, 222, 1)" : "rgb(239, 246, 255)",
+        backgroundColor: state.isSelected ? "#ec4899" : "rgb(239, 246, 255)",
       },
     }),
   };
@@ -70,9 +70,9 @@ const SelectField = ({ label, id, options, required, isMulti = false, ...props }
     control: (state) =>
       `bg-white px-3 py-1.5 border rounded-lg custom-select transition-all ${
         state.isFocused
-          ? "border-blue-500 ring-1 ring-blue-500 shadow-md"
+          ? "border-[var(--primary)] ring-1 ring-[var(--primary)] shadow-md"
           : isInvalid
-          ? "border-red-500 ring-1 ring-red-500" // Added ring for error state consistency
+          ? "border-[var(--red)] ring-1 ring-[var(--red)]" // Added ring for error state consistency
           : "border-gray-300"
       }`,
     placeholder: () => "text-gray-500",
@@ -81,13 +81,13 @@ const SelectField = ({ label, id, options, required, isMulti = false, ...props }
     menu: () => "rounded-lg overflow-hidden mt-1 bg-white shadow-xl",
     menuList: () => "thin-scrollbar", // Preserved custom scrollbar class
     dropdownIndicator: () => "text-gray-400 hover:text-gray-600 transition",
-    clearIndicator: () => "text-gray-400 hover:text-red-500 transition",
+    clearIndicator: () => "text-gray-400 hover:text-[var(--red)] transition",
     indicatorSeparator: () => "hidden",
 
     // Multi-select classes for better styling consistency
     multiValue: () => "bg-blue-100 text-blue-800 rounded-md",
     multiValueLabel: () => "py-1 pl-3 text-sm font-medium",
-    multiValueRemove: () => "pl-1 pr-2 text-blue-500 hover:text-red-500 transition",
+    multiValueRemove: () => "pl-1 pr-2 text-blue-500 hover:text-[var(--red)] transition",
   };
 
   return (

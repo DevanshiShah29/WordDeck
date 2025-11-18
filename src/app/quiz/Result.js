@@ -119,7 +119,7 @@ const ReviewScreen = ({ quizHistory, totalScore, totalQuestions, onReviewSelect,
                     className={`flex h-8 w-8 items-center justify-center rounded-full bg-white font-bold text-sm border-2 ${
                       quiz.userAnswer === quiz.correct_option
                         ? "border-green-500 text-green-700"
-                        : "border-red-500 text-red-700"
+                        : "border-[var(--red)] text-red-700"
                     }`}
                   >
                     {index + 1}
@@ -133,7 +133,7 @@ const ReviewScreen = ({ quizHistory, totalScore, totalQuestions, onReviewSelect,
                     <XCircle className="w-5 h-5 text-red-600" />
                   )}
                   <Eye
-                    className={`w-5 h-5 text-indigo-500 hover:text-indigo-700`}
+                    className={`w-5 h-5 text-[var(--primary)] hover:text-[var(--primary-dark)]`}
                     onClick={(e) => {
                       e.stopPropagation();
 

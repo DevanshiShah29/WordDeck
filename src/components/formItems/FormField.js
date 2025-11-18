@@ -18,8 +18,8 @@ const FormField = ({ label, id, type = "text", placeholder, icon, required }) =>
   // Determine the border color based on Formik validation state
   const isError = touched[id] && errors[id];
   const borderColor = isError
-    ? "border-red-500 ring-red-500" // Error state
-    : "border-gray-300 focus:border-[var(--primary)] focus:ring-[var(--primary)]"; // Default and focus states
+    ? "border-[var(--red)] ring-[var(--red)]"
+    : "border-gray-300 focus:border-[var(--primary)] focus:ring-[var(--primary)]";
 
   return (
     <div className="space-y-2">

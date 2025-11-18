@@ -112,14 +112,14 @@ export default function FilterModal({
                 placeholder="From Date"
                 value={dateRange.from}
                 onChange={(e) => setDateRange({ ...dateRange, from: e.target.value })}
-                className="px-4 py-2 border border-slate-300 rounded-lg text-slate-700 w-full focus:ring-2 focus:ring-blue-500 transition-colors"
+                className="px-4 py-2 border border-slate-300 rounded-lg text-slate-700 w-full focus:ring-2 focus:ring-[var(--primary)] transition-colors"
               />
               <input
                 type="date"
                 placeholder="To Date"
                 value={dateRange.to}
                 onChange={(e) => setDateRange({ ...dateRange, to: e.target.value })}
-                className="px-4 py-2 border border-slate-300 rounded-lg text-slate-700 w-full focus:ring-2 focus:ring-blue-500 transition-colors"
+                className="px-4 py-2 border border-slate-300 rounded-lg text-slate-700 w-full focus:ring-2 focus:ring-[var(--primary)] transition-colors"
               />
             </div>
           </FilterSection>

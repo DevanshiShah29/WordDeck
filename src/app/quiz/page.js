@@ -216,7 +216,7 @@ const QuizGenerator = () => {
       return "border-green-500 bg-green-500/20 text-green-700 shadow-md transition-all";
     }
     if (option === currentQuiz.userAnswer && option !== currentQuiz.correct_option) {
-      return "border-red-500 bg-red-500/20 text-red-700 shadow-md transition-all";
+      return "border-[var(--red)] bg-red-500/20 text-red-700 shadow-md transition-all";
     }
     return "bg-gray-100 border-gray-200 text-gray-500 cursor-default transition-all";
   };
@@ -338,7 +338,7 @@ const QuizGenerator = () => {
                             )}
                             {option === currentQuiz.userAnswer &&
                               option !== currentQuiz.correct_option && (
-                                <XCircle className="h-5 w-5 text-red-500 flex-shrink-0" />
+                                <XCircle className="h-5 w-5 text-[var(--red)] flex-shrink-0" />
                               )}
                           </>
                         )}

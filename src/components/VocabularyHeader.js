@@ -114,7 +114,7 @@ export default function VocabularyHeader({
             <div className="flex w-full md:w-auto gap-3">
               <Button
                 onClick={onBookmarkClick}
-                className="flex flex-1 items-center justify-center md:justify-start bg-green-500 text-white hover:bg-green-600 p-2 md:px-4 md:py-2"
+                className="flex flex-1 items-center justify-center md:justify-start bg-[var(--secondary)] text-white hover:bg-[var(--secondary-hover)] p-2 md:px-4 md:py-2"
               >
                 <Bookmark size={18} className="mr-0 md:mr-2" />
                 <span className="hidden md:inline">Bookmarks</span>
@@ -128,7 +128,7 @@ export default function VocabularyHeader({
                 <span className="hidden md:inline">Filters</span>
                 {/* Active Filter Count Badge */}
                 {activeFilterCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full font-bold">
+                  <span className="absolute -top-2 -right-2 bg-[var(--red)] text-white text-xs px-2 py-0.5 rounded-full font-bold">
                     {activeFilterCount}
                   </span>
                 )}
@@ -145,7 +145,7 @@ export default function VocabularyHeader({
 
               <Button
                 onClick={() => router.push("/add")}
-                className="flex flex-1 items-center justify-center md:justify-start bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition shadow-md p-2 md:px-4 md:py-2"
+                className="flex flex-1 items-center justify-center md:justify-start bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--primary-hover)] transition shadow-md p-2 md:px-4 md:py-2"
                 variant="transparent"
               >
                 <Plus size={18} className="mr-0 md:mr-2" />

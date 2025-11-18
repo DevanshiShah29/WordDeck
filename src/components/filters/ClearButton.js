@@ -6,7 +6,7 @@ const ClearButton = ({ onClick }) => (
   <Button
     variant="transparent"
     onClick={onClick}
-    className="text-sm font-medium text-red-500 hover:text-red-700 p-1 transition"
+    className="text-sm font-medium text-[var(--red)] hover:text-red-700 p-1 transition"
   >
     Clear
     <CircleX size={14} className="ml-1" />

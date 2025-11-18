@@ -119,7 +119,7 @@ export default function VocabCard({
             <Button
               className={`p-2.5 cursor-pointer bg-white/90 backdrop-blur-sm text-slate-600 rounded-xl hover:bg-white hover:text-blue-600 transition-all duration-300 shadow-lg ${
                 isBookmarkedState
-                  ? "text-red-500 hover:text-red-600"
+                  ? "text-[var(--red)] hover:text-red-600"
                   : "text-slate-600 hover:bg-white hover:text-blue-600"
               }`}
               title={isBookmarkedState ? "Remove bookmark" : "Add bookmark"}

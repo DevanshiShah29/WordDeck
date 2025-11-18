@@ -178,7 +178,7 @@ const FlippableWordCard = ({
               <div>
                 <h4 className="text-xl font-extrabold text-gray-900">{wordData.word}</h4>
               </div>
-              <RotateCcw className="h-4 w-4 text-blue-500 cursor-pointer hover:text-blue-600 transition" />
+              <RotateCcw className="h-4 w-4 text-[var(--primary)] cursor-pointer hover:text-[var(--primary)] transition" />
             </div>
 
             <div className="space-y-6 flex-grow">

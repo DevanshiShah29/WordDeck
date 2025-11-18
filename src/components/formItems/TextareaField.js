@@ -18,9 +18,8 @@ const TextareaField = ({ label, id, placeholder, rows = 3, required }) => {
 
   // Determine border and focus classes
   const borderColor = isError
-    ? "border-red-500 focus:ring-red-500" // Error state
-    : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"; // Default and focus states
-
+    ? "border-[var(--red)] focus:ring-[var(--red)]"
+    : "border-gray-300 focus:border-[var(--primary)] focus:ring-[var(--primary)]";
   return (
     <div className="space-y-2">
       {/* Label */}

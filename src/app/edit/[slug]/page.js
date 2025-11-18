@@ -210,7 +210,7 @@ const EditVocabularyForm = ({ params }) => {
       <div className="bg-slate-50 min-h-screen pb-10">
         {/* Conditional Content Rendering */}
         {error ? (
-          <div className="text-center p-10 text-red-500 container mx-auto">
+          <div className="text-center p-10 text-[var(--red)] container mx-auto">
             Failed to load word: {error.message || "Word not found."}
           </div>
         ) : isLoading && !isDataLoaded ? (
