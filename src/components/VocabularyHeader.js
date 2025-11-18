@@ -114,7 +114,7 @@ export default function VocabularyHeader({
             <div className="flex w-full md:w-auto gap-3">
               <Button
                 onClick={onBookmarkClick}
-                className="flex flex-1 items-center justify-center md:justify-start bg-[var(--secondary)] text-white hover:bg-[var(--secondary-hover)] p-2 md:px-4 md:py-2"
+                className="flex flex-1 items-center justify-center md:justify-start bg-[var(--secondary)] text-white hover:bg-[var(--secondary-600)] p-2 md:px-4 md:py-2"
               >
                 <Bookmark size={18} className="mr-0 md:mr-2" />
                 <span className="hidden md:inline">Bookmarks</span>
