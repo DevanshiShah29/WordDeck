@@ -19,7 +19,7 @@ const FormField = ({ label, id, type = "text", placeholder, icon, required }) =>
   const isError = touched[id] && errors[id];
   const borderColor = isError
     ? "border-red-500 ring-red-500" // Error state
-    : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"; // Default and focus states
+    : "border-gray-300 focus:border-[var(--primary)] focus:ring-[var(--primary)]"; // Default and focus states
 
   return (
     <div className="space-y-2">
@@ -28,7 +28,7 @@ const FormField = ({ label, id, type = "text", placeholder, icon, required }) =>
         {/* Icon (if provided) */}
         {Icon && (
           <Icon
-            className="w-4 h-4 inline-block align-text-bottom mr-2 text-blue-600"
+            className="w-4 h-4 inline-block align-text-bottom mr-2 text-[var(--primary)]"
             aria-hidden="true"
           />
         )}

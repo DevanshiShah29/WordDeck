@@ -16,7 +16,7 @@ export default function Loader({ message = "Loading content, please wait...", fu
 
   return (
     <div className={containerClasses}>
-      <Loader2 className="w-8 h-8 text-blue-600 animate-spin mb-4" />
+      <Loader2 className="w-8 h-8 text-[var(--primary)] animate-spin mb-4" />
 
       <div
         className="text-lg font-medium tracking-wide text-slate-700 
