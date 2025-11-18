@@ -155,7 +155,7 @@ export default function VocabCard({
               onClick={(e) => handleActionClick(e, "speak")}
               variant="transparent"
               title="Play pronunciation"
-              className="p-2 hover:bg-blue-100 rounded-xl cursor-pointer transition-all duration-300 text-slate-600 hover:text-blue-600 transform hover:scale-110"
+              className="p-2 hover:bg-[var(--primary-100)] rounded-xl cursor-pointer transition-all duration-300 text-slate-600 hover:text-blue-600 transform hover:scale-110"
             >
               <Volume2 className="w-5 h-5" />
             </Button>

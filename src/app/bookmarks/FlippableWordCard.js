@@ -163,7 +163,7 @@ const FlippableWordCard = ({
 
         {/* BACK OF CARD  */}
         <Card
-          className="absolute w-full h-full backface-hidden border-gray-100 bg-white rounded-xl shadow-2xl p-6  hover:shadow-xl hover:shadow-blue-100/20 transition-all"
+          className="absolute w-full h-full backface-hidden border-gray-100 bg-white rounded-xl shadow-2xl p-6  hover:shadow-xl hover:shadow-[var(--primary-100)]/20 transition-all"
           style={{
             backfaceVisibility: "hidden",
             transform: "rotateY(180deg)",
@@ -174,7 +174,7 @@ const FlippableWordCard = ({
               isFlipped ? "overflow-y-auto" : "overflow-hidden"
             }`}
           >
-            <div className="flex items-center justify-between border-b border-blue-100 pb-4 mb-4">
+            <div className="flex items-center justify-between border-b border-[var(--primary-100)] pb-4 mb-4">
               <div>
                 <h4 className="text-xl font-extrabold text-gray-900">{wordData.word}</h4>
               </div>

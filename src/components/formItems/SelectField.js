@@ -85,7 +85,7 @@ const SelectField = ({ label, id, options, required, isMulti = false, ...props }
     indicatorSeparator: () => "hidden",
 
     // Multi-select classes for better styling consistency
-    multiValue: () => "bg-blue-100 text-[var(--primary-700)] rounded-md",
+    multiValue: () => "bg-[var(--primary-100)] text-[var(--primary-700)] rounded-md",
     multiValueLabel: () => "py-1 pl-3 text-sm font-medium",
     multiValueRemove: () => "pl-1 pr-2 text-blue-500 hover:text-[var(--red)] transition",
   };

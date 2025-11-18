@@ -170,19 +170,19 @@ const Bookmarks = () => {
             <div className="flex flex-wrap justify-center gap-4">
               <Button
                 variant="transparent"
-                className="p-3 hover:border-[var(--primary-600)] hover:bg-blue-100 transition-all"
+                className="p-3 hover:border-[var(--primary-600)] hover:bg-[var(--primary-100)] transition-all"
               >
                 Export Bookmarks
               </Button>
               <Button
                 variant="transparent"
-                className="p-3 hover:border-[var(--primary-600)] hover:bg-blue-100 transition-all"
+                className="p-3 hover:border-[var(--primary-600)] hover:bg-[var(--primary-100)] transition-all"
               >
                 Study Session
               </Button>
               <Button
                 variant="transparent"
-                className="p-3 hover:border-[var(--primary-600)] hover:bg-blue-100 transition-all"
+                className="p-3 hover:border-[var(--primary-600)] hover:bg-[var(--primary-100)] transition-all"
               >
                 Print List
               </Button>

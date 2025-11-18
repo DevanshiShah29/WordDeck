@@ -58,8 +58,8 @@ const OriginFilter = ({ selectedOrigins, setSelectedOrigins, allOrigins }) => {
                         px-3 py-1 text-sm rounded-full transition 
                         ${
                           isSelected
-                            ? "bg-blue-100 text-[var(--primary-700)] hover:bg-[var(--primary-200)]"
-                            : "bg-slate-50 text-slate-700 hover:bg-blue-100"
+                            ? "bg-[var(--primary-100)] text-[var(--primary-700)] hover:bg-[var(--primary-200)]"
+                            : "bg-slate-50 text-slate-700 hover:bg-[var(--primary-100)]"
                         }
                     `}
               >
