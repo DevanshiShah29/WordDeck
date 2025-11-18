@@ -24,7 +24,7 @@ export default function NotFound({ message }) {
 
         <button
           onClick={() => window.history.back()}
-          className="mt-6 inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition"
+          className="mt-6 inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-[var(--primary)] hover:bg-[var(--primary-dark)] transition"
         >
           Go Back
         </button>
