@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 
 // Library Imports
-import { RotateCw, ChevronLeft, ChevronRight, CheckCircle, XCircle, Eye } from "lucide-react";
+import { ChevronLeft, ChevronRight, CheckCircle, XCircle, Eye } from "lucide-react";
 import { toast } from "react-toastify";
 
 // Component Imports
@@ -15,16 +15,13 @@ import ReviewScreen from "./Result";
 // Utility Imports
 import { fetchWithBackoff, selectRandomWords } from "./helper";
 
-// --- Configuration ---
 const QUIZ_LENGTH = 5;
-const PRIMARY_COLOR_CLASS = "text-indigo-600";
-const PRIMARY_BG_CLASS = "bg-indigo-600";
 
 const Progress = ({ value, className = "" }) => {
   return (
     <div className={`w-full bg-gray-200 rounded-full h-3 ${className}`}>
       <div
-        className={`${PRIMARY_BG_CLASS} h-3 rounded-full transition-all duration-500`}
+        className={`bg-[var(--primary-600)] h-3 rounded-full transition-all duration-500`}
         style={{ width: `${value}%` }}
       ></div>
     </div>
@@ -44,7 +41,7 @@ const QuizGenerator = () => {
   const [isReviewing, setIsReviewing] = useState(false);
   const [wordBeingFetched, setWordBeingFetched] = useState(null);
 
-  // --- Derived State ---
+  // Derived State
   const currentQuiz = useMemo(() => quizHistory[currentIndex], [quizHistory, currentIndex]);
   const isAnswered = currentQuiz?.isAnswered;
   const isLastGeneratedQuestion = currentIndex === quizHistory.length - 1;
@@ -64,7 +61,7 @@ const QuizGenerator = () => {
   const isFirstQuestionGenerating =
     !isWordsLoading && quizWords.length > 0 && quizHistory.length === 0 && loading;
 
-  // --- Data Fetching and Selection Logic ---
+  // Data Fetching and Selection Logic
   const fetchAllWords = useCallback(async () => {
     setQuizWords([]);
     setAllWords([]);
@@ -156,12 +153,9 @@ const QuizGenerator = () => {
 
   useEffect(() => {
     if (!isWordsLoading && quizWords.length > 0 && quizHistory.length === 0 && !loading && !error) {
-      // This will fetch the *first* question (word 1 of 10)
       generateNewQuestion();
     }
   }, [isWordsLoading, quizWords.length, quizHistory.length, loading, error, generateNewQuestion]);
-
-  // --- Interaction Handlers ---
 
   const handleRestart = () => {
     setUsedWords([]);
@@ -208,7 +202,7 @@ const QuizGenerator = () => {
   const getOptionClass = (option) => {
     // If not answered, use hover/default styling
     if (!isAnswered && isLastGeneratedQuestion) {
-      return "bg-white border-gray-300 text-gray-800 hover:bg-indigo-50 hover:border-indigo-400 shadow-sm transition-all hover:scale-[1.01]";
+      return "bg-white border-gray-300 text-gray-800 hover:bg-[var(--primary-50)] hover:border-[var(--primary)] shadow-sm transition-all hover:scale-[1.01]";
     }
 
     // Review/Answered Mode (Show feedback colors)
@@ -282,7 +276,7 @@ const QuizGenerator = () => {
                     <p className="text-2xl font-bold text-gray-900">{totalScore} correct</p>
                   </div>
                   <div className="text-right">
-                    <div className={`text-4xl font-bold ${PRIMARY_COLOR_CLASS}`}>
+                    <div className={`text-4xl font-bold text-[var(--primary-600)]`}>
                       {progressPercentage}%
                     </div>
                     <p className="text-xs text-gray-500">Quiz Progress</p>
