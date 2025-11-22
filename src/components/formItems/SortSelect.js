@@ -26,10 +26,14 @@ const SortSelect = ({ currentSort, onSortChange, options }) => {
     option: (provided, state) => ({
       ...provided,
       color: state.isSelected ? "white" : "black",
-      backgroundColor: state.isSelected ? "var(--primary)" : state.isFocused ? "#eff6ff" : "white",
+      backgroundColor: state.isSelected
+        ? "var(--primary)"
+        : state.isFocused
+        ? "var(--primary-50)"
+        : "white",
       cursor: "pointer",
       ":active": {
-        backgroundColor: state.isSelected ? "var(--primary)" : "#dbeafe",
+        backgroundColor: state.isSelected ? "var(--primary)" : "var(--primary-50)",
       },
     }),
   };

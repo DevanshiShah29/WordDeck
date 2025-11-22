@@ -71,15 +71,19 @@ const EditVocabularyForm = ({ params }) => {
   const { slug } = params;
   const router = useRouter();
 
-  // 1. State for data and loading/error status
-  // Initialize with DUMMY values to keep Formik's structure consistent on first render
+  // State for data and loading/error status
   const [initialValues, setInitialValues] = useState(DUMMY_INITIAL_VALUES);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
 
-  // 2. Fetch data using useEffect
+  useEffect(() => {
+    // Scrolls the window to the top (0, 0) coordinates.
+    window.scrollTo(0, 0);
+  }, []);
+
+  // Fetch data using useEffect
   useEffect(() => {
     if (!slug) return;
 
@@ -123,7 +127,6 @@ const EditVocabularyForm = ({ params }) => {
     fetchWordData();
   }, [slug]);
 
-  // 3. handleSubmit
   const handleSubmit = useCallback(
     async (values, { setSubmitting }) => {
       try {
@@ -158,7 +161,6 @@ const EditVocabularyForm = ({ params }) => {
     [router, slug]
   );
 
-  // 4. handleGenerateAnswer
   const handleGenerateAnswer = async (word, setFieldValue) => {
     if (!word || word.trim() === "") {
       toast.info("Please enter a word in the 'Word' field first.");

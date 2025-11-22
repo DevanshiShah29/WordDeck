@@ -147,7 +147,7 @@ export default function VocabCard({
         <div className="flex-grow p-5 space-y-4">
           {/* Title + Speaker */}
           <div className="flex items-start justify-between mb-2">
-            <h3 className="text-xl font-bold text-slate-900 py-1 group-hover:text-blue-600 transition-colors duration-300">
+            <h3 className="text-xl font-bold text-slate-900 py-1 group-hover:text-[var(--primary-600)] transition-colors duration-300">
               {word}
             </h3>
 
@@ -155,7 +155,7 @@ export default function VocabCard({
               onClick={(e) => handleActionClick(e, "speak")}
               variant="transparent"
               title="Play pronunciation"
-              className="p-2 hover:bg-[var(--primary-100)] rounded-xl cursor-pointer transition-all duration-300 text-slate-600 hover:text-blue-600 transform hover:scale-110"
+              className="p-2 hover:bg-[var(--primary-100)] rounded-xl cursor-pointer transition-all duration-300 text-slate-600 hover:text-[var(--primary-600)] transform hover:scale-110"
             >
               <Volume2 className="w-5 h-5" />
             </Button>
@@ -171,13 +171,13 @@ export default function VocabCard({
           {/* Definition */}
           <div className=" text-sm flex items-center gap-2 text-slate-700 font-semibold">
             <span className="flex items-center gap-2 text-slate-700">
-              <BookOpen height={18} width={18} className="text-blue-700" />
+              <BookOpen height={18} width={18} className="text-[var(--primary-600)]" />
               Definition
             </span>
           </div>
-          <div className="border-l-3 border-blue-200">
+          <div className="border-l-3 border-[var(--primary-200)] ">
             <p
-              className="text-md text-slate-800 line-clamp-3 bg-blue-50 rounded-r-lg px-4 py-2.5
+              className="text-md text-slate-800 line-clamp-3 bg-[var(--primary-50)] rounded-r-lg px-4 py-2.5
               leading-6 max-h-[87px] overflow-hidden"
             >
               {definition}

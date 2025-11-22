@@ -107,7 +107,7 @@ export default function VocabularyHeader({
             {/* Title & Count */}
             <div>
               <h1 className="text-2xl font-bold text-slate-900">Vocabulary Collection</h1>
-              <p className="text-slate-500">{totalWords} in total</p>
+              <p className="text-slate-500">{totalWords} words in total</p>
             </div>
 
             {/* Action Buttons */}

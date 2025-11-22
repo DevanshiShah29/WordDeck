@@ -54,11 +54,11 @@ const SelectField = ({ label, id, options, required, isMulti = false, ...props }
       backgroundColor: state.isSelected
         ? "var(--primary)"
         : state.isFocused
-        ? "rgba(239, 242, 255, 1)"
+        ? "var(--primary-50)"
         : "white",
       cursor: "pointer",
       ":active": {
-        backgroundColor: state.isSelected ? "var(--primary)" : "rgb(239, 246, 255)",
+        backgroundColor: state.isSelected ? "var(--primary)" : "var(--primary-50)",
       },
     }),
   };

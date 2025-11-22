@@ -10,7 +10,6 @@ export const validationSchema = Yup.object({
   example: Yup.string()
     .min(10, "Example must be at least 10 characters long")
     .required("Usage example is required"),
-  imageUrl: Yup.string().url("Must be a valid URL").required("Image URL is required"),
   origin: Yup.string().required("Origin is required"),
   synonyms: Yup.string().required("Synonyms is required"),
   etymology: Yup.string().required("Etymology is required"),
