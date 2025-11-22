@@ -353,7 +353,7 @@ const EditVocabularyForm = ({ params }) => {
                   <div className="flex w-full md:w-auto items-center gap-4">
                     <Link
                       href="/word"
-                      className="px-6 py-3 border border-gray-300 text-gray-700 bg-white rounded-lg hover:bg-gray-100 transition-colors font-medium w-1/2 md:w-auto"
+                      className="px-6 py-3 border border-gray-300 text-center text-gray-700 bg-white rounded-lg hover:bg-gray-100 transition-colors font-medium w-1/2 md:w-auto"
                     >
                       Cancel
                     </Link>

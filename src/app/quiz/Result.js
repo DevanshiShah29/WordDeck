@@ -3,7 +3,6 @@ import { useRouter } from "next/navigation";
 import Card from "@/components/Card";
 import Button from "@/components/buttons/Button";
 import { slugify } from "@/utils/helper";
-const PRIMARY_BG_CLASS = "bg-indigo-600 hover:bg-indigo-700 text-white";
 
 const ReviewScreen = ({ quizHistory, totalScore, totalQuestions, onReviewSelect, onRestart }) => {
   const scorePercentage = ((totalScore / totalQuestions) * 100).toFixed(0);
@@ -65,7 +64,8 @@ const ReviewScreen = ({ quizHistory, totalScore, totalQuestions, onReviewSelect,
                 <span className="font-medium text-red-600">{totalQuestions - totalScore}</span>
               </p>
               <p>
-                Accuracy: <span className="font-medium text-indigo-600">{scorePercentage}%</span>
+                Accuracy:
+                <span className="font-medium text-[var(--primary)]">{scorePercentage}%</span>
               </p>
             </div>
           </Card>
