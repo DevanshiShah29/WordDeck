@@ -41,9 +41,9 @@ const SortSelect = ({ currentSort, onSortChange, options }) => {
   const selectClassNames = {
     control: (state) => `bg-white rounded-lg px-1 text-sm font-medium transition-all `,
     valueContainer: () => "p-0 pl-3 cursor-pointer",
-    singleValue: () => "text-slate-700",
+    singleValue: () => "text-[var(--slate-700)]",
     indicatorsContainer: () => "pr-2",
-    dropdownIndicator: () => "text-[var(--slate-500)] hover:text-slate-700 transition",
+    dropdownIndicator: () => "text-[var(--slate-500)] hover:text-[var(--slate-700)] transition",
     indicatorSeparator: () => "hidden",
 
     // Dropdown menu styling

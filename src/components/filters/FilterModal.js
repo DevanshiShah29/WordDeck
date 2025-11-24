@@ -81,11 +81,11 @@ export default function FilterModal({
       <div className={MODAL_CONTAINER_CLASSES}>
         {/* Header */}
         <div className="py-4 px-8 border-b border-[var(--slate-200)] flex items-center justify-between">
-          <h2 className="text-xl font-bold text-slate-800">Advance filters</h2>
+          <h2 className="text-xl font-bold text-[var(--slate-800)]">Advance filters</h2>
           <Button
             variant="transparent"
             onClick={onClose}
-            className="p-2 rounded-full text-[var(--slate-500)] hover:text-slate-800 hover:bg-slate-100 transition"
+            className="p-2 rounded-full text-[var(--slate-500)] hover:text-[var(--slate-800)] hover:bg-slate-100 transition"
             aria-label="Close filter modal"
           >
             <X size={24} />
@@ -120,14 +120,14 @@ export default function FilterModal({
                 placeholder="From Date"
                 value={dateRange.from}
                 onChange={(e) => setDateRange({ ...dateRange, from: e.target.value })}
-                className="flex-1 px-4 py-2 border border-[var(--slate-300)] rounded-lg text-slate-700 w-full focus:ring-2 focus:ring-[var(--primary)] transition-colors"
+                className="flex-1 px-4 py-2 border border-[var(--slate-300)] rounded-lg text-[var(--slate-700)] w-full focus:ring-2 focus:ring-[var(--primary)] transition-colors"
               />
               <input
                 type="date"
                 placeholder="To Date"
                 value={dateRange.to}
                 onChange={(e) => setDateRange({ ...dateRange, to: e.target.value })}
-                className="flex-1 px-4 py-2 border border-[var(--slate-300)] rounded-lg text-slate-700 w-full focus:ring-2 focus:ring-[var(--primary)] transition-colors"
+                className="flex-1 px-4 py-2 border border-[var(--slate-300)] rounded-lg text-[var(--slate-700)] w-full focus:ring-2 focus:ring-[var(--primary)] transition-colors"
               />
             </div>
           </FilterSection>

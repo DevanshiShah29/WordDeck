@@ -21,7 +21,7 @@ export default function InfoRow({ label, value, icon, type }) {
 
     return (
       <div className="flex items-center justify-between py-2">
-        <span className="text-md font-medium text-slate-700">{label}</span>
+        <span className="text-md font-medium text-[var(--slate-700)]">{label}</span>
 
         <span
           className={`
@@ -43,7 +43,7 @@ export default function InfoRow({ label, value, icon, type }) {
 
   return (
     <div className="flex items-center justify-between py-3">
-      <span className="text-md font-medium text-slate-700">{label}</span>
+      <span className="text-md font-medium text-[var(--slate-700)]">{label}</span>
 
       <div className="flex items-center gap-1">
         {icon && (
@@ -51,7 +51,7 @@ export default function InfoRow({ label, value, icon, type }) {
             {icon}
           </div>
         )}
-        <span className="text-md font-semibold text-slate-800">{value}</span>
+        <span className="text-md font-semibold text-[var(--slate-800)]">{value}</span>
       </div>
     </div>
   );

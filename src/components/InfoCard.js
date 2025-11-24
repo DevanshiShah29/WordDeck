@@ -16,7 +16,7 @@ export default function InfoCard({ icon, title, children, iconGradient }) {
         <div className={`p-3 rounded-xl text-white shadow-lg  bg-gradient-to-r  ${iconGradient}`}>
           {icon}
         </div>
-        <h2 className="text-xl font-bold text-slate-800 tracking-tight">{title}</h2>
+        <h2 className="text-xl font-bold text-[var(--slate-800)] tracking-tight">{title}</h2>
       </div>
       <div className="space-y-3 divide-y divide-slate-100">{children}</div>
     </div>

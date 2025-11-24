@@ -39,7 +39,7 @@ const Header = ({
           </Button>
           <div className="flex items-center gap-3">
             <div>
-              <h1 className="text-2xl font-bold text-slate-900">Bookmarks</h1>
+              <h1 className="text-2xl font-bold text-[var(--slate-900)]">Bookmarks</h1>
               <p className="text-[var(--slate-500)]">
                 {bookmarkedWords.length} {bookmarkedWords.length === 1 ? "word" : "words"}
               </p>
@@ -53,7 +53,7 @@ const Header = ({
               type="text"
               onChange={handleSearch}
               placeholder="Search words, difficulty, or type..."
-              className="w-full outline-none text-base text-slate-700 placeholder-[var(--slate-300)]"
+              className="w-full outline-none text-base text-[var(--slate-700)] placeholder-[var(--slate-300)]"
             />
           </div>
 

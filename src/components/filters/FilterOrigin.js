@@ -39,7 +39,7 @@ const OriginFilter = ({ selectedOrigins, setSelectedOrigins, allOrigins }) => {
           placeholder="Search origins..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full outline-none text-base text-slate-700 placeholder-[var(--slate-300)]"
+          className="w-full outline-none text-base text-[var(--slate-700)] placeholder-[var(--slate-300)]"
         />
       </div>
 
@@ -59,7 +59,7 @@ const OriginFilter = ({ selectedOrigins, setSelectedOrigins, allOrigins }) => {
                         ${
                           isSelected
                             ? "bg-[var(--primary-100)] text-[var(--primary-700)] hover:bg-[var(--primary-200)]"
-                            : "bg-slate-50 text-slate-700 hover:bg-[var(--primary-100)]"
+                            : "bg-slate-50 text-[var(--slate-700)] hover:bg-[var(--primary-100)]"
                         }
                     `}
               >

@@ -24,7 +24,7 @@ export default function Card({
       <div className="flex items-center gap-4 mb-6">
         {/* Icon Container */}
         <div className={`p-3 bg-gradient-to-r ${iconGradient} rounded-xl text-white`}>{icon}</div>
-        <h2 className="text-xl font-bold text-slate-900">{title}</h2>
+        <h2 className="text-xl font-bold text-[var(--slate-900)]">{title}</h2>
       </div>
 
       {/* Card Content Area */}

@@ -147,7 +147,9 @@ const FlippableWordCard = ({
                 className={`inline-flex items-center rounded-full border px-4 py-1.5 font-bold shadow-md text-white  transition-all ${
                   shouldShowImage
                     ? `bg-white/20 z-10`
-                    : `shadow-slate-900/10 bg-gradient-to-br ${getTypeGradient(wordData.type)}`
+                    : `shadow-[var(--slate-900)]/10 bg-gradient-to-br ${getTypeGradient(
+                        wordData.type
+                      )}`
                 } ${isFlipped ? "!opacity-0" : ""}`}
               >
                 {capitalizeFirstLetter(wordData.type)}
@@ -194,12 +196,12 @@ const FlippableWordCard = ({
             </div>
 
             <div className="space-y-6 flex-grow">
-              <div className="text-slate-800 bg-blue-50 rounded-lg p-3">
+              <div className="text-[var(--slate-800)] bg-blue-50 rounded-lg p-3">
                 <span className="flex items-center text-blue-700 font-sm mb-2">Definition</span>
                 {wordData.definition}
               </div>
 
-              <div className="text-slate-800 bg-violet-50 rounded-lg p-3">
+              <div className="text-[var(--slate-800)] bg-violet-50 rounded-lg p-3">
                 <span className="flex items-center text-blue-700 font-sm  mb-2">Example Usage</span>
                 {wordData.example
                   .split("/")
@@ -214,7 +216,7 @@ const FlippableWordCard = ({
                   ))}
               </div>
 
-              <div className="text-slate-800 bg-green-50 rounded-lg p-3">
+              <div className="text-[var(--slate-800)] bg-green-50 rounded-lg p-3">
                 <span className="flex items-center text-green-700 font-sm  mb-2">
                   💡 Memory Aid
                 </span>

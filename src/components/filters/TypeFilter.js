@@ -41,7 +41,7 @@ const TypeFilter = ({ selectedTypes, setSelectedTypes }) => {
             onChange={toggleAllTypes}
             className="w-5 h-5  border-[var(--slate-300)] rounded  cursor-pointer accent-[var(--primary-600)]"
           />
-          <span className="text-slate-800 font-bold">All Types</span>
+          <span className="text-[var(--slate-800)] font-bold">All Types</span>
         </label>
       </div>
 

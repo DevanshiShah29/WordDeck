@@ -29,15 +29,16 @@ const FilterDifficulty = ({ title, options, selected, setSelected, colorMap = {}
           if (title === "Difficulty Level") {
             const lowerCaseLevel = option.toLowerCase();
             const levelColors =
-              colorMap[lowerCaseLevel] || "bg-slate-100 text-slate-700 hover:bg-[var(--slate-200)]";
+              colorMap[lowerCaseLevel] ||
+              "bg-slate-100 text-[var(--slate-700)] hover:bg-[var(--slate-200)]";
 
             colorClasses = isSelected
               ? levelColors
-              : "bg-slate-100 text-slate-700 hover:bg-[var(--slate-200)]";
+              : "bg-slate-100 text-[var(--slate-700)] hover:bg-[var(--slate-200)]";
           } else {
             colorClasses = isSelected
               ? "bg-[var(--primary-600)] text-white hover:bg-[var(--primary-700)]"
-              : "bg-slate-100 text-slate-700 hover:bg-[var(--slate-200)]";
+              : "bg-slate-100 text-[var(--slate-700)] hover:bg-[var(--slate-200)]";
           }
 
           return (

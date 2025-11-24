@@ -106,7 +106,7 @@ export default function VocabularyHeader({
           <div className="flex flex-wrap items-center justify-between gap-4">
             {/* Title & Count */}
             <div>
-              <h1 className="text-2xl font-bold text-slate-900">Vocabulary Collection</h1>
+              <h1 className="text-2xl font-bold text-[var(--slate-900)]">Vocabulary Collection</h1>
               <p className="text-slate-500">{totalWords} words in total</p>
             </div>
 
@@ -163,7 +163,7 @@ export default function VocabularyHeader({
                 value={localSearchTerm}
                 onChange={handleInputChange}
                 placeholder="Search words, definitions, or synonyms..."
-                className="w-full outline-none text-base text-slate-700 placeholder-[var(--slate-300)]"
+                className="w-full outline-none text-base text-[var(--slate-700)] placeholder-[var(--slate-300)]"
               />
             </div>
 

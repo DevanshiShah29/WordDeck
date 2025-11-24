@@ -24,7 +24,7 @@ const DetailHeader = ({ word, onSpeak, onToggleBookmark, isBookmarked, handleEdi
               <ArrowLeft className="w-5 h-5 text-[var(--slate-600)] group-hover:text-[var(--primary-600)]" />
             </Button>
             <div>
-              <h1 className="text-2xl font-bold text-slate-900">{title}</h1>
+              <h1 className="text-2xl font-bold text-[var(--slate-900)]">{title}</h1>
               <p className="mt-1 text-[var(--slate-500)] text-sm font-mono bg-slate-100 px-3 py-1 rounded-lg inline-block">
                 {pronunciation}
               </p>

@@ -19,7 +19,7 @@ export default function Loader({ message = "Loading content, please wait...", fu
       <Loader2 className="w-8 h-8 text-[var(--primary)] animate-spin mb-4" />
 
       <div
-        className="text-lg font-medium tracking-wide text-slate-700 
+        className="text-lg font-medium tracking-wide text-[var(--slate-700)] 
                    animate-pulse transition-opacity duration-700"
       >
         {message}

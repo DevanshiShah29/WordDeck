@@ -128,7 +128,9 @@ export default function VocabDetail({ params }) {
               contentBackground="from-blue-50 to-indigo-50"
               contentBorderColor="border-blue-100"
             >
-              <p className="text-slate-800 text-lg leading-relaxed font-medium">{definition}</p>
+              <p className="text-[var(--slate-800)] text-lg leading-relaxed font-medium">
+                {definition}
+              </p>
             </Card>
 
             <Card
@@ -138,7 +140,7 @@ export default function VocabDetail({ params }) {
               contentBackground="from-purple-50 to-pink-50"
               contentBorderColor="border-purple-100"
             >
-              <blockquote className="text-lg leading-relaxed text-slate-800 italic">
+              <blockquote className="text-lg leading-relaxed text-[var(--slate-800)] italic">
                 {usage}
               </blockquote>
             </Card>
@@ -151,7 +153,7 @@ export default function VocabDetail({ params }) {
               contentBorderColor="border-indigo-100"
             >
               <p className="text-blue-800 text-lg font-semibold mb-2">{mini_etymology}</p>
-              <p className="text-slate-700 leading-relaxed text-lg">{etymology_story}</p>
+              <p className="text-[var(--slate-700)] leading-relaxed text-lg">{etymology_story}</p>
             </Card>
 
             <Card
