@@ -150,7 +150,9 @@ const VocabularyForm = () => {
               <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
                 <div className="flex items-center gap-3 mb-6">
                   <BookIcon className="w-6 h-6 text-[var(--primary-600)]" />
-                  <h2 className="text-xl font-semibold text-gray-900">1. Basic Information</h2>
+                  <h2 className="text-xl font-semibold text-[var(--slate-900)]">
+                    1. Basic Information
+                  </h2>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <FormField id="word" label="Word" placeholder="Enter the word" required />
@@ -196,7 +198,9 @@ const VocabularyForm = () => {
               <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
                 <div className="flex items-center gap-3 mb-6">
                   <GlobeIcon className="w-6 h-6 text-green-600" />
-                  <h2 className="text-xl font-semibold text-gray-900">2. Origin & Story</h2>
+                  <h2 className="text-xl font-semibold text-[var(--slate-900)]">
+                    2. Origin & Story
+                  </h2>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <FormField
@@ -236,7 +240,9 @@ const VocabularyForm = () => {
               <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
                 <div className="flex items-center gap-3 mb-6">
                   <LightbulbIcon className="w-6 h-6 text-yellow-600" />
-                  <h2 className="text-xl font-semibold text-gray-900">3. Memory & Media</h2>
+                  <h2 className="text-xl font-semibold text-[var(--slate-900)]">
+                    3. Memory & Media
+                  </h2>
                 </div>
                 <div className="space-y-6">
                   <TextareaField
@@ -274,7 +280,7 @@ const VocabularyForm = () => {
                 <div className="flex w-full md:w-auto items-center gap-4">
                   <Link
                     href="/word"
-                    className="px-6 py-3 border text-center border-gray-300 text-gray-700 bg-white rounded-lg hover:bg-gray-100 transition-colors font-medium w-1/2 md:w-auto"
+                    className="px-6 py-3 border text-center border-[var(--slate-300)] text-[var(--slate-700)] bg-white rounded-lg hover:bg-[var(--slate-100)] transition-colors font-medium w-1/2 md:w-auto"
                   >
                     Cancel
                   </Link>

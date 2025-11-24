@@ -111,7 +111,7 @@ const Bookmarks = () => {
   }, [currentSort, filteredWords]);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[var(--slate-50)]">
       <Header
         bookmarkedWords={bookmarkedWords}
         onSearch={handleSearch}
@@ -137,7 +137,7 @@ const Bookmarks = () => {
             ))}
           </div>
         ) : (
-          <Card className="bg-white border-gray-200 p-12 text-center mb-6">
+          <Card className="bg-white border-[var(--slate-200)] p-12 text-center mb-6">
             <div className="max-w-md mx-auto">
               <div className={`p-6 rounded-full w-fit mx-auto mb-6`}>
                 <Bookmark className={`h-16 w-16`} />
@@ -165,7 +165,7 @@ const Bookmarks = () => {
         )}
 
         {sortedVocab.length > 0 && (
-          <Card className={`bg-gray-50 border-gray-200 p-8 text-center`}>
+          <Card className={`bg-[var(--slate-50)] border-[var(--slate-200)] p-8 text-center`}>
             <h3 className={`text-xl font-bold mb-6`}>Quick Actions</h3>
             <div className="flex flex-wrap justify-center gap-4">
               <Button

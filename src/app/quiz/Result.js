@@ -41,7 +41,7 @@ const ReviewScreen = ({ quizHistory, totalScore, totalQuestions, onReviewSelect,
               </span>
             </div>
             {scorePercentage < 70 ? (
-              <p className="text-sm text-gray-600 mt-2 text-center">
+              <p className="text-sm text-[var(--slate-600)] mt-2 text-center">
                 Try revising some words and take the quiz again 💡
               </p>
             ) : (
@@ -50,11 +50,12 @@ const ReviewScreen = ({ quizHistory, totalScore, totalQuestions, onReviewSelect,
           </Card>
 
           <Card className="p-8 flex flex-col justify-center space-y-3 text-center">
-            <h3 className="text-xl font-semibold text-gray-800">Performance Summary</h3>
+            <h3 className="text-xl font-semibold text-[var(--slate-800)]">Performance Summary</h3>
 
-            <div className="space-y-1 text-sm text-gray-600">
+            <div className="space-y-1 text-sm text-[var(--slate-600)]">
               <p>
-                Total Questions: <span className="font-medium text-gray-900">{totalQuestions}</span>
+                Total Questions:{" "}
+                <span className="font-medium text-[var(--slate-900)]">{totalQuestions}</span>
               </p>
               <p>
                 Correct Answers: <span className="font-medium text-green-600">{totalScore}</span>
@@ -73,10 +74,10 @@ const ReviewScreen = ({ quizHistory, totalScore, totalQuestions, onReviewSelect,
           <Card className="p-8 flex flex-col justify-center items-center space-y-3 text-center">
             <div className="flex items-center gap-2">
               <Trophy className={`w-5 h-5 text-[var(--primary-600)]`} />
-              <h2 className="text-xl font-semibold text-gray-800">Quiz Complete!</h2>
+              <h2 className="text-xl font-semibold text-[var(--slate-800)]">Quiz Complete!</h2>
             </div>
 
-            <p className="text-lg text-gray-600">
+            <p className="text-lg text-[var(--slate-600)]">
               {scorePercentage === 100
                 ? "Perfect score! 🎉"
                 : scorePercentage >= 70
@@ -89,7 +90,7 @@ const ReviewScreen = ({ quizHistory, totalScore, totalQuestions, onReviewSelect,
             <div className="flex gap-2 w-full mt-4">
               <Button
                 onClick={() => router.push("/word")}
-                className={`mt-2 px-4 py-3 w-1/2 bg-gray-200 !text-gray-700 hover:bg-gray-300`}
+                className={`mt-2 px-4 py-3 w-1/2 bg-[var(--slate-200)] !text-[var(--slate-700)] hover:bg-[var(--slate-300)]`}
               >
                 Revise words
               </Button>
@@ -105,7 +106,9 @@ const ReviewScreen = ({ quizHistory, totalScore, totalQuestions, onReviewSelect,
 
         {/* Review Answers Card */}
         <Card className="p-8">
-          <h3 className={`text-xl font-bold mb-6 flex items-center gap-2 text-gray-800 pb-3`}>
+          <h3
+            className={`text-xl font-bold mb-6 flex items-center gap-2 text-[var(--slate-800)] pb-3`}
+          >
             <ListTodo className={`w-6 h-6 text-[var(--primary-600)]`} /> Review Your Answers
           </h3>
           <div className="space-y-4">
@@ -127,7 +130,7 @@ const ReviewScreen = ({ quizHistory, totalScore, totalQuestions, onReviewSelect,
                   >
                     {index + 1}
                   </span>
-                  <p className="font-semibold text-gray-800">{quiz.word}</p>
+                  <p className="font-semibold text-[var(--slate-800)]">{quiz.word}</p>
                 </div>
                 <div className="flex items-center gap-3">
                   {quiz.userAnswer === quiz.correct_option ? (

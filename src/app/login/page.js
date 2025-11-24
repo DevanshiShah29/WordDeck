@@ -57,8 +57,8 @@ const AuthForm = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4 font-sans">
-      <div className="w-full max-w-sm bg-white p-8 md:p-10 rounded-xl shadow-2xl border border-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-[var(--slate-50)] p-4 font-sans">
+      <div className="w-full max-w-sm bg-white p-8 md:p-10 rounded-xl shadow-2xl border border-[var(--slate-100)]">
         {/* Header */}
         <div className="flex flex-col items-center mb-8">
           <Aperture className="w-10 h-10 text-accent-500 mb-2" />

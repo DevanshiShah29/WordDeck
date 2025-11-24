@@ -69,7 +69,7 @@ const Header = ({
               className={`!py-3 w-1/2 md:w-auto ${
                 isHintActive
                   ? "bg-yellow-500 hover:bg-yellow-600 text-white"
-                  : "bg-gray-100 hover:bg-gray-200 text-gray-700"
+                  : "bg-[var(--slate-100)] hover:bg-[var(--slate-200)] text-[var(--slate-700)]"
               }`}
               onClick={handleHintClick}
             >

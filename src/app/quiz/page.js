@@ -19,7 +19,7 @@ const QUIZ_LENGTH = 5;
 
 const Progress = ({ value, className = "" }) => {
   return (
-    <div className={`w-full bg-gray-200 rounded-full h-3 ${className}`}>
+    <div className={`w-full bg-[var(--slate-200)] rounded-full h-3 ${className}`}>
       <div
         className={`bg-[var(--primary-600)] h-3 rounded-full transition-all duration-500`}
         style={{ width: `${value}%` }}
@@ -206,7 +206,7 @@ const QuizGenerator = () => {
   const getOptionClass = (option) => {
     // If not answered, use hover/default styling
     if (!isAnswered && isLastGeneratedQuestion) {
-      return "bg-white border-gray-300 text-gray-800 hover:bg-[var(--primary-50)] hover:border-[var(--primary)] shadow-sm transition-all hover:scale-[1.01]";
+      return "bg-white border-[var(--slate-300)] text-[var(--slate-800)] hover:bg-[var(--primary-50)] hover:border-[var(--primary)] shadow-sm transition-all hover:scale-[1.01]";
     }
 
     // Review/Answered Mode (Show feedback colors)
@@ -216,7 +216,7 @@ const QuizGenerator = () => {
     if (option === currentQuiz.userAnswer && option !== currentQuiz.correct_option) {
       return "border-[var(--red)] bg-red-500/20 text-red-700 shadow-md transition-all";
     }
-    return "bg-gray-100 border-gray-200 text-gray-500 cursor-default transition-all";
+    return "bg-[var(--slate-100)] border-[var(--slate-200)] text-[var(--slate-500)] cursor-default transition-all";
   };
 
   const actionButtonText = isQuizCompleted
@@ -274,16 +274,18 @@ const QuizGenerator = () => {
               <div className="mb-8 space-y-4">
                 <div className="flex items-end justify-between">
                   <div className="space-y-1">
-                    <p className="text-sm font-medium text-gray-500">
+                    <p className="text-sm font-medium text-[var(--slate-500)]">
                       Question {currentIndex + 1} of {quizWords.length}
                     </p>
-                    <p className="text-2xl font-bold text-gray-900">{totalScore} correct</p>
+                    <p className="text-2xl font-bold text-[var(--slate-900)]">
+                      {totalScore} correct
+                    </p>
                   </div>
                   <div className="text-right">
                     <div className={`text-4xl font-bold text-[var(--primary-600)]`}>
                       {progressPercentage}%
                     </div>
-                    <p className="text-xs text-gray-500">Quiz Progress</p>
+                    <p className="text-xs text-[var(--slate-500)]">Quiz Progress</p>
                   </div>
                 </div>
                 <Progress value={progressPercentage} className="h-3" />
@@ -298,12 +300,13 @@ const QuizGenerator = () => {
                   />
                 </Card>
               ) : (
-                // Main Quiz Card
                 <Card className="p-8 md:p-12 mb-6 shadow-xl">
                   {/* Question section */}
                   <div className="mb-8">
-                    <h2 className="text-2xl font-bold mb-3 text-gray-900">{currentQuiz.word}</h2>
-                    <p className="text-lg text-gray-600">{currentQuiz.question}</p>
+                    <h2 className="text-2xl font-bold mb-3 text-[var(--slate-900)]">
+                      {currentQuiz.word}
+                    </h2>
+                    <p className="text-lg text-[var(--slate-600)]">{currentQuiz.question}</p>
                   </div>
 
                   {/* Options section */}
@@ -321,8 +324,8 @@ const QuizGenerator = () => {
                       >
                         <span className="flex items-center gap-3">
                           <span
-                            className={`flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 text-sm ${
-                              isAnswered ? "bg-white" : "border-gray-300"
+                            className={`flex h-6 w-6 items-center justify-center rounded-full bg-[var(--slate-100)] text-sm ${
+                              isAnswered ? "bg-white" : "border-[var(--slate-300)]"
                             }`}
                           >
                             {String.fromCharCode(65 + index)}
@@ -345,22 +348,11 @@ const QuizGenerator = () => {
                   </div>
 
                   {/* Navigation Section */}
-                  <div
-                    className="
-                  mt-10 pt-6 border-t border-gray-200 
-    flex flex-col gap-4
-    md:flex-row md:justify-between
-                  "
-                  >
+                  <div className="mt-10 pt-6 border-t border-[var(--slate-200)] flex flex-col gap-4 md:flex-row md:justify-between">
                     <Button
                       onClick={handlePrevious}
                       disabled={currentIndex === 0 || isTotalLoading}
-                      className="
-                      px-5 py-3 bg-gray-100 border-gray-300 !text-gray-700 hover:bg-gray-200
-
-      w-full md:w-auto 
-      flex items-center justify-center
-                       "
+                      className="px-5 py-3 bg-[var(--slate-100)] border-[var(--slate-300)] !text-[var(--slate-700)] hover:bg-[var(--slate-200)] w-full md:w-auto flex items-center justify-center"
                     >
                       <ChevronLeft className="w-5 h-5 mr-1" />
                       Previous
@@ -369,11 +361,7 @@ const QuizGenerator = () => {
                       varient="primary"
                       onClick={handleMainButtonClick}
                       disabled={isActionButtonDisabled}
-                      className={`
-                        px-5 py-3 
-      w-full md:w-auto 
-      flex items-center justify-center
-                        `}
+                      className={`w-full md:w-auto flex items-center justify-center`}
                     >
                       {actionButtonText}
                       {actionButtonText.includes("Next") ? (

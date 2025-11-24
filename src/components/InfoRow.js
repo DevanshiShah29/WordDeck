@@ -15,7 +15,9 @@ export default function InfoRow({ label, value, icon, type }) {
 
   if (type === "difficulty") {
     const colorKey = value.toLowerCase();
-    const colors = difficultyColorMap[colorKey] || "bg-gray-100 text-gray-700 border-gray-300";
+    const colors =
+      difficultyColorMap[colorKey] ||
+      "bg-[var(--slate-100)] text-[var(--slate-700)] border-[var(--slate-300)]";
 
     return (
       <div className="flex items-center justify-between py-2">

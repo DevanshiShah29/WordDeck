@@ -17,7 +17,7 @@ const Header = ({ handleRestart }) => {
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-3">
               <Brain className={`h-5 w-5 text-[var(--primary-600)]`} />
-              <h1 className="text-sm font-semibold tracking-wide uppercase text-gray-700">
+              <h1 className="text-sm font-semibold tracking-wide uppercase text-[var(--slate-700)]">
                 AI Quiz
               </h1>
             </div>
@@ -25,9 +25,9 @@ const Header = ({ handleRestart }) => {
           <Button
             varient="transparent"
             onClick={handleRestart}
-            className="bg-gray-100 hover:bg-gray-200 ml-auto"
+            className="bg-[var(--slate-100)] hover:bg-[var(--slate-200)] ml-auto"
           >
-            <RotateCw className="w-4 h-4 text-gray-700" />
+            <RotateCw className="w-4 h-4 text-[var(--slate-700)]" />
           </Button>
         </div>
       </div>

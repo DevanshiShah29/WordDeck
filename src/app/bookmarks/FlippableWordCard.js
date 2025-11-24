@@ -44,7 +44,7 @@ const FlippableWordCard = ({
       }
     : {};
 
-  const textColorClass = shouldShowImage ? "text-white" : "text-gray-900";
+  const textColorClass = shouldShowImage ? "text-white" : "text-[var(--slate-900)]";
 
   return (
     <div
@@ -61,12 +61,12 @@ const FlippableWordCard = ({
       >
         {/* FRONT OF CARD  */}
         <Card
-          className={`absolute w-full h-full backface-hidden border-gray-200  hover:shadow-xl transition-all`}
+          className={`absolute w-full h-full backface-hidden border-[var(--slate-200)] hover:shadow-xl transition-all`}
           style={{ backfaceVisibility: "hidden" }}
         >
           <CardContent
             className={`flex flex-col items-center justify-center h-full p-8 relative pt-6 rounded-xl ${
-              shouldShowImage ? "bg-gray-900" : "bg-white"
+              shouldShowImage ? "bg-[var(--slate-900)]" : "bg-white"
             }`}
             style={hintStyles}
           >
@@ -88,7 +88,7 @@ const FlippableWordCard = ({
               >
                 <Eye
                   className={`h-4 w-4 ${
-                    shouldShowImage ? "text-white" : "text-gray-400 hover:text-green-600"
+                    shouldShowImage ? "text-white" : "text-[var(--slate-300)] hover:text-green-600"
                   }`}
                 />
               </Button>
@@ -111,7 +111,7 @@ const FlippableWordCard = ({
               >
                 <BookmarkMinus
                   className={`h-4 w-4 ${
-                    shouldShowImage ? "text-white" : "text-gray-400 hover:text-red-600"
+                    shouldShowImage ? "text-white" : "text-[var(--slate-300)] hover:text-red-600"
                   }`}
                 />
               </Button>
@@ -175,7 +175,7 @@ const FlippableWordCard = ({
 
         {/* BACK OF CARD  */}
         <Card
-          className="absolute w-full h-full backface-hidden border-gray-100 bg-white rounded-xl shadow-2xl p-6  hover:shadow-xl hover:shadow-[var(--primary-100)]/20 transition-all"
+          className="absolute w-full h-full backface-hidden border-[var(--slate-100)] bg-white rounded-xl shadow-2xl p-6  hover:shadow-xl hover:shadow-[var(--primary-100)]/20 transition-all"
           style={{
             backfaceVisibility: "hidden",
             transform: "rotateY(180deg)",
@@ -188,7 +188,7 @@ const FlippableWordCard = ({
           >
             <div className="flex items-center justify-between border-b border-[var(--primary-100)] pb-4 mb-4">
               <div>
-                <h4 className="text-xl font-extrabold text-gray-900">{wordData.word}</h4>
+                <h4 className="text-xl font-extrabold text-[var(--slate-900)]">{wordData.word}</h4>
               </div>
               <RotateCcw className="h-4 w-4 text-[var(--primary)] cursor-pointer hover:text-[var(--primary)] transition" />
             </div>
@@ -207,7 +207,7 @@ const FlippableWordCard = ({
                   .map((segment, idx) => (
                     <p
                       key={idx}
-                      className="text-md text-gray-700 italic leading-relaxed first:mt-0 mt-2"
+                      className="text-md text-[var(--slate-700)] italic leading-relaxed first:mt-0 mt-2"
                     >
                       • {segment.trim()}
                     </p>
