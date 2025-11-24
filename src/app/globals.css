@@ -35,6 +35,7 @@
   --slate-100: #f1f5f9;
   --slate-200: #e2e8f0;
   --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
   --slate-50: #f8fafc;
 }
 
@@ -71,20 +72,18 @@ html {
   width: 5px;
 }
 .thin-scrollbar::-webkit-scrollbar-track {
-  background: #fff; /* Color of the track */
+  background: #fff;
 }
 .thin-scrollbar::-webkit-scrollbar-thumb {
-  background: #b7b7b7; /* Color of the handle */
+  background: #b7b7b7;
   border-radius: 10px;
 }
 .thin-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #555; /* Color on hover */
+  background: #555;
 }
 
 .hidden-scrollbar {
-  /* Hide scrollbar for IE and Edge */
   -ms-overflow-style: none;
-  /* Hide scrollbar for Firefox */
   scrollbar-width: none;
 }
 
@@ -95,4 +94,14 @@ html {
 }
 .custom-select {
   border-radius: 0.5rem !important;
+}
+
+/* Target autofilled input fields in Webkit browsers (Chrome, Safari) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px var(--white, #ffffff) inset !important;
+  -webkit-text-fill-color: var(--slate-700, #334155) !important;
+  transition: background-color 5000s ease-in-out 0s;
 }

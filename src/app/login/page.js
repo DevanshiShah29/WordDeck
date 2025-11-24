@@ -10,7 +10,8 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import { Lock, LogIn, Aperture, User } from "lucide-react";
+import { Lock, LogIn, User } from "lucide-react";
+import logo from "@/assets/favicon.png";
 
 //  Mock User Data
 const MOCK_USERS = {
@@ -44,6 +45,10 @@ const AuthForm = () => {
 
       // Mock Login: Check if username exists and password matches
       if (MOCK_USERS[username] === password) {
+        if (typeof window !== "undefined") {
+          localStorage.setItem("auth_user", username);
+        }
+
         toast.success(`Welcome back, ${username}!`);
         router.push("/word"); // Redirect on successful login
       } else {
@@ -61,9 +66,12 @@ const AuthForm = () => {
       <div className="w-full max-w-sm bg-white p-8 md:p-10 rounded-xl shadow-2xl border border-[var(--slate-100)]">
         {/* Header */}
         <div className="flex flex-col items-center mb-8">
-          <Aperture className="w-10 h-10 text-accent-500 mb-2" />
-          <h1 className="text-3xl font-bold text-neutral-900">Sign In</h1>
-          <p className="text-neutral-700 text-sm mt-1">Access the app</p>
+          <div className="flex items-center">
+            <img src={logo.src} alt="Logo" className="h-7 w-7 inline-block mr-0.5" />
+            <h1 className="logo text-2xl mt-1 font-extrabold uppercase tracking-wider text-[var(--primary)] leading-none">
+              ordSmith
+            </h1>
+          </div>
         </div>
 
         <Formik

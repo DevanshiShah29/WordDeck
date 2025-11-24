@@ -2,6 +2,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 import "./generateAI.css";
+import AuthGuard from "@/components/AuthGuard";
 
 export const metadata = {
   title: "WordSpark | Ignite Your Vocabulary Power",
@@ -36,7 +37,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`antialiased`}>
-        {children}
+        <AuthGuard>{children}</AuthGuard>
         <ToastContainer
           position="top-right"
           autoClose={3000}
