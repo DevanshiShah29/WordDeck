@@ -79,7 +79,6 @@ const EditVocabularyForm = ({ params }) => {
   const [isGenerating, setIsGenerating] = useState(false);
 
   useEffect(() => {
-    // Scrolls the window to the top (0, 0) coordinates.
     window.scrollTo(0, 0);
   }, []);
 

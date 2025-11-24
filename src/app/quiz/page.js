@@ -146,6 +146,10 @@ const QuizGenerator = () => {
   }, [usedWords, quizWords, fetchQuizQuestion]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (allWords.length === 0 && !error && isWordsLoading) {
       fetchAllWords();
     }
@@ -252,7 +256,7 @@ const QuizGenerator = () => {
           {/*  Loading List  */}
           {isWordsLoading && (
             <Card className="text-center py-20 w-full mb-8">
-              <Loader message="Loading vocabulary list..." fullScreen={false} />
+              <Loader message="Loading the list..." fullScreen={false} />
             </Card>
           )}
 

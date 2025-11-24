@@ -257,7 +257,7 @@ export default function HomePage() {
   const { totalPages, currentPage, totalWords } = vocabResponse.pagination;
 
   if (loading && vocabResponse.data.length === 0) {
-    return <Loader message="Loading vocabulary list..." />;
+    return <Loader message="Loading the list..." />;
   }
 
   return (

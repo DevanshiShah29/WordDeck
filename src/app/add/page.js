@@ -48,7 +48,7 @@ const FormHeader = () => (
         <Link
           href="/word"
           className="p-2 rounded-lg transition-all duration-300 group hover:bg-slate-100"
-          aria-label="Go back to vocabulary list"
+          aria-label="Go back to the list"
         >
           <ArrowLeft className="w-5 h-5 text-slate-600 group-hover:text-[var(--primary-600)]" />
         </Link>

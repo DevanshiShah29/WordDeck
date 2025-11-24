@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // Library Imports
 import { X, RotateCcw } from "lucide-react";
@@ -33,7 +33,7 @@ export default function FilterModal({
   const [isBookmarkedOnly, setIsBookmarkedOnly] = useState(isBookmarked || false);
   const [dateRange, setDateRange] = useState(dateRangeFilter || { from: "", to: "" });
 
-  // --- Actions ---
+  // Actions
   const applyFilters = () => {
     onFilterChange?.({
       type: selectedTypes,
@@ -64,6 +64,14 @@ export default function FilterModal({
     onFilterChange?.(defaultFilters);
     onClose();
   };
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, []);
 
   const MODAL_CONTAINER_CLASSES =
     "bg-white rounded-2xl shadow-2xl w-full max-w-2xl h-[90vh] md:h-[80vh] flex flex-col relative transform transition-all duration-300 scale-95 md:scale-100";
@@ -112,14 +120,14 @@ export default function FilterModal({
                 placeholder="From Date"
                 value={dateRange.from}
                 onChange={(e) => setDateRange({ ...dateRange, from: e.target.value })}
-                className="px-4 py-2 border border-slate-300 rounded-lg text-slate-700 w-full focus:ring-2 focus:ring-[var(--primary)] transition-colors"
+                className="flex-1 px-4 py-2 border border-slate-300 rounded-lg text-slate-700 w-full focus:ring-2 focus:ring-[var(--primary)] transition-colors"
               />
               <input
                 type="date"
                 placeholder="To Date"
                 value={dateRange.to}
                 onChange={(e) => setDateRange({ ...dateRange, to: e.target.value })}
-                className="px-4 py-2 border border-slate-300 rounded-lg text-slate-700 w-full focus:ring-2 focus:ring-[var(--primary)] transition-colors"
+                className="flex-1 px-4 py-2 border border-slate-300 rounded-lg text-slate-700 w-full focus:ring-2 focus:ring-[var(--primary)] transition-colors"
               />
             </div>
           </FilterSection>

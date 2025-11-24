@@ -189,7 +189,7 @@ export default function VocabCard({
             {synonyms?.map((synonym, index) => (
               <span
                 key={index}
-                className=" text-sm px-2.5 py-1 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 rounded-lg font-medium"
+                className=" text-sm px-2.5 py-1 bg-gradient-to-r from-[var(--blue-100)] to-purple-100 text-[var(--blue-700)] rounded-lg font-medium"
               >
                 {capitalizeFirstLetter(synonym)}
               </span>
@@ -197,7 +197,7 @@ export default function VocabCard({
           </div>
         </div>
 
-        {/* --- Footer Area */}
+        {/* Footer Area */}
         <div className="p-6 border-t border-slate-200">
           <div className="flex flex-wrap items-center justify-between gap-2">
             {/* Difficulty */}

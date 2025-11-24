@@ -11,18 +11,21 @@
   --primary-100: #fce7f3; /* Pink-100 */
   --primary-50: #faedf4; /* Pink-50 */
 
-  --secondary: #06b6d4; /* Tailwind's Cyan-500 */
-  --secondary-600: #0891b2; /* Cyan-600 */
-  --secondary-400: #22d3ee; /* Cyan-400 */
-
-  /* --- Neutral Colors --- */
+  --secondary: #06b6d4; /* Teal-500 (Main) */
+  --secondary-600: #0891b2; /* Teal-600 */
+  --secondary-400: #22d3ee; /* Teal-400 */
+  --secondary-100: #defbfe; /* Teal-100 */
+  --secondary-800: #164e63; /* Teal-800 */
+  /*  Neutral Colors  */
   --black: #1f2937; /* Dark slate gray for body text */
   --white: #ffffff; /* White background */
-  --gray: #6b7280; /* Gray-500 for borders and secondary text */
-  --gray-light: #d1d5db; /* Gray-300 for lighter borders and backgrounds */
-  --gray-lighter: #f3f4f6; /* Gray-100 for very light backgrounds */
+  --gray: #6b7280; /* Gray-500  */
+  --gray-light: #d1d5db; /* Gray-300 */
+  --gray-lighter: #f3f4f6; /* Gray-100 */
   --accent: #f59e0b; /* Amber-500 for accents */
   --red: #ef4444; /* Red-500 for errors and warnings */
+  --blue-700: #1d4ed8; /* Blue-700 */
+  --blue-100: #dbeafe; /* Blue-100  */
 }
 
 @tailwind base;
