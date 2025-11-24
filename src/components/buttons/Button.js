@@ -17,10 +17,11 @@ const variantClasses = {
   primary:
     "bg-[var(--primary-600)] text-white hover:bg-[var(--primary-700)] focus:ring-[var(--primary)] px-4 py-2 rounded-lg font-medium transition",
   secondary:
-    "bg-slate-100 text-slate-700 hover:bg-[var(--slate-200)] focus:ring-slate-300  px-4 py-2 rounded-lg font-medium transition",
+    "bg-slate-100 text-slate-700 hover:bg-[var(--slate-200)] focus:ring-[var(--slate-300)]  px-4 py-2 rounded-lg font-medium transition",
   danger: "bg-red-600 text-white hover:bg-red-700 focus:ring-[var(--red)]",
-  ghost: "bg-transparent text-slate-600 hover:bg-slate-100 focus:ring-slate-300 focus:ring-0",
-  transparent: "text-slate-600 rounded-lg font-medium transition",
+  ghost:
+    "bg-transparent text-[var(--slate-600)] hover:bg-slate-100 focus:ring-[var(--slate-300)] focus:ring-0",
+  transparent: "text-[var(--slate-600)] rounded-lg font-medium transition",
 };
 
 /**

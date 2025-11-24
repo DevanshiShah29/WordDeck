@@ -43,7 +43,7 @@ const SortSelect = ({ currentSort, onSortChange, options }) => {
     valueContainer: () => "p-0 pl-3 cursor-pointer",
     singleValue: () => "text-slate-700",
     indicatorsContainer: () => "pr-2",
-    dropdownIndicator: () => "text-slate-500 hover:text-slate-700 transition",
+    dropdownIndicator: () => "text-[var(--slate-500)] hover:text-slate-700 transition",
     indicatorSeparator: () => "hidden",
 
     // Dropdown menu styling
@@ -54,11 +54,11 @@ const SortSelect = ({ currentSort, onSortChange, options }) => {
   const CustomControl = ({ children, ...rest }) => (
     <div
       {...rest.innerProps}
-      className={`${rest.className} border border-slate-300 w-full md:w-auto min-w-[150px] md:min-w-[200px] py-2.5 rounded-lg hover:border-slate-400 `}
+      className={`${rest.className} border border-[var(--slate-300)] w-full md:w-auto min-w-[150px] md:min-w-[200px] py-2.5 rounded-lg hover:border-[var(--slate-300)] `}
     >
       <div className="flex items-center">
         {children}
-        <ArrowDownNarrowWide size={20} className="text-slate-500 mr-3" />
+        <ArrowDownNarrowWide size={20} className="text-[var(--slate-500)] mr-3" />
       </div>
     </div>
   );

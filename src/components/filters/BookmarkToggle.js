@@ -23,7 +23,9 @@ const BookmarkedToggle = ({ isBookmarkedOnly, setIsBookmarkedOnly }) => {
       >
         <Bookmark
           size={20}
-          className={isBookmarkedOnly ? "text-yellow-600 fill-yellow-600" : "text-slate-500"}
+          className={
+            isBookmarkedOnly ? "text-yellow-600 fill-yellow-600" : "text-[var(--slate-500)]"
+          }
         />
         <span className={`font-medium ${isBookmarkedOnly ? "text-yellow-800" : "text-slate-700"}`}>
           Show Bookmarked Words Only

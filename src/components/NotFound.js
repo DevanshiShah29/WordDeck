@@ -18,7 +18,7 @@ export default function NotFound({ message }) {
 
         <h1 className="text-3xl font-extrabold text-slate-800 mb-3">Uh Oh! Missing Artifact</h1>
 
-        <p className="text-slate-500 text-base leading-relaxed">
+        <p className="text-[var(--slate-500)] text-base leading-relaxed">
           {message} Please return to the main list.
         </p>
 

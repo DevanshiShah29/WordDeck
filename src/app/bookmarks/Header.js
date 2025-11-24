@@ -40,20 +40,20 @@ const Header = ({
           <div className="flex items-center gap-3">
             <div>
               <h1 className="text-2xl font-bold text-slate-900">Bookmarks</h1>
-              <p className="text-slate-500">
+              <p className="text-[var(--slate-500)]">
                 {bookmarkedWords.length} {bookmarkedWords.length === 1 ? "word" : "words"}
               </p>
             </div>
           </div>
         </div>
         <div className="flex flex-col md:flex-row items-stretch mt-3 gap-4">
-          <div className="flex items-center w-full md:flex-1 bg-white border border-slate-300 rounded-lg px-4 py-3  hover:border-slate-400 ">
-            <Search size={20} className="text-slate-400 mr-3" />
+          <div className="flex items-center w-full md:flex-1 bg-white border border-[var(--slate-300)] rounded-lg px-4 py-3  hover:border-[var(--slate-300)] ">
+            <Search size={20} className="text-[var(--slate-300)] mr-3" />
             <input
               type="text"
               onChange={handleSearch}
               placeholder="Search words, difficulty, or type..."
-              className="w-full outline-none text-base text-slate-700 placeholder-slate-400"
+              className="w-full outline-none text-base text-slate-700 placeholder-[var(--slate-300)]"
             />
           </div>
 

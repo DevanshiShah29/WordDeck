@@ -62,8 +62,7 @@ export default function TagList({ icon, title, items, colors = "purple" }) {
     <div className="bg-white rounded-xl shadow-lg p-6 border border-slate-100">
       {/* Header */}
       <div className="flex items-center gap-3 mb-4">
-        <div className="text-slate-600">{icon}</div>{" "}
-        {/* Added text-slate-600 for icon color consistency */}
+        <div className="text-[var(--slate-600)]">{icon}</div>{" "}
         <h2 className="text-xl font-bold text-slate-900">{title}</h2>
       </div>
 

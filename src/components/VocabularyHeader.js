@@ -156,14 +156,14 @@ export default function VocabularyHeader({
 
           <div className="flex flex-col md:flex-row items-stretch mt-3 gap-4">
             {/* Search Bar */}
-            <div className="flex items-center w-full md:flex-1 bg-white border border-slate-300 rounded-lg px-4 py-3  hover:border-slate-400 ">
-              <Search size={20} className="text-slate-400 mr-3" />
+            <div className="flex items-center w-full md:flex-1 bg-white border border-[var(--slate-300)] rounded-lg px-4 py-3  hover:border-[var(--slate-300)] ">
+              <Search size={20} className="text-[var(--slate-300)] mr-3" />
               <input
                 type="text"
                 value={localSearchTerm}
                 onChange={handleInputChange}
                 placeholder="Search words, definitions, or synonyms..."
-                className="w-full outline-none text-base text-slate-700 placeholder-slate-400"
+                className="w-full outline-none text-base text-slate-700 placeholder-[var(--slate-300)]"
               />
             </div>
 

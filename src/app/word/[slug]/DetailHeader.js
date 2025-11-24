@@ -21,11 +21,11 @@ const DetailHeader = ({ word, onSpeak, onToggleBookmark, isBookmarked, handleEdi
               className="p-2 rounded-lg transition-all duration-300 group hover:bg-slate-100"
               onClick={() => router.back()}
             >
-              <ArrowLeft className="w-5 h-5 text-slate-600 group-hover:text-[var(--primary-600)]" />
+              <ArrowLeft className="w-5 h-5 text-[var(--slate-600)] group-hover:text-[var(--primary-600)]" />
             </Button>
             <div>
               <h1 className="text-2xl font-bold text-slate-900">{title}</h1>
-              <p className="mt-1 text-slate-500 text-sm font-mono bg-slate-100 px-3 py-1 rounded-lg inline-block">
+              <p className="mt-1 text-[var(--slate-500)] text-sm font-mono bg-slate-100 px-3 py-1 rounded-lg inline-block">
                 {pronunciation}
               </p>
             </div>
@@ -37,7 +37,7 @@ const DetailHeader = ({ word, onSpeak, onToggleBookmark, isBookmarked, handleEdi
               variant="transparent"
               onClick={onSpeak}
               title="Play pronunciation"
-              className="p-2 hover:bg-[var(--primary-100)] rounded-lg transition-all duration-300 text-slate-600 hover:text-[var(--primary-600)] transform hover:scale-110 cursor-pointer"
+              className="p-2 hover:bg-[var(--primary-100)] rounded-lg transition-all duration-300 text-[var(--slate-600)] hover:text-[var(--primary-600)] transform hover:scale-110 cursor-pointer"
             >
               <Volume2 className="w-5 h-5" />
             </Button>
@@ -49,7 +49,7 @@ const DetailHeader = ({ word, onSpeak, onToggleBookmark, isBookmarked, handleEdi
               className={`p-2 cursor-pointer rounded-lg transition transform hover:scale-105 ${
                 isBookmarked
                   ? "bg-[var(--primary-600)] text-white shadow-lg"
-                  : "bg-slate-100 text-slate-600 hover:bg-[var(--primary-100)] hover:text-[var(--primary-600)]"
+                  : "bg-slate-100 text-[var(--slate-600)] hover:bg-[var(--primary-100)] hover:text-[var(--primary-600)]"
               }`}
             >
               <Bookmark className="w-5 h-5" fill={isBookmarked ? "currentColor" : "none"} />
@@ -58,7 +58,7 @@ const DetailHeader = ({ word, onSpeak, onToggleBookmark, isBookmarked, handleEdi
             <Button
               variant="transparent"
               title="Edit word entry"
-              className="p-2 hover:bg-[var(--primary-100)] rounded-lg transition-all duration-300 text-slate-600 hover:text-[var(--primary-600)] transform hover:scale-110 cursor-pointer"
+              className="p-2 hover:bg-[var(--primary-100)] rounded-lg transition-all duration-300 text-[var(--slate-600)] hover:text-[var(--primary-600)] transform hover:scale-110 cursor-pointer"
               onClick={handleEditClick}
             >
               <Pencil className="w-5 h-5 " />

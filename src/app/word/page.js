@@ -289,7 +289,7 @@ export default function HomePage() {
                   />
                 ))
               ) : (
-                <p className="text-slate-500 text-lg sm:col-span-2 lg:col-span-3">
+                <p className="text-[var(--slate-500)] text-lg sm:col-span-2 lg:col-span-3">
                   No words match the current filters. Try broadening your search!
                 </p>
               )}

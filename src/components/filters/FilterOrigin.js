@@ -32,14 +32,14 @@ const OriginFilter = ({ selectedOrigins, setSelectedOrigins, allOrigins }) => {
       onClear={clearOrigins}
     >
       {/* Search Input */}
-      <div className="flex items-center w-full bg-white border border-slate-300 rounded-lg px-4 py-2  hover:border-slate-400 mb-3">
-        <Search size={18} className="text-slate-400 mr-3" />
+      <div className="flex items-center w-full bg-white border border-[var(--slate-300)] rounded-lg px-4 py-2  hover:border-[var(--slate-300)] mb-3">
+        <Search size={18} className="text-[var(--slate-300)] mr-3" />
         <input
           type="text"
           placeholder="Search origins..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full outline-none text-base text-slate-700 placeholder-slate-400"
+          className="w-full outline-none text-base text-slate-700 placeholder-[var(--slate-300)]"
         />
       </div>
 
@@ -73,7 +73,7 @@ const OriginFilter = ({ selectedOrigins, setSelectedOrigins, allOrigins }) => {
           })}
         </div>
         {searchTerm && filteredOptions.length === 0 && (
-          <p className="text-sm text-slate-500 p-2">
+          <p className="text-sm text-[var(--slate-500)] p-2">
             No origins found matching &quot;{searchTerm} &quot;
           </p>
         )}

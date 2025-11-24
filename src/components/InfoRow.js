@@ -46,7 +46,11 @@ export default function InfoRow({ label, value, icon, type }) {
       <span className="text-md font-medium text-slate-700">{label}</span>
 
       <div className="flex items-center gap-1">
-        {icon && <div className="flex items-center justify-center text-slate-500 mr-1">{icon}</div>}
+        {icon && (
+          <div className="flex items-center justify-center text-[var(--slate-500)] mr-1">
+            {icon}
+          </div>
+        )}
         <span className="text-md font-semibold text-slate-800">{value}</span>
       </div>
     </div>
