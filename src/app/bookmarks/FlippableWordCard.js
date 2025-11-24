@@ -144,9 +144,9 @@ const FlippableWordCard = ({
               </h3>
 
               <div
-                className={`inline-flex items-center rounded-full border px-4 py-1.5 font-bold shadow-md text-white transition-all ${
+                className={`inline-flex items-center rounded-full px-4 py-1.5 font-bold shadow-md text-white transition-all ${
                   shouldShowImage
-                    ? `bg-white/20 z-10`
+                    ? `bg-white/20 z-10 border`
                     : `shadow-[var(--slate-900)]/10 bg-gradient-to-br ${getTypeGradient(
                         wordData.type
                       )}`

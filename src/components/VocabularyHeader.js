@@ -13,7 +13,7 @@ import { useDebounce } from "@/components/hooks/useDebounce";
 
 // Utility Imports
 import { SORT_OPTIONS } from "@/utils/constants";
-
+import logo from "@/assets/favicon.png";
 /**
  * Header component for the vocabulary page, including search and filtering controls.
  *
@@ -106,7 +106,12 @@ export default function VocabularyHeader({
           <div className="flex flex-wrap items-center justify-between gap-4">
             {/* Title & Count */}
             <div>
-              <h1 className="text-2xl font-bold text-[var(--slate-900)]">Vocabulary Collection</h1>
+              <div className="flex items-center">
+                <img src={logo.src} alt="Logo" className="h-7 w-7 inline-block mr-0.5" />
+                <h1 className="logo text-2xl mt-1 font-extrabold uppercase tracking-wider text-[var(--primary)] leading-none">
+                  ordSmith
+                </h1>
+              </div>
               <p className="text-slate-500">{totalWords} words in total</p>
             </div>
 
