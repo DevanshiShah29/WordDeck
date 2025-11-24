@@ -39,7 +39,7 @@ const TypeFilter = ({ selectedTypes, setSelectedTypes }) => {
             type="checkbox"
             checked={selectedTypes.length === TYPE_VALUES.length}
             onChange={toggleAllTypes}
-            className="w-5 h-5  border-gray-300 rounded  cursor-pointer accent-[var(--primary-600)]"
+            className="w-5 h-5  border-[var(--slate-300)] rounded  cursor-pointer accent-[var(--primary-600)]"
           />
           <span className="text-slate-800 font-bold">All Types</span>
         </label>
@@ -56,9 +56,9 @@ const TypeFilter = ({ selectedTypes, setSelectedTypes }) => {
               id={typeOption.value}
               checked={selectedTypes.includes(typeOption.value)}
               onChange={() => toggleSelection(typeOption.value)}
-              className="w-5 h-5  border-gray-300 rounded cursor-pointer accent-[var(--primary-600)]"
+              className="w-5 h-5 border-[var(--slate-300)] rounded cursor-pointer accent-[var(--primary-600)]"
             />
-            <span className="capitalize text-slate-700">{typeOption.label}</span>
+            <span className="capitalize text-[var(--slate-700)]">{typeOption.label}</span>
           </label>
         ))}
       </div>

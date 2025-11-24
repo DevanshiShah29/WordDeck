@@ -40,20 +40,20 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   };
 
   return (
-    <div className="w-full bg-white pt-6 pb-10 shadow-md border-t border-gray-200">
+    <div className="w-full bg-white pt-6 pb-10 shadow-md border-t border-[var(--slate-200)]">
       <div className="container mx-auto px-4 sm:px-8">
         <div className=" flex justify-center sm:justify-end items-center space-x-2">
           <Button
             variant="transparent"
             onClick={() => onPageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="flex items-center px-3 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150"
+            className="flex items-center px-3 py-2.5 text-sm font-medium text-[var(--slate-700)] bg-white border border-[var(--slate-300)] rounded-lg hover:bg-[var(--slate-50)] disabled:opacity-50 disabled:cursor-not-allowed transition duration-150"
           >
             <ChevronLeft className="w-5 h-5 " />
           </Button>
 
           {/* Mobile View: Page X of Y (Hidden on sm and up) */}
-          <span className="sm:hidden text-sm font-semibold text-gray-700 px-3 py-2.5">
+          <span className="sm:hidden text-sm font-semibold text-[var(--slate-700)] px-3 py-2.5">
             {currentPage} / {totalPages}
           </span>
 
@@ -61,7 +61,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
           <div className="hidden sm:flex space-x-1">
             {getPageNumbers().map((page, index) =>
               page === "..." ? (
-                <span key={index} className="px-3 py-2 text-gray-500">
+                <span key={index} className="px-3 py-2 text-[var(--slate-500)]">
                   ...
                 </span>
               ) : (
@@ -74,7 +74,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
                     ${
                       page === currentPage
                         ? "bg-[var(--primary)] text-white shadow-md"
-                        : "bg-white text-gray-700 border border-gray-300 hover:bg-[var(--primary-50)] hover:text-[var(--primary-600)]"
+                        : "bg-white text-[var(--slate-700)] border border-[var(--slate-300)] hover:bg-[var(--primary-50)] hover:text-[var(--primary-600)]"
                     }
                   `}
                   aria-current={page === currentPage ? "page" : undefined}
@@ -89,7 +89,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
             variant="transparent"
             onClick={() => onPageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="flex items-center px-3 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150"
+            className="flex items-center px-3 py-2.5 text-sm font-medium text-[var(--slate-700)] bg-white border border-[var(--slate-300)] rounded-lg hover:bg-[var(--slate-50)] disabled:opacity-50 disabled:cursor-not-allowed transition duration-150"
           >
             <ChevronRight className="w-5 h-5 " />
           </Button>

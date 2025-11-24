@@ -19,12 +19,12 @@ const FormField = ({ label, id, type = "text", placeholder, icon, required }) =>
   const isError = touched[id] && errors[id];
   const borderColor = isError
     ? "border-[var(--red)] ring-[var(--red)]"
-    : "border-gray-300 focus:border-[var(--primary)] focus:ring-[var(--primary)]";
+    : "border-[var(--slate-300)] focus:border-[var(--primary)] focus:ring-[var(--primary)]";
 
   return (
     <div className="space-y-2">
       {/* Label and Icon */}
-      <label htmlFor={id} className="block text-sm font-medium text-gray-700 select-none">
+      <label htmlFor={id} className="block text-sm font-medium text-[var(--slate-700)] select-none">
         {/* Icon (if provided) */}
         {Icon && (
           <Icon
@@ -61,8 +61,8 @@ const FormField = ({ label, id, type = "text", placeholder, icon, required }) =>
           py-3 
           border 
           rounded-xl 
-          text-gray-900 
-          placeholder-gray-500 
+          text-[var(--slate-900)] 
+          placeholder-[var(--slate-500)] 
           shadow-sm
           transition-colors
           outline-none 

@@ -43,14 +43,10 @@ const SelectField = ({ label, id, options, required, isMulti = false, ...props }
     return options.find((option) => option.value === currentValue) || null;
   }, [values, id, isMulti, options]);
 
-  // --- Original Custom Styles (Functional and Preserved) ---
-
   const selectStyles = {
-    // This is necessary if you need complex, state-dependent styling that CSS/Tailwind can't easily handle
     option: (provided, state) => ({
       ...provided,
       color: state.isSelected ? "white" : "black",
-      // Using your original blue-gray color values
       backgroundColor: state.isSelected
         ? "var(--primary)"
         : state.isFocused
@@ -63,8 +59,6 @@ const SelectField = ({ label, id, options, required, isMulti = false, ...props }
     }),
   };
 
-  // --- Original Custom ClassNames (Functional and Preserved) ---
-
   const selectClassNames = {
     // Preserve the original class structure and logic for control styling
     control: (state) =>
@@ -73,18 +67,17 @@ const SelectField = ({ label, id, options, required, isMulti = false, ...props }
           ? "border-[var(--primary)] ring-1 ring-[var(--primary)] shadow-md"
           : isInvalid
           ? "border-[var(--red)] ring-1 ring-[var(--red)]"
-          : "border-gray-300"
+          : "border-[var(--slate-300)]"
       }`,
-    placeholder: () => "text-gray-500",
-    singleValue: () => "text-gray-900",
+    placeholder: () => "text-[var(--slate-500)]",
+    singleValue: () => "text-[var(--slate-900)]",
     option: (state) => `py-2 px-4 cursor-pointer`,
     menu: () => "rounded-lg overflow-hidden mt-1 bg-white shadow-xl",
-    menuList: () => "thin-scrollbar", // Preserved custom scrollbar class
-    dropdownIndicator: () => "text-gray-400 hover:text-gray-600 transition",
-    clearIndicator: () => "text-gray-400 hover:text-[var(--red)] transition",
+    menuList: () => "thin-scrollbar",
+    dropdownIndicator: () => "text-[var(--slate-300)] hover:text-[var(--slate-600)] transition",
+    clearIndicator: () => "text-[var(--slate-300)] hover:text-[var(--red)] transition",
     indicatorSeparator: () => "hidden",
 
-    // Multi-select classes for better styling consistency
     multiValue: () => "bg-[var(--primary-100)] text-[var(--primary-700)] rounded-md",
     multiValueLabel: () => "py-1 pl-3 text-sm font-medium",
     multiValueRemove: () => "pl-1 pr-2 text-blue-500 hover:text-[var(--red)] transition",
@@ -93,7 +86,7 @@ const SelectField = ({ label, id, options, required, isMulti = false, ...props }
   return (
     <div className="space-y-2">
       {/* Label */}
-      <label htmlFor={id} className="block text-sm font-medium text-gray-700 select-none">
+      <label htmlFor={id} className="block text-sm font-medium text-[var(--slate-700)] select-none">
         {label}
         {required && (
           <span className="text-red-600 ml-1 font-bold" aria-hidden="true">
