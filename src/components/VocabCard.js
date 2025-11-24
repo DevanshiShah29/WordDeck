@@ -198,7 +198,7 @@ export default function VocabCard({
         </div>
 
         {/* Footer Area */}
-        <div className="p-6 border-t border-slate-200">
+        <div className="p-6 border-t border-[var(--slate-200)]">
           <div className="flex flex-wrap items-center justify-between gap-2">
             {/* Difficulty */}
             <span

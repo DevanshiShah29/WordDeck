@@ -80,7 +80,7 @@ export default function FilterModal({
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <div className={MODAL_CONTAINER_CLASSES}>
         {/* Header */}
-        <div className="py-4 px-8 border-b border-slate-200 flex items-center justify-between">
+        <div className="py-4 px-8 border-b border-[var(--slate-200)] flex items-center justify-between">
           <h2 className="text-xl font-bold text-slate-800">Advance filters</h2>
           <Button
             variant="transparent"
@@ -139,7 +139,7 @@ export default function FilterModal({
         </div>
 
         {/* Footer */}
-        <div className="flex justify-between items-center p-6 border-t border-slate-200 bg-white">
+        <div className="flex justify-between items-center p-6 border-t border-[var(--slate-200)] bg-white">
           <Button variant="secondary" onClick={clearAllFilters}>
             <RotateCcw className="mr-2 h-4 w-4" />
             Clear All

@@ -42,7 +42,7 @@ const initialValues = {
 };
 
 const FormHeader = () => (
-  <div className="bg-white backdrop-blur-sm shadow-lg border-b border-slate-200 sticky top-0 z-40">
+  <div className="bg-white backdrop-blur-sm shadow-lg border-b border-[var(--slate-200)] sticky top-0 z-40">
     <div className="container mx-auto py-4 px-4 md:px-8">
       <div className="flex items-center gap-2">
         <Link

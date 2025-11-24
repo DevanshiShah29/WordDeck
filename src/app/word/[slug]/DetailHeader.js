@@ -11,7 +11,7 @@ const DetailHeader = ({ word, onSpeak, onToggleBookmark, isBookmarked, handleEdi
   const { word: title, pronunciation } = word;
 
   return (
-    <div className="bg-white/80 backdrop-blur-sm shadow-lg border-b border-slate-200 sticky top-0 z-40">
+    <div className="bg-white/80 backdrop-blur-sm shadow-lg border-b border-[var(--slate-200)] sticky top-0 z-40">
       <div className="container mx-auto px-8 py-4">
         <div className="flex items-center justify-between">
           {/* Title and Back Button */}

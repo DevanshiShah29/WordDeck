@@ -31,7 +31,7 @@ const Header = ({
   };
 
   return (
-    <header className="bg-white backdrop-blur-sm shadow-sm border-b border-slate-200/50 z-40 relative">
+    <header className="bg-white backdrop-blur-sm shadow-sm border-b border-[var(--slate-200)]/50 z-40 relative">
       <div className="container mx-auto p-6">
         <div className="flex items-center gap-4 ">
           <Button variant="transparent" size="icon" onClick={() => router.back()}>

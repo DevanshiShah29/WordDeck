@@ -101,7 +101,7 @@ export default function VocabularyHeader({
 
   return (
     <>
-      <header className="bg-white backdrop-blur-sm shadow-sm border-b border-slate-200/50 z-40 relative">
+      <header className="bg-white backdrop-blur-sm shadow-sm border-b border-[var(--slate-200)]/50 z-40 relative">
         <div className="container mx-auto p-4 md:p-6">
           <div className="flex flex-wrap items-center justify-between gap-4">
             {/* Title & Count */}

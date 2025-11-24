@@ -46,7 +46,7 @@ const DUMMY_INITIAL_VALUES = {
 };
 
 const FormHeader = ({ word }) => (
-  <div className="bg-white backdrop-blur-sm shadow-lg border-b border-slate-200 sticky top-0 z-40">
+  <div className="bg-white backdrop-blur-sm shadow-lg border-b border-[var(--slate-200)] sticky top-0 z-40">
     <div className="container mx-auto px-4 py-4 md:px-8">
       <div className="flex items-center gap-2">
         <Link
