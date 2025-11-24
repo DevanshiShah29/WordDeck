@@ -119,8 +119,8 @@ const FlippableWordCard = ({
 
             {/* Difficulty Badge - Top Left */}
             <div
-              className={`absolute top-4 left-4 ${shouldShowImage ? "z-10 opacity-50" : ""} ${
-                isFlipped ? "opacity-0" : ""
+              className={`absolute top-4 left-4 ${shouldShowImage ? "z-10 opacity-80" : ""} ${
+                isFlipped ? "!opacity-0" : ""
               }`}
             >
               <div
@@ -144,7 +144,7 @@ const FlippableWordCard = ({
               </h3>
 
               <div
-                className={`inline-flex items-center rounded-full border px-4 py-1.5 font-bold shadow-md text-white  transition-all ${
+                className={`inline-flex items-center rounded-full border px-4 py-1.5 font-bold shadow-md text-white transition-all ${
                   shouldShowImage
                     ? `bg-white/20 z-10`
                     : `shadow-[var(--slate-900)]/10 bg-gradient-to-br ${getTypeGradient(

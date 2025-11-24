@@ -293,9 +293,9 @@ const QuizGenerator = () => {
 
               {/* Generating Subsequent Question (Below progress bar) */}
               {loading ? (
-                <Card className="text-center py-16 mb-8">
+                <Card className="text-center p-8 mb-8">
                   <Loader
-                    message={`Generating question for ${wordBeingFetched} ...`}
+                    message={`Generating question for ${wordBeingFetched}`}
                     fullScreen={false}
                   />
                 </Card>
