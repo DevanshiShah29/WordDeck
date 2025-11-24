@@ -54,7 +54,7 @@ const SortSelect = ({ currentSort, onSortChange, options }) => {
   const CustomControl = ({ children, ...rest }) => (
     <div
       {...rest.innerProps}
-      className={`${rest.className} border border-[var(--slate-300)] w-full md:w-auto min-w-[150px] md:min-w-[200px] py-2.5 rounded-lg hover:border-[var(--slate-300)] `}
+      className={`${rest.className} border border-[var(--slate-400)] w-full md:w-auto min-w-[150px] md:min-w-[200px] py-2.5 rounded-lg hover:border-[var(--slate-400)] `}
     >
       <div className="flex items-center">
         {children}

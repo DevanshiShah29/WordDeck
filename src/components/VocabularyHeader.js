@@ -2,13 +2,14 @@
 import { useState, useMemo, useRef, useEffect } from "react";
 
 // Library Imports
-import { Search, Bookmark, Plus, ListFilter, Brain } from "lucide-react";
+import { Bookmark, Plus, ListFilter, Brain, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 // Component Imports
 import FilterModal from "./filters/FilterModal";
 import Button from "./buttons/Button";
 import SortSelect from "./formItems/SortSelect";
+import SearchBar from "./SearchBar";
 import { useDebounce } from "@/components/hooks/useDebounce";
 
 // Utility Imports
@@ -99,6 +100,14 @@ export default function VocabularyHeader({
     );
   }, [type, tag, level, dateRange, origin, wordLength, isBookmarked]);
 
+  const handleLogout = () => {
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("auth_user");
+      localStorage.removeItem("vocab_app_state");
+    }
+    router.replace("/login");
+  };
+
   return (
     <>
       <header className="bg-white backdrop-blur-sm shadow-sm border-b border-[var(--slate-200)]/50 z-40 relative">
@@ -127,7 +136,7 @@ export default function VocabularyHeader({
 
               <Button
                 onClick={() => setIsFilterModalOpen(true)}
-                className="flex flex-1 items-center justify-center md:justify-start bg-purple-600 text-white hover:bg-purple-700 relative p-2 md:px-4 md:py-2"
+                className="relative flex flex-1 items-center justify-center md:justify-start bg-purple-600 text-white hover:bg-purple-700  p-2 md:px-4 md:py-2"
               >
                 <ListFilter size={18} className="mr-0 md:mr-2" />
                 <span className="hidden md:inline">Filters</span>
@@ -141,7 +150,7 @@ export default function VocabularyHeader({
 
               <Button
                 onClick={() => router.push("/quiz")}
-                className="flex flex-1 items-center justify-center md:justify-start bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition shadow-md p-2 md:px-4 md:py-2"
+                className="flex flex-1 items-center justify-center md:justify-start bg-teal-600 text-white rounded-lg hover:bg-teal-700 p-2 md:px-4 md:py-2"
                 variant="transparent"
               >
                 <Brain size={18} className="mr-0 md:mr-2" />
@@ -150,27 +159,33 @@ export default function VocabularyHeader({
 
               <Button
                 onClick={() => router.push("/add")}
-                className="flex flex-1 items-center justify-center md:justify-start bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--primary-600)] transition shadow-md p-2 md:px-4 md:py-2"
+                className="flex flex-1 items-center justify-center md:justify-start bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--primary-700)] p-2 md:px-4 md:py-2"
                 variant="transparent"
               >
                 <Plus size={18} className="mr-0 md:mr-2" />
                 <span className="hidden md:inline">Add</span>
+              </Button>
+
+              <Button
+                onClick={handleLogout}
+                className="flex flex-1 items-center justify-center md:justify-start bg-orange-500 text-white  rounded-lg hover:bg-orange-700  p-2 md:px-4 md:py-2"
+                variant="transparent"
+                aria-label="Logout"
+              >
+                <LogOut size={18} className="mr-0 md:mr-2" />
+                <span className="hidden md:inline">Logout</span>
               </Button>
             </div>
           </div>
 
           <div className="flex flex-col md:flex-row items-stretch mt-3 gap-4">
             {/* Search Bar */}
-            <div className="flex items-center w-full md:flex-1 bg-white border border-[var(--slate-400)] rounded-lg px-4 py-3  hover:border-[var(--slate-400)] ">
-              <Search size={20} className="text-[var(--slate-400)] mr-3" />
-              <input
-                type="text"
-                value={localSearchTerm}
-                onChange={handleInputChange}
-                placeholder="Search words, definitions, or synonyms..."
-                className="w-full outline-none text-base text-[var(--slate-700)] placeholder-[var(--slate-400)]"
-              />
-            </div>
+
+            <SearchBar
+              value={localSearchTerm}
+              onChange={handleInputChange}
+              placeholder="Search words, definitions, or synonyms..."
+            />
 
             <SortSelect
               currentSort={currentSort}

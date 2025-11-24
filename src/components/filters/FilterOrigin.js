@@ -2,10 +2,11 @@ import React, { useState } from "react";
 
 // Library Imports
 import Button from "../buttons/Button";
-import { X, Search } from "lucide-react";
+import { X } from "lucide-react";
 
 // Component Imports
 import FilterSection from "./FilterSection";
+import SearchBar from "../SearchBar";
 
 import { ORIGIN_OPTIONS } from "@/utils/constants";
 
@@ -32,16 +33,15 @@ const OriginFilter = ({ selectedOrigins, setSelectedOrigins, allOrigins }) => {
       onClear={clearOrigins}
     >
       {/* Search Input */}
-      <div className="flex items-center w-full bg-white border border-[var(--slate-400)] rounded-lg px-4 py-2  hover:border-[var(--slate-400)] mb-3">
-        <Search size={18} className="text-[var(--slate-400)] mr-3" />
-        <input
-          type="text"
-          placeholder="Search origins..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full outline-none text-base text-[var(--slate-700)] placeholder-[var(--slate-400)]"
-        />
-      </div>
+
+      <SearchBar
+        iconSize={18}
+        placeholder="Search origins..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="mb-4 px-3 py-1"
+        inputClassName="text-sm"
+      />
 
       <div className="max-h-40 overflow-y-auto">
         <div className="flex flex-wrap gap-2">

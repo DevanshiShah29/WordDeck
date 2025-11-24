@@ -3,6 +3,21 @@ import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 import "./generateAI.css";
 import AuthGuard from "@/components/AuthGuard";
+import { Montserrat, Noto_Sans } from "next/font/google";
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-montserrat",
+  display: "swap",
+});
+
+const noto_sans = Noto_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-noto-sans",
+  display: "swap",
+});
 
 export const metadata = {
   title: "WordSpark | Ignite Your Vocabulary Power",
@@ -35,7 +50,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={` ${montserrat.variable} ${noto_sans.variable} `}>
       <body className={`antialiased`}>
         <AuthGuard>{children}</AuthGuard>
         <ToastContainer

@@ -106,10 +106,14 @@ const AuthForm = () => {
                     type="submit"
                     icon={LogIn}
                     disabled={isSubmitting || !isValid}
-                    className="w-full mt-4 bg-[var(--primary)] text-white hover:bg-[var(--primary-600)] flex items-center justify-center gap-2 p-3 rounded-lg font-semibold transition"
+                    className="w-full mt-4 bg-[var(--primary)] text-white hover:bg-[var(--primary-600)]  items-center  p-3 rounded-lg font-semibold text-lg"
                   >
                     {isSubmitting ? "Signing In..." : "Sign In"}
                   </Button>
+                </div>
+
+                <div className="text-md text-[var(--slate-700)] text-center mt-6">
+                  &copy; {new Date().getFullYear()} All rights reserved
                 </div>
               </Form>
             );

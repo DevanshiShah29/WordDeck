@@ -1,12 +1,13 @@
 import React from "react";
 
 // Library Imports
-import { ArrowLeft, Search, Lightbulb } from "lucide-react";
+import { ArrowLeft, Lightbulb } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 // Component Imports
 import Button from "@/components/buttons/Button";
 import SortSelect from "@/components/formItems/SortSelect";
+import SearchBar from "@/components/SearchBar";
 
 // Utility Imports
 import { SORT_OPTIONS } from "@/utils/constants";
@@ -47,15 +48,7 @@ const Header = ({
           </div>
         </div>
         <div className="flex flex-col md:flex-row items-stretch mt-3 gap-4">
-          <div className="flex items-center w-full md:flex-1 bg-white border border-[var(--slate-400)] rounded-lg px-4 py-3  hover:border-[var(--slate-400)] ">
-            <Search size={20} className="text-[var(--slate-400)] mr-3" />
-            <input
-              type="text"
-              onChange={handleSearch}
-              placeholder="Search words, difficulty, or type..."
-              className="w-full outline-none text-base text-[var(--slate-700)] placeholder-[var(--slate-400)]"
-            />
-          </div>
+          <SearchBar onChange={handleSearch} placeholder="Search words, difficulty, or type..." />
 
           <div className="flex gap-4 w-full md:w-auto">
             <SortSelect

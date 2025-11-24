@@ -24,19 +24,17 @@ const FormField = ({ label, id, type = "text", placeholder, icon, required }) =>
   return (
     <div className="space-y-2">
       {/* Label and Icon */}
-      <label htmlFor={id} className="block text-sm font-medium text-[var(--slate-700)] select-none">
+      <label htmlFor={id} className="block text-md font-medium text-[var(--slate-700)] select-none">
         {/* Icon (if provided) */}
         {Icon && (
           <Icon
-            className="w-4 h-4 inline-block align-text-bottom mr-2 text-[var(--primary)]"
+            className="w-5 h-5 inline-block align-text-bottom mr-2 text-[var(--primary)]"
             aria-hidden="true"
           />
         )}
 
-        {/* Label Text */}
         {label}
 
-        {/* Required Asterisk (if required) */}
         {required && (
           <span className="text-red-600 ml-1 font-bold" aria-hidden="true">
             *
@@ -61,6 +59,7 @@ const FormField = ({ label, id, type = "text", placeholder, icon, required }) =>
           py-3 
           border 
           rounded-xl 
+          text-lg
           text-[var(--slate-900)] 
           placeholder-[var(--slate-500)] 
           shadow-sm

@@ -62,7 +62,7 @@ const SelectField = ({ label, id, options, required, isMulti = false, ...props }
   const selectClassNames = {
     // Preserve the original class structure and logic for control styling
     control: (state) =>
-      `bg-white px-3 py-1.5 border rounded-lg custom-select transition-all outline-none ${
+      `bg-white px-3 py-1.5 border rounded-lg custom-select transition-all outline-none text-lg ${
         state.isFocused
           ? "border-[var(--primary)] ring-1 ring-[var(--primary)] shadow-md"
           : isInvalid
@@ -77,16 +77,12 @@ const SelectField = ({ label, id, options, required, isMulti = false, ...props }
     dropdownIndicator: () => "text-[var(--slate-300)] hover:text-[var(--slate-600)] transition",
     clearIndicator: () => "text-[var(--slate-300)] hover:text-[var(--red)] transition",
     indicatorSeparator: () => "hidden",
-
-    multiValue: () => "bg-[var(--primary-100)] text-[var(--primary-700)] rounded-md",
-    multiValueLabel: () => "py-1 pl-3 text-sm font-medium",
-    multiValueRemove: () => "pl-1 pr-2 text-blue-500 hover:text-[var(--red)] transition",
   };
 
   return (
     <div className="space-y-2">
       {/* Label */}
-      <label htmlFor={id} className="block text-sm font-medium text-[var(--slate-700)] select-none">
+      <label htmlFor={id} className="block text-md font-medium text-[var(--slate-700)] select-none">
         {label}
         {required && (
           <span className="text-red-600 ml-1 font-bold" aria-hidden="true">
