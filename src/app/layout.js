@@ -60,8 +60,13 @@ export default function RootLayout({ children }) {
     <html lang="en" className={` ${montserrat.variable} ${noto_sans.variable} `}>
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#ffffff" />
-        <link rel="apple-touch-icon" href="/assets/favicon.png" />
+        <meta name="theme-color" content="#fff" />
+        <link rel="icon" href="/logo.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/logo.png" />
+        <link rel="apple-touch-icon" sizes="192x192" href="/logo.png" />
+        <link rel="apple-touch-icon" sizes="512x512" href="/logo.png" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
       </head>
       <body className={`antialiased`}>
         <AuthGuard>{children}</AuthGuard>
