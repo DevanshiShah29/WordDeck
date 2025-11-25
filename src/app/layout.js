@@ -1,7 +1,10 @@
+// Library Imports
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 import "./generateAI.css";
+
+// Component Imports
 import AuthGuard from "@/components/AuthGuard";
 import { Montserrat, Noto_Sans } from "next/font/google";
 
@@ -20,27 +23,31 @@ const noto_sans = Noto_Sans({
 });
 
 export const metadata = {
-  title: "WordSpark | Ignite Your Vocabulary Power",
+  title: "WordSmith",
 
   description:
-    "WordSpark provides fast, engaging quizzes and personalized tracking to help you rapidly expand your word knowledge. Start mastering complex vocabulary today!",
+    "WordSmith provides fast, engaging quizzes and personalized tracking to help you rapidly expand your word knowledge. Start mastering complex vocabulary today!",
 
   keywords:
     "vocabulary app, word quiz, learn new words, improve vocabulary, language fluency, WordSpark, word game, spaced repetition",
-
+  manifest: "/manifest.json",
+  icons: {
+    icon: "/assets/favicon.png",
+    apple: "/assets/favicon.png",
+  },
   // OpenGraph (OG) Metadata for Social Media Sharing (e.g., Facebook, LinkedIn)
   openGraph: {
-    title: "WordSpark: Ignite Your Vocabulary Power",
+    title: "WordSmith: Ignite Your Vocabulary Power",
     description:
       "Rapidly expand your word knowledge with fast, engaging quizzes and personalized tracking.",
-    url: "https://your-app-domain.com", // REPLACE with your actual domain
-    siteName: "WordSpark",
+    url: "https://www.wordsmithtool.netlify.app",
+    siteName: "WordSmith",
     images: [
       {
         url: "https://your-app-domain.com/og-banner.jpg", //  REPLACE with a link to your app's banner image (1200x630px recommended)
         width: 1200,
         height: 630,
-        alt: "WordSpark Vocabulary App Screenshot",
+        alt: "WordSmith Vocabulary App Screenshot",
       },
     ],
     locale: "en_US",
@@ -51,6 +58,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={` ${montserrat.variable} ${noto_sans.variable} `}>
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#ffffff" />
+        <link rel="apple-touch-icon" href="/assets/favicon.png" />
+      </head>
       <body className={`antialiased`}>
         <AuthGuard>{children}</AuthGuard>
         <ToastContainer

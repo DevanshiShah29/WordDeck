@@ -1,3 +1,9 @@
+const withPWA = require("next-pwa")({
+  dest: "public", // The destination folder for the service worker (sw.js)
+  register: true, // Auto-register the service worker
+  skipWaiting: true, // Activate the new service worker immediately
+  disable: process.env.NODE_ENV === "development", // Optional: disable PWA in development
+});
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -15,4 +21,4 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+module.exports = withPWA(nextConfig);
