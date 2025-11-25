@@ -86,7 +86,7 @@ const VocabularyForm = () => {
         }
 
         // Success
-        toast.success(`Word "${values.word}" added successfully!`);
+        toast.success(`Word ${values.word} added successfully!`);
         router.push("/word");
       } catch (error) {
         toast.error("Failed to add word due to a network or connection error.");

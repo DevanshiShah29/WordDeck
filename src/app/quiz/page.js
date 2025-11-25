@@ -136,6 +136,8 @@ const QuizGenerator = () => {
       return;
     }
 
+    scrollToTop();
+
     const availableWords = quizWords.filter((word) => !usedWords.includes(word));
     const randomIndex = Math.floor(Math.random() * availableWords.length);
     const nextWord = availableWords[randomIndex];
@@ -148,6 +150,13 @@ const QuizGenerator = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
   useEffect(() => {
     if (allWords.length === 0 && !error && isWordsLoading) {
@@ -179,6 +188,7 @@ const QuizGenerator = () => {
   const handleNext = () => {
     if (currentIndex < quizHistory.length - 1) {
       setCurrentIndex((prev) => prev + 1);
+      scrollToTop();
     } else if (isLastGeneratedQuestion && isAnswered && !isQuizCompleted) {
       generateNewQuestion();
     }
@@ -201,6 +211,7 @@ const QuizGenerator = () => {
   const handleReviewSelect = (index) => {
     setIsReviewing(false);
     setCurrentIndex(index);
+    scrollToTop();
   };
 
   const getOptionClass = (option) => {
@@ -291,7 +302,6 @@ const QuizGenerator = () => {
                 <Progress value={progressPercentage} className="h-3" />
               </div>
 
-              {/* Generating Subsequent Question (Below progress bar) */}
               {loading ? (
                 <Card className="text-center p-8 mb-8">
                   <Loader
@@ -352,7 +362,7 @@ const QuizGenerator = () => {
                     <Button
                       onClick={handlePrevious}
                       disabled={currentIndex === 0 || isTotalLoading}
-                      className="px-5 py-3 bg-[var(--slate-100)] border-[var(--slate-300)] !text-[var(--slate-700)] hover:bg-[var(--slate-200)] w-full md:w-auto flex items-center justify-center"
+                      className="px-5 py-4 bg-[var(--slate-100)] border-[var(--slate-300)] !text-[var(--slate-700)] hover:bg-[var(--slate-200)] w-full md:w-auto flex items-center justify-center"
                     >
                       <ChevronLeft className="w-5 h-5 mr-1" />
                       Previous
@@ -361,7 +371,7 @@ const QuizGenerator = () => {
                       varient="primary"
                       onClick={handleMainButtonClick}
                       disabled={isActionButtonDisabled}
-                      className={`w-full md:w-auto flex items-center justify-center`}
+                      className={`w-full md:w-auto flex items-center justify-center py-4`}
                     >
                       {actionButtonText}
                       {actionButtonText.includes("Next") ? (

@@ -24,12 +24,10 @@ const noto_sans = Noto_Sans({
 
 export const metadata = {
   title: "WordSmith",
-
   description:
     "WordSmith provides fast, engaging quizzes and personalized tracking to help you rapidly expand your word knowledge. Start mastering complex vocabulary today!",
-
   keywords:
-    "vocabulary app, word quiz, learn new words, improve vocabulary, language fluency, WordSpark, word game, spaced repetition",
+    "vocabulary app, word quiz, learn new words, improve vocabulary, language fluency, wordsmith, word game, spaced repetition",
   manifest: "/manifest.json",
   icons: {
     icon: "/logo.png",
@@ -72,7 +70,7 @@ export default function RootLayout({ children }) {
         <AuthGuard>{children}</AuthGuard>
         <ToastContainer
           position="top-right"
-          autoClose={3000}
+          autoClose={2000}
           hideProgressBar={false}
           newestOnTop={false}
           closeOnClick
