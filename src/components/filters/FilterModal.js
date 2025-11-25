@@ -120,18 +120,18 @@ export default function FilterModal({
                 placeholder="From Date"
                 value={dateRange.from}
                 onChange={(e) => setDateRange({ ...dateRange, from: e.target.value })}
-                className="flex-1 px-4 py-2 border border-[var(--slate-300)] rounded-lg text-[var(--slate-700)] w-full 
+                className="flex-1 px-4 py-2 border border-[var(--slate-300)] rounded-lg w-full 
                  focus:ring-2 focus:ring-[var(--primary)] transition-colors 
-                 appearance-none"
+                 appearance-none text-[var(--slate-700)]"
               />
               <input
                 type="date"
                 placeholder="To Date"
                 value={dateRange.to}
                 onChange={(e) => setDateRange({ ...dateRange, to: e.target.value })}
-                className="flex-1 px-4 py-2 border border-[var(--slate-300)] rounded-lg text-[var(--slate-700)] w-full 
+                className="flex-1 px-4 py-2 border border-[var(--slate-300)] rounded-lg w-full 
                  focus:ring-2 focus:ring-[var(--primary)] transition-colors 
-                 appearance-none"
+                 appearance-none  text-[var(--slate-700)]"
               />
             </div>
           </FilterSection>

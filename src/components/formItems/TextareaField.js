@@ -23,7 +23,7 @@ const TextareaField = ({ label, id, placeholder, rows = 3, required }) => {
   return (
     <div className="space-y-2">
       {/* Label */}
-      <label htmlFor={id} className="block text-md font-medium text-[var(--slate-700)] select-none">
+      <label htmlFor={id} className="block text-sm font-medium text-[var(--slate-700)] select-none">
         {label}
         {required && (
           <span className="text-red-600 ml-1 font-bold" aria-hidden="true">
@@ -50,7 +50,7 @@ const TextareaField = ({ label, id, placeholder, rows = 3, required }) => {
           py-3 
           border 
           rounded-xl 
-          text-lg
+          text-md
           text-[var(--slate-900)] 
           placeholder-[var(--slate-500)] 
           shadow-sm
