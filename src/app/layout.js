@@ -32,8 +32,8 @@ export const metadata = {
     "vocabulary app, word quiz, learn new words, improve vocabulary, language fluency, WordSpark, word game, spaced repetition",
   manifest: "/manifest.json",
   icons: {
-    icon: "/assets/favicon.png",
-    apple: "/assets/favicon.png",
+    icon: "/logo.png",
+    apple: "/logo.png",
   },
   // OpenGraph (OG) Metadata for Social Media Sharing (e.g., Facebook, LinkedIn)
   openGraph: {
