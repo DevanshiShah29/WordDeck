@@ -6,4 +6,4 @@ const Card = ({ className, ...props }) => (
     {...props}
   />
 );
-export default Card;
+export default Card; 
