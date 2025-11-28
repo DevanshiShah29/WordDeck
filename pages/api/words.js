@@ -394,6 +394,38 @@ async function handlePatch(req, res, collection) {
   }
 }
 
+/**
+ * Handles deleting a single word document by its _id or slug.
+ */
+async function handleDelete(req, res, collection) {
+  const { _id, slug } = req.query;
+  const filter = {};
+
+  // Determine the Filter (by _id or slug)
+  if (_id) {
+    if (!ObjectId.isValid(_id))
+      return res.status(400).json({ error: "Invalid _id format for deletion." });
+    filter._id = new ObjectId(_id);
+  } else if (slug) {
+    filter.slug = slug;
+  } else {
+    return res.status(400).json({ error: "Missing _id or slug for delete operation." });
+  }
+
+  try {
+    const deleteResult = await collection.deleteOne(filter);
+
+    if (deleteResult.deletedCount === 0) {
+      return res.status(404).json({ error: `Word not found for deletion.` });
+    }
+
+    return res.status(200).json({ message: "Word deleted successfully!" });
+  } catch (dbError) {
+    console.error("MongoDB Deletion Failed:", dbError);
+    return res.status(500).json({ error: "Failed to delete word from database." });
+  }
+}
+
 // Main Export Handler
 
 export default async function handler(req, res) {
@@ -410,6 +442,8 @@ export default async function handler(req, res) {
         return handlePost(req, res, collection);
       case "PATCH":
         return handlePatch(req, res, collection);
+      case "DELETE":
+        return handleDelete(req, res, collection);
       default:
         res.setHeader("Allow", ["GET", "POST", "PATCH"]);
         return res.status(405).end(`Method ${req.method} Not Allowed`);

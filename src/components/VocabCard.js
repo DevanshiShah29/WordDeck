@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 // Library Imports
 import Link from "next/link";
-import { Volume2, Languages, Bookmark, BookOpen, Pencil } from "lucide-react";
+import { Volume2, Languages, Bookmark, BookOpen, Pencil, MoreVertical, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
@@ -36,11 +36,20 @@ export default function VocabCard({
 
   // State to manage the UI's bookmark status, initialized from the prop
   const [isBookmarkedState, setIsBookmarkedState] = useState(initialBookmarked);
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // New state for the dropdown menu
 
   // Sync internal state if the prop changes (e.g., parent re-fetches data)
   useEffect(() => {
     setIsBookmarkedState(initialBookmarked);
   }, [initialBookmarked]);
+
+  useEffect(() => {
+    const closeMenu = () => setIsMenuOpen(false);
+    if (isMenuOpen) {
+      document.addEventListener("click", closeMenu);
+    }
+    return () => document.removeEventListener("click", closeMenu);
+  }, [isMenuOpen]);
 
   const updateBookmarkStatus = async (wordSlug, isNowBookmarked) => {
     const endpoint = `/api/words?slug=${wordSlug}`;
@@ -69,9 +78,40 @@ export default function VocabCard({
     }
   };
 
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsMenuOpen(false);
+
+    if (
+      !window.confirm(
+        `Are you sure you want to delete the word "${word}"? This action cannot be undone.`
+      )
+    ) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/words?slug=${slug}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `Failed to delete word: ${response.status}`);
+      }
+
+      toast.success(`Word "${word}" deleted successfully.`);
+      router.refresh();
+    } catch (error) {
+      toast.error(error.message || "Failed to delete word. Please try again.");
+    }
+  };
+
   const handleActionClick = async (e, action) => {
-    e.preventDefault(); // Prevents the default button action
-    e.stopPropagation(); // Prevents the click from bubbling up to the Link
+    e.preventDefault();
+    e.stopPropagation();
+    setIsMenuOpen(false);
     if (action === "speak") {
       speakWord(word);
     } else if (action === "bookmark") {
@@ -90,6 +130,12 @@ export default function VocabCard({
     }
   };
 
+  const toggleMenu = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsMenuOpen((prev) => !prev);
+  };
+
   return (
     <Link href={`/word/${slug}`} className="block h-full">
       <div className="flex flex-col h-full group relative bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-500 overflow-hidden cursor-pointer transform hover:-translate-y-1 border border-slate-100">
@@ -103,15 +149,59 @@ export default function VocabCard({
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
 
-          <div className="absolute top-4 right-14 z-10">
-            <Button
-              className="p-2.5 cursor-pointer bg-white/90 backdrop-blur-sm text-[var(--slate-600)] rounded-xl hover:bg-white hover:text-indigo-600 transition-all duration-300 shadow-lg"
-              title="Edit word entry"
-              onClick={(e) => handleActionClick(e, "edit")}
-              variant="transparent"
-            >
-              <Pencil className="w-4 h-4 text-[var(--slate-600)] drop-shadow-md" />
-            </Button>
+          <div className="absolute top-4 right-4 z-20">
+            <div className="relative">
+              <Button
+                className="p-2.5 cursor-pointer bg-white/90 backdrop-blur-sm text-[var(--slate-600)] rounded-xl hover:bg-white hover:text-[var(--primary-600)] transition-all duration-300 shadow-lg"
+                title="More Actions"
+                onClick={toggleMenu}
+                variant="transparent"
+              >
+                <MoreVertical className="w-5 h-5 drop-shadow-md" />
+              </Button>
+
+              {isMenuOpen && (
+                <div
+                  className="absolute right-0 mt-2 w-40 origin-top-right rounded-md shadow-2xl bg-white 
+                          ring-opacity-5 divide-y divide-slate-100 focus:outline-none z-30"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div className="py-1">
+                    <Button
+                      variant="transparent"
+                      onClick={(e) => handleActionClick(e, "edit")}
+                      className="group flex items-center justify-start w-full px-4 py-2 text-sm text-[var(--slate-700)] hover:bg-[var(--slate-100)]"
+                    >
+                      <Pencil className="mr-3 h-4 w-4 text-indigo-500" />
+                      Edit
+                    </Button>
+
+                    <Button
+                      variant="transparent"
+                      onClick={(e) => handleActionClick(e, "bookmark")}
+                      className="group flex items-center justify-start w-full px-4 py-2 text-sm text-[var(--slate-700)] hover:bg-[var(--slate-100)] "
+                    >
+                      <Bookmark
+                        className={`mr-3 h-4 w-4 ${
+                          isBookmarkedState ? "text-[var(--red)] fill-current" : "text-blue-500"
+                        }`}
+                        fill={isBookmarkedState ? "currentColor" : "none"}
+                      />
+                      {isBookmarkedState ? "Unbookmark" : "Bookmark"}
+                    </Button>
+
+                    <Button
+                      variant="transparent"
+                      onClick={handleDelete}
+                      className="group flex items-center justify-start w-full px-4 py-2 text-sm text-red-700 hover:bg-[var(--slate-100)] "
+                    >
+                      <Trash2 className="mr-3 h-4 w-4 text-red-500" />
+                      Delete
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Bookmark Button */}
