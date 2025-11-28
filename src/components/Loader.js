@@ -20,7 +20,7 @@ export default function Loader({ message = "Loading content, please wait...", fu
 
       <div
         className="text-lg font-medium tracking-wide text-[var(--slate-700)] 
-                   animate-pulse transition-opacity duration-700"
+                   animate-pulse transition-opacity duration-700 text-center"
       >
         {message}
       </div>

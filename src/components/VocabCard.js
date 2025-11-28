@@ -36,7 +36,7 @@ export default function VocabCard({
 
   // State to manage the UI's bookmark status, initialized from the prop
   const [isBookmarkedState, setIsBookmarkedState] = useState(initialBookmarked);
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // New state for the dropdown menu
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Sync internal state if the prop changes (e.g., parent re-fetches data)
   useEffect(() => {
@@ -83,11 +83,7 @@ export default function VocabCard({
     e.stopPropagation();
     setIsMenuOpen(false);
 
-    if (
-      !window.confirm(
-        `Are you sure you want to delete the word "${word}"? This action cannot be undone.`
-      )
-    ) {
+    if (!window.confirm(`Are you sure you want to delete the word "${word}"? `)) {
       return;
     }
 
@@ -139,8 +135,8 @@ export default function VocabCard({
   return (
     <Link href={`/word/${slug}`} className="block h-full">
       <div className="flex flex-col h-full group relative bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-500 overflow-hidden cursor-pointer transform hover:-translate-y-1 border border-slate-100">
-        {/* --- Image Header Area --- */}
-        <div className="relative h-40 sm:h-48 md:h-50 overflow-hidden">
+        {/* Image Header Area */}
+        <div className="relative h-40 sm:h-48 md:h-50 ">
           <ImageWithFallback
             src={imageUrl}
             alt={`Illustration for ${word}`}
@@ -152,7 +148,7 @@ export default function VocabCard({
           <div className="absolute top-4 right-4 z-20">
             <div className="relative">
               <Button
-                className="p-2.5 cursor-pointer bg-white/90 backdrop-blur-sm text-[var(--slate-600)] rounded-xl hover:bg-white hover:text-[var(--primary-600)] transition-all duration-300 shadow-lg"
+                className="p-2 cursor-pointer bg-white/90 backdrop-blur-sm text-[var(--slate-600)] rounded-xl hover:bg-white hover:text-[var(--primary-600)] transition-all duration-300 shadow-lg"
                 title="More Actions"
                 onClick={toggleMenu}
                 variant="transparent"
@@ -162,8 +158,7 @@ export default function VocabCard({
 
               {isMenuOpen && (
                 <div
-                  className="absolute right-0 mt-2 w-40 origin-top-right rounded-md shadow-2xl bg-white 
-                          ring-opacity-5 divide-y divide-slate-100 focus:outline-none z-30"
+                  className="absolute right-0 mt-2 w-40 origin-top-right rounded-md shadow-2xl bg-white divide-y divide-slate-100 focus:outline-none z-30"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div className="py-1">
@@ -172,7 +167,7 @@ export default function VocabCard({
                       onClick={(e) => handleActionClick(e, "edit")}
                       className="group flex items-center justify-start w-full px-4 py-2 text-sm text-[var(--slate-700)] hover:bg-[var(--slate-100)]"
                     >
-                      <Pencil className="mr-3 h-4 w-4 text-indigo-500" />
+                      <Pencil className="mr-3 h-4 w-4 text-blue-500" />
                       Edit
                     </Button>
 
@@ -267,6 +262,7 @@ export default function VocabCard({
           </div>
           <div className="border-l-3 border-[var(--primary-200)] ">
             <p
+              title={definition}
               className="text-md text-[var(--slate-800)] line-clamp-3 bg-[var(--primary-50)] rounded-r-lg px-4 py-2.5
               leading-6 max-h-[87px] overflow-hidden"
             >

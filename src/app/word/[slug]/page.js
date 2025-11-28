@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 // Utility Imports
 import { speakWord, formattedDate } from "@/utils/helper";
@@ -52,11 +53,11 @@ export default function VocabDetail({ params }) {
   }, [slug]);
 
   if (loading) {
-    return <Loader message={`Loading details for "${slug}"...`} />;
+    return <Loader message={`Loading details for ${slug}...`} />;
   }
 
   if (!word) {
-    return <NotFound message={`Word with slug "${slug}" not found.`} />;
+    return <NotFound message={`Word with slug ${slug} not found.`} />;
   }
 
   const {
@@ -84,6 +85,30 @@ export default function VocabDetail({ params }) {
     router.push(`/edit/${slug}`);
   };
 
+  const handleDeleteClick = async (e) => {
+    console.log("Delete clicked");
+
+    if (!window.confirm(`Are you sure you want to delete the word ${slug}?`)) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/words?slug=${slug}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `Failed to delete word: ${response.status}`);
+      }
+
+      toast.success(`Word ${slug} deleted successfully.`);
+      router.push("/word");
+    } catch (error) {
+      toast.error(error.message || "Failed to delete word. Please try again.");
+    }
+  };
+
   const safeSynonyms = formatWordListProp(synonyms);
   const safeTags = formatWordListProp(tags);
 
@@ -95,6 +120,7 @@ export default function VocabDetail({ params }) {
         onToggleBookmark={handleToggleBookmark}
         isBookmarked={bookmarked}
         handleEditClick={handleEditClick}
+        handleDeleteClick={handleDeleteClick}
       />
 
       <div className="container mx-auto p-4 md:p-8">
