@@ -13,6 +13,8 @@ import {
   Star,
   Tag,
   Languages,
+  Expand,
+  X,
 } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -31,6 +33,7 @@ import InfoRow from "@/components/InfoRow";
 import Loader from "@/components/Loader";
 import NotFound from "@/components/NotFound";
 import DetailHeader from "./DetailHeader";
+import Button from "@/components/buttons/Button";
 
 export default function VocabDetail({ params }) {
   const actualParams = use(params);
@@ -41,6 +44,7 @@ export default function VocabDetail({ params }) {
   const [word, setWord] = useState(null);
   const [loading, setLoading] = useState(true);
   const [bookmarked, setBookmarked] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (!slug) return;
@@ -51,6 +55,17 @@ export default function VocabDetail({ params }) {
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
   }, [slug]);
+
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isModalOpen]);
 
   if (loading) {
     return <Loader message={`Loading details for ${slug}...`} />;
@@ -137,15 +152,48 @@ export default function VocabDetail({ params }) {
                   className="object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-                <div className="absolute top-6 right-6 z-10">
+                <div className="absolute top-4 right-4 z-10">
                   <div
                     className={`px-3 py-1.5 rounded-xl text-sm font-bold shadow-lg bg-gradient-to-r ${gradient} text-white capitalize`}
                   >
                     {type}
                   </div>
                 </div>
+                <div
+                  className="absolute bottom-0 right-0 cursor-pointer"
+                  onClick={() => setIsModalOpen(true)}
+                >
+                  <Expand className="h-9 w-9 bg-[var(--slate-900)] text-white p-2 rounded-lg" />
+                </div>
               </div>
             </div>
+
+            {isModalOpen && (
+              <div
+                className="fixed inset-0 z-[100] bg-black/90 m-0 flex items-center justify-center p-4"
+                onClick={() => setIsModalOpen(false)}
+              >
+                <Button
+                  variant="transparent"
+                  className="absolute top-8 right-5 z-10 text-white !text-xl font-light bg-white/10 hover:bg-white/20 rounded-full p-2 transition-colors"
+                  onClick={() => setIsModalOpen(false)}
+                >
+                  <X className="w-5 h-5" />
+                </Button>
+
+                <div
+                  className="relative w-full h-full max-w-screen-xl max-h-full"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <Image
+                    src={image || "/placeholder.jpg"}
+                    alt={title || "word"}
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+            )}
 
             <Card
               icon={<BookOpen className="h-5 w-5" />}

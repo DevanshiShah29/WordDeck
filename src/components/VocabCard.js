@@ -190,7 +190,7 @@ export default function VocabCard({
                       onClick={handleDelete}
                       className="group flex items-center justify-start w-full px-4 py-2 text-sm text-red-700 hover:bg-[var(--slate-100)] "
                     >
-                      <Trash2 className="mr-3 h-4 w-4 text-red-500" />
+                      <Trash2 className="mr-3 h-4 w-4 text-red-700" />
                       Delete
                     </Button>
                   </div>
