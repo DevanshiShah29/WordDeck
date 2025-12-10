@@ -192,7 +192,7 @@ export default function MiniWordMap({ group = [], onNodeSelect = () => {} }) {
         )}
 
         <div className="map-status absolute bottom-2 left-2 text-xs text-slate-600 bg-white/80 rounded-md px-2 py-1 shadow-sm">
-          {isReady ? `Nodes: ${nodes.length}` : "pending"}
+          {isReady ? `Nodes: ${nodes.length}` : "Loading..."}
         </div>
       </div>
     </div>

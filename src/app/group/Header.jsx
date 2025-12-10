@@ -2,20 +2,37 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
+import Button from "@/components/buttons/Button";
 
-export default function Header({ title = "Word Groups" }) {
+export default function Header({ title = "Word Groups", subtitle = "" }) {
   const router = useRouter();
-  return (
-    <header className="group-header fixed top-0 left-0 right-0 h-16 z-50 flex items-center px-4 md:px-8 bg-white/95 backdrop-blur-sm shadow-sm border-b border-[var(--slate-200)]/60">
-      <button
-        aria-label="Back"
-        onClick={() => router.back()}
-        className="h-10 w-10 rounded-md flex items-center justify-center mr-4 text-[var(--slate-800)] hover:bg-[var(--slate-100)]"
-      >
-        ←
-      </button>
 
-      <h1 className="text-lg font-semibold tracking-wide">{title}</h1>
-    </header>
+  return (
+    <div className="bg-white/80 backdrop-blur-sm shadow-lg border-b border-[var(--slate-200)] sticky top-0 z-40">
+      <div className="container mx-auto px-4 py-3 md:px-8">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Button
+              variant="transparent"
+              className="p-2 rounded-lg transition-all duration-300 group hover:bg-slate-100"
+              onClick={() => router.back()}
+              aria-label="Back"
+            >
+              <ArrowLeft className="w-5 h-5 text-[var(--slate-600)] group-hover:text-[var(--primary-600)]" />
+            </Button>
+
+            <div>
+              <h1 className="text-lg md:text-2xl font-bold text-[var(--slate-900)]">{title}</h1>
+              {subtitle ? (
+                <p className="mt-1 text-[var(--slate-500)] text-sm font-mono bg-slate-100 px-3 py-1 rounded-lg inline-block">
+                  {subtitle}
+                </p>
+              ) : null}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
