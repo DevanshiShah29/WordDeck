@@ -270,7 +270,7 @@ export default function Sidebar() {
           {detail && (
             <div className="space-y-6">
               {detail?.imageUrl && (
-                <div className="relative w-full h-40 rounded-xl overflow-hidden shadow-lg bg-slate-200 flex items-center justify-center text-slate-500 text-xs">
+                <div className="relative w-full h-45 rounded-xl overflow-hidden shadow-lg bg-slate-200 flex items-center justify-center text-slate-500 text-xs">
                   <ImageWithFallback
                     src={detail.imageUrl}
                     alt={`Illustration for ${word}`}

@@ -11,7 +11,7 @@ let cachedClient = null;
 const CACHE_COLLECTION_NAME = "word_groups_cache";
 const CACHE_EXPIRY_MS = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
-// Function to connect or return cached connection (Corrected from previous steps)
+// Function to connect or return cached connection
 async function connectToDatabase() {
   if (cachedClient) {
     return cachedClient;
@@ -41,13 +41,10 @@ export default async function handler(req, res) {
 
     if (cachedResult && Date.now() - cachedResult.timestamp < CACHE_EXPIRY_MS) {
       console.log("CACHE HIT: Returning grouped words from cache.");
-      // Cache is fresh, return cached data
       return res.status(200).json(cachedResult.groups);
     }
 
-    // --- 2. CACHE MISS/STALE: Proceed with DB Fetch and AI Call ---
-
-    // Fetch all words from the database
+    // CACHE MISS/STALE: Fetch words and call AI
     const wordsToGroup = await wordsCollection
       .find({})
       .project({ word: 1, _id: 0 })
@@ -58,17 +55,27 @@ export default async function handler(req, res) {
       return res.status(200).json([]);
     }
 
-    // Define the desired output structure using JSON Schema
+    // New schema: each group is an object { words: [...], description: "one line" }
     const responseSchema = {
       type: "object",
       properties: {
         related_groups: {
           type: "array",
-          description:
-            "An array of arrays, where each inner array contains words that are semantically related.",
+          description: "Array of group objects with words and a one-line description",
           items: {
-            type: "array",
-            items: { type: "string" },
+            type: "object",
+            properties: {
+              words: {
+                type: "array",
+                items: { type: "string" },
+              },
+              description: {
+                type: "string",
+                description:
+                  "A single short sentence describing the connection between words in the group",
+              },
+            },
+            required: ["words", "description"],
           },
         },
       },
@@ -76,19 +83,23 @@ export default async function handler(req, res) {
     };
 
     const prompt = `
-Task: Analyze the provided list of words. Group words that are related through **synonymy, antonymy, or a close conceptual/lexical relationship.**
+Task: Analyze the provided list of words and group words that are related through synonymy, antonymy, or a close conceptual/lexical relationship.
 
-Rules:
-1.  Form groups of any size where words are connected as synonyms, antonyms, or are very closely associated terms (e.g., 'happy', 'joyful', 'exuberant', 'melancholy'—where the group is focused on mood words, and happy is an antonym of melancholy).
-2.  Do not group words based on arbitrary or non-lexical themes like "Jainism concepts" or "types of food." The relationship must be about meaning or opposition in meaning.
-3.  If a word cannot be linked to any other word by synonymy, antonymy, or a close lexical bond, it should be placed alone in its own group.
-4.  Return ONLY the JSON object.
+Requirements:
+1. Return ONLY a single JSON object that conforms exactly to the provided schema.
+2. The JSON must include "related_groups": an array of objects. Each object must have:
+   - "words": an array of strings (the group members)
+   - "description": a single short sentence (one line) describing the relationship of the group
+3. Do NOT include groups that contain only a single word. Only include groups with 2 or more words.
+4. Be concise in descriptions (one short sentence, 10–18 words preferred).
+5. Do not return any extra explanatory text outside the JSON.
 
-Word List: ${wordsToGroup.join(", ")}
+Word List:
+${wordsToGroup.join(", ")}
 `;
+
     console.log("CACHE MISS: Calling Gemini API...");
 
-    // Call the Gemini API for structured output
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
       contents: prompt,
@@ -98,30 +109,72 @@ Word List: ${wordsToGroup.join(", ")}
       },
     });
 
-    // Parse the structured JSON response
-    const result = JSON.parse(response.text);
-    const groupedWords = result.related_groups;
+    // Parse structured JSON response
+    let grouped = [];
+    try {
+      const parsed = JSON.parse(response.text);
+      grouped = parsed.related_groups;
+    } catch (err) {
+      console.warn("Failed to parse AI JSON response:", err);
+      // Attempt to be resilient: if text contains JSON-like content, try to extract
+      try {
+        const jsonMatch = response.text.match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+          const parsed = JSON.parse(jsonMatch[0]);
+          grouped = parsed.related_groups || [];
+        }
+      } catch (err2) {
+        console.error("Fallback JSON parse failed:", err2);
+        grouped = [];
+      }
+    }
+
+    // Normalize legacy array-of-arrays responses to new object form,
+    // and filter out single-child groups.
+    let normalized = [];
+    if (Array.isArray(grouped)) {
+      if (grouped.length === 0) {
+        normalized = [];
+      } else if (grouped.every((g) => Array.isArray(g))) {
+        // legacy: array of arrays -> convert and drop singletons
+        normalized = grouped
+          .map((arr) => ({ words: arr.filter(Boolean).map(String), description: "" }))
+          .filter((g) => Array.isArray(g.words) && g.words.length >= 2);
+      } else {
+        // expected object form: ensure shape, coerce if necessary, drop singletons
+        normalized = grouped
+          .map((g) => {
+            if (!g) return null;
+            if (Array.isArray(g.words)) {
+              return { words: g.words.map(String), description: (g.description || "").trim() };
+            }
+            // if the AI returned {words: "..."} incorrectly, try to coerce
+            if (Array.isArray(g)) {
+              return { words: g.map(String), description: "" };
+            }
+            return null;
+          })
+          .filter(Boolean)
+          .filter((g) => Array.isArray(g.words) && g.words.length >= 2);
+      }
+    }
+
+    // Final result to cache/return
+    const finalGroups = normalized;
 
     // --- 3. CACHE UPDATE ---
     const cacheDocument = {
-      groups: groupedWords,
-      timestamp: Date.now(), // Store the current time
-      wordsCount: wordsToGroup.length, // Optional: for debugging
+      groups: finalGroups,
+      timestamp: Date.now(),
+      wordsCount: wordsToGroup.length,
     };
 
-    // Replace the old cache document with the new one
-    await cacheCollection.replaceOne(
-      {}, // Filter: just find the one cache document (since we only need one)
-      cacheDocument,
-      { upsert: true } // Insert if no document is found
-    );
+    await cacheCollection.replaceOne({}, cacheDocument, { upsert: true });
     console.log("Cache updated successfully.");
 
-    // Return the final result
-    return res.status(200).json(groupedWords);
+    return res.status(200).json(finalGroups);
   } catch (error) {
     console.error("API Error:", error);
-    // You might want to return the stale cache data here if the AI call fails!
     return res.status(500).json({ error: "Failed to process words with AI." });
   }
 }
