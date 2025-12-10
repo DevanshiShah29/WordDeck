@@ -148,24 +148,22 @@ export default function MiniWordMap({ group = [], onNodeSelect = () => {}, descr
           <Button
             varient="transparent"
             onClick={zoomIn}
-            className="mini-map-btn w-1/6 md:w-auto"
+            className="mini-map-btn w-1/5 md:w-auto"
             aria-label="Zoom in"
           >
             ＋
           </Button>
-          <Button onClick={zoomOut} className="mini-map-btn w-1/6 md:w-auto" aria-label="Zoom out">
+          <Button onClick={zoomOut} className="mini-map-btn w-1/5 md:w-auto" aria-label="Zoom out">
             −
           </Button>
-          <Button onClick={fitView} className="mini-map-btn w-1/6 md:w-auto" aria-label="Fit view">
-            ⤢
-          </Button>
-          <Button onClick={resetView} className="mini-map-btn w-1/6 md:w-auto" aria-label="Reset">
+
+          <Button onClick={resetView} className="mini-map-btn w-1/5 md:w-auto" aria-label="Reset">
             ⟲
           </Button>
 
           <Button
             onClick={toggleLock}
-            className="mini-map-btn w-1/6 md:w-auto"
+            className="mini-map-btn w-1/5 md:w-auto"
             aria-pressed={locked}
             title={locked ? "Unlock canvas" : "Lock canvas"}
           >
