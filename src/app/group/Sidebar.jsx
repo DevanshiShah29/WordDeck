@@ -19,6 +19,7 @@ import Loader from "@/components/Loader";
 import ImageWithFallback from "@/components/ImageWithFallback";
 import { typeColorMap, difficultyColorMap } from "@/utils/constants";
 import Button from "@/components/buttons/Button";
+import { toast } from "react-toastify";
 
 const SECTION_STYLES = {
   definition: "bg-white shadow-md",
@@ -57,12 +58,50 @@ export default function Sidebar() {
     window.dispatchEvent(new Event("miniwordmap:sidebar-closed"));
   }, []);
 
-  const handleBookmarkClick = useCallback((e) => {
-    e?.preventDefault();
-    e?.stopPropagation();
-    setIsBookmarked((v) => !v);
-    // TODO: call bookmark API
-  }, []);
+  const handleBookmarkClick = useCallback(
+    async (e) => {
+      e?.preventDefault();
+      e?.stopPropagation();
+
+      const nextState = !isBookmarked;
+      setIsBookmarked(nextState);
+
+      try {
+        const slug = detail?.slug ?? meta?.slug;
+        if (!slug) throw new Error("Missing slug");
+
+        const res = await fetch(`/api/bookmarks?slug=${encodeURIComponent(slug)}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ bookmarked: nextState }),
+        });
+
+        if (!res.ok) {
+          const body = await res.json().catch(() => ({}));
+          toast.error(`Failed to update bookmark: ${body?.error || body?.message || res.status}`);
+        } else {
+          toast.success(`Bookmark ${nextState ? "added" : "removed"} successfully!`);
+        }
+
+        const payload = await res.json().catch(() => null);
+        if (payload && typeof payload.bookmarked !== "undefined") {
+          setIsBookmarked(Boolean(payload.bookmarked));
+        } else if (payload && typeof payload.isBookmarked !== "undefined") {
+          setIsBookmarked(Boolean(payload.isBookmarked));
+        }
+
+        window.dispatchEvent(
+          new CustomEvent("miniwordmap:bookmark-changed", {
+            detail: { slug, isBookmarked: Boolean(payload?.bookmarked ?? nextState) },
+          })
+        );
+      } catch (err) {
+        toast.error(`Error updating bookmark: ${err?.message || err}`);
+        setIsBookmarked((v) => !nextState);
+      }
+    },
+    [isBookmarked, detail, meta]
+  );
 
   useEffect(() => {
     const onOpen = async (e) => {
@@ -172,10 +211,8 @@ export default function Sidebar() {
       )}
       {/* Sidebar Content Wrapper */}
       <div className="relative w-full h-full bg-white flex flex-col">
-        {/* --- 1. Header Block --- */}
+        {/* Header Block  */}
         <div className="p-5 pb-4 border-b border-slate-100 flex-shrink-0 relative">
-          {/* Close Button */}
-
           {/* Word Title & Pronunciation */}
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold text-slate-900">{word}</h2>
@@ -188,7 +225,7 @@ export default function Sidebar() {
                 aria-pressed={isBookmarked}
                 className={`p-2.5 bg-white/90 backdrop-blur-sm rounded-xl transition-shadow shadow-md mr-2 ${
                   isBookmarked ? "text-[var(--primary-600)]" : "text-slate-600"
-                }`}
+                } `}
               >
                 <Bookmark className="w-4 h-4" fill={isBookmarked ? "currentColor" : "none"} />
               </Button>
@@ -220,7 +257,7 @@ export default function Sidebar() {
             </div>
           )}
         </div>
-        {/*  Content (SCROLLABLE)*/}
+        {/*  Content */}
         <div className="p-5 overflow-y-auto flex-grow bg-slate-50/50 thin-scrollbar">
           {loading && <Loader fullScreen={false} title="loading" />}
 
@@ -299,7 +336,7 @@ export default function Sidebar() {
                   <p className="text-sm text-slate-700 italic pl-4">{detail.mnemonics}</p>
                 </div>
               )}
-              {/* Synonyms/Tags Block (Combined) */}
+              {/* Synonyms/Tags Block  */}
               {allRelatedTerms.length > 0 && (
                 <div>
                   <h3 className="text-sm font-semibold text-slate-800 mb-3">
@@ -310,7 +347,7 @@ export default function Sidebar() {
                     {allRelatedTerms.map((tag, i) => (
                       <span
                         key={i}
-                        className="text-xs px-2 py-1 rounded-lg bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700"
+                        className="text-xs px-2 py-2 rounded-lg bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700"
                       >
                         {capitalizeFirstLetter(tag)}
                       </span>
