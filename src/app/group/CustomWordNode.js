@@ -16,14 +16,14 @@ export default function CustomWordNode({ id, data, selected }) {
   // Use a default color if difficulty isn't set, otherwise use the specific color
   const nodeColor = difficultyColors[data.difficulty] || "#64748B"; // Slate-500 for default
 
-  // --- Styles for the inner container (The circle itself) ---
+  // Styles for the inner container (The circle itself)
   const containerStyle = {
     width: "100%",
     height: "100%",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: "50%", // Keep the circle shape
+    borderRadius: "50%",
     pointerEvents: "auto",
     cursor: "grab",
     userSelect: "none",
@@ -46,10 +46,10 @@ export default function CustomWordNode({ id, data, selected }) {
 
   // --- Styles for the text wrapper ---
   const labelWrapperStyle = {
-    padding: 6, // Removes the inner padding for a tight fit
-    margin: 6, // Ensures no margin adds extra space
+    padding: 6,
+    margin: 6,
     textAlign: "center",
-    lineHeight: 1.2, // Adjust line height for better vertical centering of text
+    lineHeight: 1.2,
   };
 
   return (
