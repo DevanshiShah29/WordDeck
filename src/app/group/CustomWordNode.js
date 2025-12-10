@@ -44,7 +44,7 @@ export default function CustomWordNode({ id, data, selected }) {
       : "0 2px 4px rgba(0,0,0,0.1)", // Subtle default shadow
   };
 
-  // --- Styles for the text wrapper ---
+  // Styles for the text wrapper
   const labelWrapperStyle = {
     padding: 6,
     margin: 6,

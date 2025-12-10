@@ -145,12 +145,12 @@ export function useWordMapLayout(initialData, rfRef) {
         nds.map((n) => {
           if (n.id === nodeId) {
             const s = { ...(n.style || {}) };
-            s.border = "3px solid var(--primary-600, #db2777)";
+            s.border = "3px solid var(--primary-600)";
             s.boxShadow = "0 8px 30px rgba(219,39,119,0.18)";
             return { ...n, style: s, className: `${n.className || ""} selected`.trim() };
           }
           const cleaned = { ...(n.style || {}) };
-          if (cleaned.border === "3px solid var(--primary-600, #db2777)") {
+          if (cleaned.border === "3px solid var(--primary-600)") {
             cleaned.border = "1px solid rgba(15,23,42,0.06)";
             cleaned.boxShadow = "0 6px 16px rgba(15,23,42,0.06)";
           }

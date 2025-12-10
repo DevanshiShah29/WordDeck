@@ -17,8 +17,8 @@ export default function CustomRelationshipEdge({
   const dist = Math.max(Math.hypot(dx, dy), 1); // normalized perpendicular vector (points "out" of the segment)
 
   const nx = -dy / dist;
-  const ny = dx / dist; // --- OPTIMIZED FOR SUBTLE CURVATURE ---
-  // 1. Reduced Curvature Factor: Smaller value for a gentler, straighter curve.
+  const ny = dx / dist;
+  //  Reduced Curvature Factor: Smaller value for a gentler, straighter curve.
 
   const CURVATURE_FACTOR = 0.05;
   // Significantly reduced from 0.25

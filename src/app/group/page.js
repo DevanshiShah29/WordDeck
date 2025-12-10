@@ -2,20 +2,13 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
+
+// Component Imports
 import Header from "./Header";
 import FilterPanel from "./FilterPanel";
 import MiniWordMap from "./MiniWordMap";
-import { transformSingleGroup } from "./utils";
 import Sidebar from "./Sidebar";
-
-/**
- * Layout:
- * - fixed header (height 64 / 16)
- * - main container below header: two-column split (30% / 70%)
- *
- * The group data is transformed to MiniWordMap-compatible inputs using transformSingleGroup.
- * If you have real group data, replace sampleGroups with it.
- */
+import { transformSingleGroup } from "./utils";
 
 const SAMPLE_GROUPS = [
   [

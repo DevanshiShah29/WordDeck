@@ -3,13 +3,18 @@
 "use client";
 
 import React, { useCallback, useRef, useEffect, useState } from "react";
+// Library Imports
 import ReactFlow, { Background } from "reactflow";
+import "reactflow/dist/style.css";
+
+// Helper function
 import { transformSingleGroup } from "./utils";
+
+// Component Imports
 import * as CustomWordNodeModule from "./CustomWordNode";
 import * as CustomRelationshipEdgeModule from "./CustomRelationshipEdge";
 import { useWordMapLayout } from "./useWordMapLayout";
 import { useMapEvents } from "./useMapEvents";
-import "reactflow/dist/style.css";
 
 const CustomWordNode =
   CustomWordNodeModule.default ?? CustomWordNodeModule.CustomWordNode ?? CustomWordNodeModule;
@@ -22,17 +27,17 @@ const nodeTypes = { wordNode: CustomWordNode };
 const edgeTypes = { similar: CustomRelationshipEdge, opposite: CustomRelationshipEdge };
 
 export default function MiniWordMap({ group = [], onNodeSelect = () => {} }) {
-  // --- 1. Map ID and Refs ---
   const mapIdRef = useRef(`map-${Math.random().toString(36).slice(2, 9)}`);
   const mapId = mapIdRef.current;
   const rfRef = useRef(null);
   const [selectedNodeId, setSelectedNodeId] = useState(null);
+  const [locked, setLocked] = useState(true);
 
-  // DRAG HOOKS (Moved back inside the component) ---
+  // DRAG HOOKS
   const dragRafRef = useRef(null);
   const pendingPositionsRef = useRef(new Map());
 
-  // Custom Hooks ---
+  // Custom Hooks
   const initialData = transformSingleGroup(group || []);
   const { nodes, setNodes, edges, isReady, error, markSelectedNode } = useWordMapLayout(
     initialData,
@@ -40,8 +45,7 @@ export default function MiniWordMap({ group = [], onNodeSelect = () => {} }) {
   );
   useMapEvents(mapId, setSelectedNodeId, setNodes);
 
-  //  DRAG HANDLERS (Now correctly defined using useCallback) ---
-
+  // DRAG HANDLERS
   const onNodeDragStart = useCallback(
     (_, node) => {
       setNodes((nds) => nds.map((n) => (n.id === node.id ? { ...n, dragging: true } : n)));
@@ -128,6 +132,8 @@ export default function MiniWordMap({ group = [], onNodeSelect = () => {} }) {
     fitView();
   };
 
+  const toggleLock = () => setLocked((s) => !s);
+
   const groupTitle = Array.isArray(group) && group.length > 0 ? group[0] : "Group";
 
   return (
@@ -148,6 +154,16 @@ export default function MiniWordMap({ group = [], onNodeSelect = () => {} }) {
           <button type="button" onClick={resetView} className="mini-map-btn" aria-label="Reset">
             ⟲
           </button>
+
+          <button
+            type="button"
+            onClick={toggleLock}
+            className="mini-map-btn"
+            aria-pressed={locked}
+            title={locked ? "Unlock canvas (allow scroll/zoom)" : "Lock canvas (page scroll only)"}
+          >
+            {locked ? "🔒" : "🔓"}
+          </button>
         </div>
       </div>
 
@@ -167,9 +183,9 @@ export default function MiniWordMap({ group = [], onNodeSelect = () => {} }) {
             fitView
             minZoom={0.25}
             maxZoom={2}
-            zoomOnScroll
-            panOnScroll
-            zoomOnPinch
+            zoomOnScroll={!locked}
+            panOnScroll={!locked}
+            zoomOnPinch={!locked}
             panOnDrag={false}
             nodesDraggable
             nodesConnectable={false}
@@ -186,9 +202,15 @@ export default function MiniWordMap({ group = [], onNodeSelect = () => {} }) {
           </ReactFlow>
         ) : (
           <div className="map-loading">
-            {" "}
             {error ? <span>Error: {error}</span> : <span>Calculating layout...</span>}{" "}
           </div>
+        )}
+
+        {locked && (
+          <div
+            className="absolute inset-0 z-40 bg-[var(--primary-50)] opacity-20"
+            aria-hidden="true"
+          />
         )}
 
         <div className="map-status absolute bottom-2 left-2 text-xs text-slate-600 bg-white/80 rounded-md px-2 py-1 shadow-sm">
