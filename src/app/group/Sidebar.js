@@ -203,11 +203,7 @@ export default function Sidebar() {
     >
       {/* Background Dimmer (for mobile/smaller screens) */}
       {open && (
-        <div
-          className="fixed inset-0 bg-black/30 z-[59] md:hidden"
-          onClick={close}
-          aria-hidden="true"
-        />
+        <div className="fixed inset-0 z-[100] md:hidden" onClick={close} aria-hidden="true" />
       )}
       {/* Sidebar Content Wrapper */}
       <div className="relative w-full h-full bg-white flex flex-col">

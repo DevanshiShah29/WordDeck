@@ -15,6 +15,7 @@ import * as CustomWordNodeModule from "./CustomWordNode";
 import * as CustomRelationshipEdgeModule from "./CustomRelationshipEdge";
 import { useWordMapLayout } from "./useWordMapLayout";
 import { useMapEvents } from "./useMapEvents";
+import Button from "@/components/buttons/Button";
 
 const CustomWordNode =
   CustomWordNodeModule.default ?? CustomWordNodeModule.CustomWordNode ?? CustomWordNodeModule;
@@ -138,34 +139,38 @@ export default function MiniWordMap({ group = [], onNodeSelect = () => {}, descr
 
   return (
     <div className="mini-map-container relative">
-      <div className="mini-map-header flex items-center justify-between mb-3">
-        <h3 className="mini-map-title text-sm font-semibold">
+      <div className="mini-map-header flex flex-col md:flex-row items-start md:items-center justify-between mb-3">
+        <h3 className="mini-map-title text-sm font-semibold mb-2 md:mb-0">
           {groupTitle} : {description}
         </h3>
 
-        <div className="mini-map-toolbar inline-flex items-center gap-2">
-          <button type="button" onClick={zoomIn} className="mini-map-btn" aria-label="Zoom in">
+        <div className="mini-map-toolbar inline-flex items-center gap-2 flex-wrap w-full md:w-auto md:justify-start justify-between">
+          <Button
+            varient="transparent"
+            onClick={zoomIn}
+            className="mini-map-btn w-1/6 md:w-auto"
+            aria-label="Zoom in"
+          >
             ＋
-          </button>
-          <button type="button" onClick={zoomOut} className="mini-map-btn" aria-label="Zoom out">
+          </Button>
+          <Button onClick={zoomOut} className="mini-map-btn w-1/6 md:w-auto" aria-label="Zoom out">
             −
-          </button>
-          <button type="button" onClick={fitView} className="mini-map-btn" aria-label="Fit view">
+          </Button>
+          <Button onClick={fitView} className="mini-map-btn w-1/6 md:w-auto" aria-label="Fit view">
             ⤢
-          </button>
-          <button type="button" onClick={resetView} className="mini-map-btn" aria-label="Reset">
+          </Button>
+          <Button onClick={resetView} className="mini-map-btn w-1/6 md:w-auto" aria-label="Reset">
             ⟲
-          </button>
+          </Button>
 
-          <button
-            type="button"
+          <Button
             onClick={toggleLock}
-            className="mini-map-btn"
+            className="mini-map-btn w-1/6 md:w-auto"
             aria-pressed={locked}
-            title={locked ? "Unlock canvas (allow scroll/zoom)" : "Lock canvas (page scroll only)"}
+            title={locked ? "Unlock canvas" : "Lock canvas"}
           >
             {locked ? "🔒" : "🔓"}
-          </button>
+          </Button>
         </div>
       </div>
 
