@@ -3,9 +3,11 @@
 "use client";
 
 import React, { useCallback, useRef, useEffect, useState } from "react";
+
 // Library Imports
 import ReactFlow, { Background } from "reactflow";
 import "reactflow/dist/style.css";
+import { ZoomIn, ZoomOut, RefreshCcw, LockIcon, UnlockIcon } from "lucide-react";
 
 // Helper function
 import { transformSingleGroup } from "./utils";
@@ -151,23 +153,34 @@ export default function MiniWordMap({ group = [], onNodeSelect = () => {}, descr
             className="mini-map-btn w-1/5 md:w-auto"
             aria-label="Zoom in"
           >
-            ＋
+            <ZoomIn className="h-4 w-4" />
           </Button>
-          <Button onClick={zoomOut} className="mini-map-btn w-1/5 md:w-auto" aria-label="Zoom out">
-            −
-          </Button>
-
-          <Button onClick={resetView} className="mini-map-btn w-1/5 md:w-auto" aria-label="Reset">
-            ⟲
+          <Button
+            varient="transparent"
+            onClick={zoomOut}
+            className="mini-map-btn w-1/5 md:w-auto"
+            aria-label="Zoom out"
+          >
+            <ZoomOut className="h-4 w-4" />
           </Button>
 
           <Button
+            varient="transparent"
+            onClick={resetView}
+            className="mini-map-btn w-1/5 md:w-auto"
+            aria-label="Reset"
+          >
+            <RefreshCcw className="h-4 w-4" />
+          </Button>
+
+          <Button
+            varient="transparent"
             onClick={toggleLock}
             className="mini-map-btn w-1/5 md:w-auto"
             aria-pressed={locked}
             title={locked ? "Unlock canvas" : "Lock canvas"}
           >
-            {locked ? "🔒" : "🔓"}
+            {locked ? <LockIcon className="h-4 w-4" /> : <UnlockIcon className="h-4 w-4" />}
           </Button>
         </div>
       </div>
