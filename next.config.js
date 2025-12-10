@@ -7,13 +7,18 @@ const withPWA = require("next-pwa")({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["images.unsplash.com"],
     remotePatterns: [
       {
-        protocol: "https",
-        // ⚠️ WARNING: This wildcard allows images from *any* domain.
-        // Use this ONLY if you fully understand and accept the security risks.
-        hostname: "**",
+        // ⚠️ WARNING: This allows images from *any* domain.
+        // Highly discouraged for production environments due to security risks.
+        protocol: "http", // Use this if you need http images
+        hostname: "**", // Wildcard for all subdomains and hosts
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https", // Use this if you need https images
+        hostname: "**", // Wildcard for all subdomains and hosts
         port: "",
         pathname: "/**",
       },

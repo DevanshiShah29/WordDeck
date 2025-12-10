@@ -1,6 +1,6 @@
 // pages/api/words.js
 
-import clientPromise from "../../lib/mongodb";
+import clientPromise from "../../../lib/mongodb";
 import { parseCommaSeparatedString, slugify } from "@/utils/helper";
 import { ObjectId } from "mongodb";
 import { LEVEL_ORDER } from "@/utils/constants";
