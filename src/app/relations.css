@@ -155,3 +155,10 @@
   width: 1px !important;
   height: 1px !important;
 }
+
+.no-scroll {
+  overflow: hidden !important;
+  position: fixed !important;
+  width: 100%;
+  height: 100%;
+}

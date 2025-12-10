@@ -184,6 +184,22 @@ export default function Sidebar() {
     };
   }, []);
 
+  useEffect(() => {
+    if (typeof window === "undefined" || !document.body) return;
+
+    if (open) {
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
+
+    return () => {
+      if (typeof window !== "undefined" && document.body) {
+        document.body.classList.remove("no-scroll");
+      }
+    };
+  }, [open]);
+
   const word = detail?.word || meta?.label || "Details";
   const difficultyClasses = difficultyColorMap[detail?.difficulty?.toLowerCase() || "default"];
   const typeGradient = typeColorMap[detail?.type?.toLowerCase()] || typeColorMap.default;
@@ -195,21 +211,14 @@ export default function Sidebar() {
     <aside
       className={`fixed top-0 right-0 h-screen w-full md:w-[26rem] lg:w-[28rem] bg-white border-l border-slate-100 shadow-2xl z-[60] transform transition-transform duration-300 ease-in-out ${
         open ? "translate-x-0" : "translate-x-full"
-      }`}
+      } overscroll-y-contain`}
       aria-hidden={!open}
       role="dialog"
       aria-modal="true"
       aria-label={`Details for ${word}`}
     >
-      {/* Background Dimmer (for mobile/smaller screens) */}
-      {open && (
-        <div className="fixed inset-0 z-[100] md:hidden" onClick={close} aria-hidden="true" />
-      )}
-      {/* Sidebar Content Wrapper */}
-      <div className="relative w-full h-full bg-white flex flex-col">
-        {/* Header Block  */}
+      <div className="relative w-full h-full bg-white flex flex-col overflow-hidden">
         <div className="p-5 pb-4 border-b border-slate-100 flex-shrink-0 relative">
-          {/* Word Title & Pronunciation */}
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold text-slate-900">{word}</h2>
 
@@ -235,7 +244,6 @@ export default function Sidebar() {
               </Button>
             </div>
           </div>
-
           {detail?.pronunciation && (
             <div className=" flex items-center gap-2">
               <p className="text-xs font-mono bg-slate-100 px-2 py-1 rounded-lg inline-block text-slate-500">
@@ -256,13 +264,11 @@ export default function Sidebar() {
         {/*  Content */}
         <div className="p-5 overflow-y-auto flex-grow bg-slate-50/50 thin-scrollbar">
           {loading && <Loader fullScreen={false} title="loading" />}
-
           {error && (
             <div className="text-sm text-red-700 bg-red-100 p-4 rounded-xl border border-red-300">
               Error: {error}
             </div>
           )}
-
           {detail && (
             <div className="space-y-6">
               {detail?.imageUrl && (
@@ -358,21 +364,18 @@ export default function Sidebar() {
         <div className="flex-shrink-0 p-4 border-t border-slate-100 bg-white shadow-inner">
           {detail && (
             <div className="flex flex-wrap items-center justify-between gap-3 text-sm">
-              {/* Difficulty */}
               <span
                 className={`inline-flex items-center gap-1 px-3 py-1 rounded-full border text-xs font-semibold ${difficultyClasses}`}
               >
                 <Target className="w-3.5 h-3.5" />
                 {capitalizeFirstLetter(detail.difficulty)}
               </span>
-              {/* Origin */}
               {detail.origin && (
                 <div className="flex items-center gap-1 text-xs text-slate-500">
                   <Languages className="w-3.5 h-3.5 text-slate-400" />
                   <span className="font-medium">{detail.origin}</span>
                 </div>
               )}
-              {/* Creation Date */}
               {detail.createdAt && (
                 <div className="flex items-center gap-1 text-xs text-slate-500">
                   <Clock className="w-3.5 h-3.5 text-slate-400" />
