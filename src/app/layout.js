@@ -3,6 +3,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 import "./generateAI.css";
+import "./relations.css";
 
 // Component Imports
 import AuthGuard from "@/components/AuthGuard";

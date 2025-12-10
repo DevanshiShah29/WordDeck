@@ -26,7 +26,7 @@ const CustomRelationshipEdge =
 const nodeTypes = { wordNode: CustomWordNode };
 const edgeTypes = { similar: CustomRelationshipEdge, opposite: CustomRelationshipEdge };
 
-export default function MiniWordMap({ group = [], onNodeSelect = () => {} }) {
+export default function MiniWordMap({ group = [], onNodeSelect = () => {}, description = "" }) {
   const mapIdRef = useRef(`map-${Math.random().toString(36).slice(2, 9)}`);
   const mapId = mapIdRef.current;
   const rfRef = useRef(null);
@@ -139,7 +139,9 @@ export default function MiniWordMap({ group = [], onNodeSelect = () => {} }) {
   return (
     <div className="mini-map-container relative">
       <div className="mini-map-header flex items-center justify-between mb-3">
-        <h3 className="mini-map-title text-sm font-semibold">{groupTitle}</h3>
+        <h3 className="mini-map-title text-sm font-semibold">
+          {groupTitle} : {description}
+        </h3>
 
         <div className="mini-map-toolbar inline-flex items-center gap-2">
           <button type="button" onClick={zoomIn} className="mini-map-btn" aria-label="Zoom in">

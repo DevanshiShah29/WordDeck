@@ -91,7 +91,7 @@ Requirements:
    - "words": an array of strings (the group members)
    - "description": a single short sentence (one line) describing the relationship of the group
 3. Do NOT include groups that contain only a single word. Only include groups with 2 or more words.
-4. Be concise in descriptions (one short sentence, 10–18 words preferred).
+4. Be concise in descriptions (one short sentence, 5-10 words preferred).
 5. Do not return any extra explanatory text outside the JSON.
 
 Word List:

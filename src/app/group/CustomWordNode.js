@@ -30,9 +30,10 @@ export default function CustomWordNode({ id, data, selected }) {
 
     // Background: Use the difficulty color
     background: nodeColor,
-    color: "#FFFFFF", // High contrast white text
+    color: "#FFFFFF",
     fontWeight: 700,
-    fontSize: 12,
+
+    fontSize: "clamp(12px, 0.5vw, 12px)",
 
     // Transition for smooth selection feedback
     transition: "all 0.2s ease-in-out",
@@ -41,20 +42,36 @@ export default function CustomWordNode({ id, data, selected }) {
     border: `3px solid ${selected ? "#FFFFFF" : nodeColor}`,
     boxShadow: selected
       ? `0 0 0 4px ${nodeColor}, 0 4px 12px rgba(0,0,0,0.2)`
-      : "0 2px 4px rgba(0,0,0,0.1)", // Subtle default shadow
+      : "0 2px 4px rgba(0,0,0,0.1)",
   };
 
   // Styles for the text wrapper
   const labelWrapperStyle = {
-    padding: 6,
+    padding: 4,
     margin: 6,
     textAlign: "center",
-    lineHeight: 1.2,
+    lineHeight: 1.1,
+    width: "100%",
+    maxWidth: "100%",
+    display: "block",
+  };
+
+  const labelTextStyle = {
+    display: "inline-block",
+    maxWidth: "100%",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    fontSize: "inherit",
+    lineHeight: 1.1,
   };
 
   return (
     <div id={id} className={`word-node-inner ${selected ? "selected" : ""}`} style={containerStyle}>
-      <div style={labelWrapperStyle}>{label}</div>
+      <div style={labelWrapperStyle}>
+        <span style={labelTextStyle} title={label}>
+          {label}
+        </span>
+      </div>
 
       <Handle type="target" position={Position.Center} style={{ visibility: "hidden" }} />
       <Handle type="source" position={Position.Center} style={{ visibility: "hidden" }} />
