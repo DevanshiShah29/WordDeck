@@ -19,11 +19,11 @@ import TextareaField from "@/components/formItems/TextareaField";
 import SelectField from "@/components/formItems/SelectField";
 import GenerateWithAIButton from "@/components/buttons/GenerateWithAI";
 import Button from "@/components/buttons/Button";
+import PageHeader from "@/components/header/PageHeader";
 
 // Data Imports
 import { LEVEL_OPTIONS_DROPDOWN, TYPE_OPTIONS_DROPDOWN } from "@/utils/constants";
 import { validationSchema } from "./helper";
-import { localStorageArray } from "@/utils/helper";
 
 const initialValues = {
   word: "",
@@ -40,28 +40,6 @@ const initialValues = {
   imageUrl: "",
   tags: "",
 };
-
-const FormHeader = () => (
-  <div className="bg-white backdrop-blur-sm shadow-lg border-b border-[var(--slate-200)] sticky top-0 z-40">
-    <div className="container mx-auto py-4 px-4 md:px-8">
-      <div className="flex items-center gap-2">
-        <Link
-          href="/word"
-          className="p-2 rounded-lg transition-all duration-300 group hover:bg-slate-100"
-          aria-label="Go back to the list"
-        >
-          <ArrowLeft className="w-5 h-5 text-[var(--slate-600)] group-hover:text-[var(--primary-600)]" />
-        </Link>
-        <div>
-          <h1 className="text-2xl font-bold text-[var(--slate-900)]">Add New Word</h1>
-          <p className="mt-1 text-[var(--slate-500)] text-sm font-mono bg-slate-100 px-3 py-1 rounded-lg inline-block">
-            Expand your vocabulary
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-);
 
 const VocabularyForm = () => {
   const router = useRouter();
@@ -137,7 +115,7 @@ const VocabularyForm = () => {
 
   return (
     <>
-      <FormHeader />
+      <PageHeader title="Add New Word" subtitle="Expand your vocabulary by adding new words " />
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}

@@ -38,7 +38,7 @@ export default function PageHeader({ title, subtitle, actions, controls }) {
             {/* Title and Subtitle/Status */}
             <div>
               <h1 className="text-xl font-bold text-[var(--slate-900)]">{title} </h1>
-              {subtitle}
+              <p className="text-md text-[var(--slate-500)]"> {subtitle}</p>
             </div>
           </div>
           {/* Top-Row Actions (e.g., Quiz Restart) */} <div>{actions}</div>

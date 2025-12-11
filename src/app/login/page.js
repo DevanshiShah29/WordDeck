@@ -43,7 +43,7 @@ const AuthForm = () => {
     try {
       const { username, password } = values;
 
-      // Mock Login: Check if username exists and password matches
+      // Check if username exists and password matches
       if (MOCK_USERS[username] === password) {
         if (typeof window !== "undefined") {
           localStorage.setItem("auth_user", username);

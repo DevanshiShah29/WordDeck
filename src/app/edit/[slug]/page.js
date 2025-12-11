@@ -11,7 +11,6 @@ import { toast } from "react-toastify";
 
 // Assets & Icons
 import { BookIcon, GlobeIcon, LightbulbIcon, ImageIcon, TagsIcon, SaveIcon } from "@/assets/svgs";
-import { ArrowLeft } from "lucide-react";
 
 // Component Imports
 import FormField from "@/components/formItems/FormField";
@@ -19,6 +18,7 @@ import TextareaField from "@/components/formItems/TextareaField";
 import SelectField from "@/components/formItems/SelectField";
 import GenerateWithAIButton from "@/components/buttons/GenerateWithAI";
 import Button from "@/components/buttons/Button";
+import PageHeader from "@/components/header/PageHeader";
 
 // Data Imports
 import { LEVEL_OPTIONS_DROPDOWN, TYPE_OPTIONS_DROPDOWN } from "@/utils/constants";
@@ -44,28 +44,6 @@ const DUMMY_INITIAL_VALUES = {
   imageUrl: "",
   tags: "",
 };
-
-const FormHeader = ({ word }) => (
-  <div className="bg-white backdrop-blur-sm shadow-lg border-b border-[var(--slate-200)] sticky top-0 z-40">
-    <div className="container mx-auto px-4 py-4 md:px-8">
-      <div className="flex items-center gap-2">
-        <Link
-          href="/word"
-          className="p-2 rounded-lg transition-all duration-300 group hover:bg-slate-100"
-          aria-label="Go back to the list"
-        >
-          <ArrowLeft className="w-5 h-5 text-[var(--slate-600)] group-hover:text-[var(--primary-600)]" />
-        </Link>
-        <div>
-          <h1 className="text-2xl font-bold text-[var(--slate-900)]">{word || "Loading..."}</h1>
-          <p className="mt-1 text-[var(--slate-500)] text-sm font-mono bg-slate-100 px-3 py-1 rounded-lg inline-block">
-            Modify entry
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-);
 
 const EditVocabularyForm = ({ params }) => {
   const { slug } = params;
@@ -202,10 +180,10 @@ const EditVocabularyForm = ({ params }) => {
     headerWord = initialValues.word;
   }
 
-  // 5. Form Render (Using consistent structure to prevent hydration errors)
+  // Form Render (Using consistent structure to prevent hydration errors)
   return (
     <>
-      <FormHeader word={headerWord} />
+      <PageHeader title={headerWord || "Loading..."} subtitle={"Modify entry"} />
 
       {/* Main Content Wrapper: Always rendered */}
       <div className="bg-slate-50 min-h-screen pb-10">
