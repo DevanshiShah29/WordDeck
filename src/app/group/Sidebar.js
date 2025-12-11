@@ -220,15 +220,15 @@ export default function Sidebar() {
       <div className="relative w-full h-full bg-white flex flex-col overflow-hidden">
         <div className="p-5 pb-4 border-b border-slate-100 flex-shrink-0 relative">
           <div className="flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-slate-900">{word}</h2>
+            <h2 className="text-xl font-semibold text-slate-900 w-[275px] md:w-auto ">{word}</h2>
 
-            <div className="">
+            <div>
               <Button
                 onClick={handleBookmarkClick}
                 title={isBookmarked ? "Remove bookmark" : "Add bookmark"}
                 variant="transparent"
                 aria-pressed={isBookmarked}
-                className={`p-2.5 bg-white/90 backdrop-blur-sm rounded-xl transition-shadow shadow-md mr-2 ${
+                className={`p-2 md:p-2.5 bg-white/90 rounded-xl mr-2 hover:bg-[var(--slate-100)] hover:text-[var(--primary-600)] ${
                   isBookmarked ? "text-[var(--primary-600)]" : "text-slate-600"
                 } `}
               >
@@ -238,7 +238,7 @@ export default function Sidebar() {
                 aria-label="Close details"
                 onClick={close}
                 variant="transparent"
-                className="p-2.5 bg-white/90 backdrop-blur-sm rounded-xl transition-shadow shadow-md"
+                className="p-2 md:2.5 bg-white/90  rounded-xl hover:bg-[var(--slate-100)] hover:text-[var(--primary-600)]"
               >
                 <X className="w-4 h-4" />
               </Button>

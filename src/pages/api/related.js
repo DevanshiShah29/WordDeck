@@ -83,20 +83,30 @@ export default async function handler(req, res) {
     };
 
     const prompt = `
-Task: Analyze the provided list of words and group words that are related through synonymy, antonymy, or a close conceptual/lexical relationship.
+    Task: Analyze the provided list of words and group words that are closely related through synonymy, antonymy, or a deep conceptual/lexical connection.
 
-Requirements:
-1. Return ONLY a single JSON object that conforms exactly to the provided schema.
-2. The JSON must include "related_groups": an array of objects. Each object must have:
-   - "words": an array of strings (the group members)
-   - "description": a single short sentence (one line) describing the relationship of the group
-3. Do NOT include groups that contain only a single word. Only include groups with 2 or more words.
-4. Be concise in descriptions (one short sentence, 5-10 words preferred).
-5. Do not return any extra explanatory text outside the JSON.
+    Word List:
+    ${wordsToGroup.join(", ")}
 
-Word List:
-${wordsToGroup.join(", ")}
-`;
+    Output Format Requirements:
+    1. Return ONLY a single JSON object.
+    2. The JSON object MUST strictly conform to the schema provided below.
+    3. The JSON MUST NOT contain any words outside the provided Word List.
+    4. The JSON MUST NOT contain any extra explanatory text, headers, or markdown outside the single JSON object (e.g., no 'json' tag, no triple backticks).
+    5. Only create groups containing 2 or more words.
+
+    JSON Schema:
+     [
+        {
+          "words": ["list", "of", "related", "words"],
+          "description": "A single, short (5-10 word) sentence describing the group's relationship."
+        }, 
+        {
+          "words": ["list", "of", "related", "words"],
+          "description": "A single, short (5-10 word) sentence describing the group's relationship."
+        }
+      ]
+    `;
 
     console.log("CACHE MISS: Calling Gemini API...");
 

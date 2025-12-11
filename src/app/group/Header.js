@@ -29,7 +29,7 @@ export default function Header({ title = "Word Groups" }) {
             <div>
               <h1 className="text-lg md:text-xl font-bold text-[var(--slate-900)]">{title}</h1>
               <p className="mt-1 text-[var(--slate-500)] text-sm py-1 rounded-lg inline-block">
-                Unlock the canvas by clicking the lock icon to enable interactive navigation
+                Explore clusters of related words visualized as interactives canvases.
               </p>
             </div>
           </div>
