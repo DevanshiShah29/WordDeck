@@ -254,7 +254,7 @@ export default function Sidebar() {
                 aria-label="Play pronunciation"
                 title="Play pronunciation"
                 variant="transparent"
-                className="p-1.5 rounded-md text-slate-700 transition hover:text-[var(--primary-600)]"
+                className="p-2 rounded-md text-slate-700 transition hover:text-[var(--primary-600)] hover:bg-[var(--primary-100)]"
               >
                 <Volume2 className="w-4 h-4" />
               </Button>

@@ -2,25 +2,25 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const FALLBACK_IMAGE_SRC =
   "https://watchdiana.fail/blog/wp-content/themes/koji/assets/images/default-fallback-image.png";
 
-export default function ImageWithFallback({ src, alt, width, height, ...rest }) {
-  const [imgSrc, setImgSrc] = useState(src);
-  const [hasError, setHasError] = useState(false);
+// Utility function to check if the source is an actual non-empty string URL.
+const isValidSrc = (src) => typeof src === "string" && src.length > 0;
 
-  // Reset the source/error state if the main 'src' prop changes (e.g., pagination)
-  useEffect(() => {
-    setImgSrc(src);
-    setHasError(false);
-  }, [src]);
+export default function ImageWithFallback({ src, alt, width, height, ...rest }) {
+  //  Initialize the source state. If the provided 'src' is invalid (null, ""), immediately start with the FALLBACK_IMAGE_SRC to prevent the "missing src" error.
+  const initialSrc = isValidSrc(src) ? src : FALLBACK_IMAGE_SRC;
+  const [imgSrc, setImgSrc] = useState(initialSrc);
+  const [isFallback, setIsFallback] = useState(initialSrc === FALLBACK_IMAGE_SRC);
 
   const handleError = () => {
+    // Only switch to the fallback if we aren't already using it.
     if (imgSrc !== FALLBACK_IMAGE_SRC) {
       setImgSrc(FALLBACK_IMAGE_SRC);
-      setHasError(true);
+      setIsFallback(true);
     }
   };
 
@@ -32,7 +32,9 @@ export default function ImageWithFallback({ src, alt, width, height, ...rest }) 
       width={width}
       height={height}
       onError={handleError}
-      className={hasError ? "opacity-70 border-2 border-red-300" : ""}
+      className={
+        isFallback ? `${rest.className || ""} opacity-70 border-2 border-red-300` : rest.className
+      }
     />
   );
 }
