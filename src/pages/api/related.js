@@ -83,7 +83,7 @@ export default async function handler(req, res) {
     };
 
     const prompt = `
-    Task: Analyze the provided list of words and group words that are closely related through synonymy, antonymy, or a deep conceptual/lexical connection.
+    Task: Analyze the provided list of words and group words that are closely related through synonymy.
 
     Word List:
     ${wordsToGroup.join(", ")}
