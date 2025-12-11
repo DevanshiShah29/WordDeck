@@ -6,10 +6,10 @@ import { Bookmark, Plus, ListFilter, Brain, LogOut, Users } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 // Component Imports
-import FilterModal from "./filters/FilterModal";
-import Button from "./buttons/Button";
-import SortSelect from "./formItems/SortSelect";
-import SearchBar from "./SearchBar";
+import FilterModal from "../filters/FilterModal";
+import Button from "../buttons/Button";
+import SortSelect from "../formItems/SortSelect";
+import SearchBar from "../SearchBar";
 import { useDebounce } from "@/components/hooks/useDebounce";
 
 // Utility Imports

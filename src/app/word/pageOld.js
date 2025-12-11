@@ -13,7 +13,7 @@ import { LEVEL_ORDER } from "@/utils/constants";
 
 // Component Imports
 import VocabCard from "@/components/VocabCard";
-import VocabularyHeader from "@/components/VocabularyHeader";
+import VocabularyHeader from "@/components/header/VocabularyHeader";
 import Loader from "@/components/Loader";
 import Pagination from "@/components/Pagination";
 

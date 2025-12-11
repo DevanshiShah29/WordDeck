@@ -4,6 +4,7 @@
 import React, { useState } from "react";
 import SearchBar from "@/components/SearchBar";
 import { ChevronDown, Zap, Link } from "lucide-react";
+import Button from "@/components/buttons/Button";
 
 // Filter Constants
 const DIFFICULTY_OPTIONS = [
@@ -113,7 +114,7 @@ export default function FilterPanel({ onSearch = () => {}, onFiltersChange = () 
           <SearchBar
             value={q}
             placeholder="Search words..."
-            className="w-full"
+            className="w-full py-1"
             onChange={(e) => handleSearch(e)}
             onSearch={(v) => handleSearch(v)}
           />
@@ -128,7 +129,7 @@ export default function FilterPanel({ onSearch = () => {}, onFiltersChange = () 
               {DIFFICULTY_OPTIONS.map((option) => (
                 <li
                   key={option.value}
-                  className={`py-1 px-3 rounded-md cursor-pointer flex items-center gap-2 ${
+                  className={`py-2 px-3 rounded-md cursor-pointer flex items-center gap-2 ${
                     difficulty === option.value
                       ? "bg-[var(--primary-100)] text-[var(--primary-700)] font-semibold"
                       : "text-[var(--slate-600)] hover:bg-[var(--slate-100)]"
@@ -156,7 +157,7 @@ export default function FilterPanel({ onSearch = () => {}, onFiltersChange = () 
               {CONNECTION_OPTIONS.map((option) => (
                 <li
                   key={option.value}
-                  className={`py-1 px-3 rounded-md cursor-pointer ${
+                  className={`py-2 px-3 rounded-md cursor-pointer ${
                     connection === option.value
                       ? "bg-[var(--primary-100)] text-[var(--primary-700)] font-semibold"
                       : "text-[var(--slate-600)] hover:bg-[var(--slate-100)]"
@@ -172,9 +173,9 @@ export default function FilterPanel({ onSearch = () => {}, onFiltersChange = () 
       </div>
       {/* Footer Button - Fixed at the bottom of the FilterPanel */}
       <div className="p-5 border-t border-[var(--slate-200)] sticky bottom-0 bg-white">
-        <button className="w-full py-2 px-4 rounded-lg bg-[var(--primary-600)] text-white font-semibold hover:bg-[var(--primary-700)] transition">
-          Generate Relations
-        </button>
+        <Button className="w-full py-2 px-4 rounded-lg bg-[var(--primary-600)] text-white font-semibold hover:bg-[var(--primary-700)] transition">
+          Generate
+        </Button>
       </div>
     </aside>
   );

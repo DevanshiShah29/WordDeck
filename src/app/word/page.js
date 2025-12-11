@@ -8,7 +8,7 @@ import { buildQueryString } from "@/utils/helper";
 
 // Component Imports
 import VocabCard from "@/components/VocabCard";
-import VocabularyHeader from "@/components/VocabularyHeader";
+import VocabularyHeader from "@/components/header/VocabularyHeader";
 import Loader from "@/components/Loader";
 import Pagination from "@/components/Pagination";
 import { toast } from "react-toastify";

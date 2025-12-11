@@ -231,7 +231,7 @@ export default function Sidebar() {
                 title={isBookmarked ? "Remove bookmark" : "Add bookmark"}
                 variant="transparent"
                 aria-pressed={isBookmarked}
-                className={`p-2 md:p-2.5 bg-white/90 rounded-xl mr-2 hover:bg-[var(--slate-100)] hover:text-[var(--primary-600)] ${
+                className={`p-2 md:p-2.5 bg-white/90 rounded-xl mr-2 hover:bg-[var(--primary-100)] hover:text-[var(--primary-600)] hover:scale-110 ${
                   isBookmarked ? "text-[var(--primary-600)]" : "text-slate-600"
                 } `}
               >
@@ -241,7 +241,7 @@ export default function Sidebar() {
                 aria-label="Close details"
                 onClick={close}
                 variant="transparent"
-                className="p-2 md:2.5 bg-white/90  rounded-xl hover:bg-[var(--slate-100)] hover:text-[var(--primary-600)]"
+                className="p-2 md:2.5 bg-white/90  rounded-xl hover:bg-[var(--primary-100)] hover:text-[var(--primary-600)] hover:scale-110 "
               >
                 <X className="w-4 h-4" />
               </Button>
@@ -257,7 +257,7 @@ export default function Sidebar() {
                 aria-label="Play pronunciation"
                 title="Play pronunciation"
                 variant="transparent"
-                className="p-2 rounded-md text-slate-700 transition hover:text-[var(--primary-600)] hover:bg-[var(--primary-100)]"
+                className="p-2 rounded-md text-slate-700 transition hover:text-[var(--primary-600)] hover:bg-[var(--primary-100)] hover:scale-110"
               >
                 <Volume2 className="w-4 h-4" />
               </Button>
@@ -296,7 +296,7 @@ export default function Sidebar() {
 
               <div className={`p-4 rounded-lg ${SECTION_STYLES.definition}`}>
                 <h3 className="text-sm font-semibold flex items-center gap-2 text-blue-800 mb-2">
-                  <BookOpen className="text-blue-500" /> Definition
+                  <BookOpen className="text-blue-500 h-4 w-4" /> Definition
                 </h3>
 
                 <p className="text-sm text-slate-700 leading-relaxed pl-4">{detail.definition}</p>
@@ -305,7 +305,7 @@ export default function Sidebar() {
               {detail.example && (
                 <div className={`p-4 rounded-lg ${SECTION_STYLES.example}`}>
                   <h3 className="text-sm font-semibold flex items-center gap-2 text-blue-800 mb-2">
-                    <MessageSquare className="text-blue-500" /> Example Usage
+                    <MessageSquare className="text-blue-500 h-4 w-4" /> Example Usage
                   </h3>
 
                   <div className="text-sm italic text-slate-700 pl-4 border-l border-blue-300 py-1">
@@ -317,7 +317,7 @@ export default function Sidebar() {
               {(detail.etymologyStory || detail.etymology) && (
                 <div className={`p-4 rounded-lg ${SECTION_STYLES.etymology}`}>
                   <h3 className="text-sm font-semibold flex items-center gap-2 text-purple-800 mb-2">
-                    <Globe className="text-purple-500" /> Word Origin Story
+                    <Globe className="text-purple-500 h-4 w-4" /> Word Origin Story
                   </h3>
 
                   {detail.etymologyStory && (
@@ -335,7 +335,7 @@ export default function Sidebar() {
               {detail.mnemonics && (
                 <div className={`p-4 rounded-lg ${SECTION_STYLES.mnemonics}`}>
                   <h3 className="text-sm font-semibold flex items-center gap-2 text-yellow-800 mb-2">
-                    <Lightbulb className="text-yellow-500" /> Memory Aid
+                    <Lightbulb className="text-yellow-500 h-4 w-4" /> Memory Aid
                   </h3>
 
                   <p className="text-sm text-slate-700 italic pl-4">{detail.mnemonics}</p>
@@ -377,14 +377,6 @@ export default function Sidebar() {
                 <div className="flex items-center gap-1 text-xs text-slate-500">
                   <Languages className="w-3.5 h-3.5 text-slate-400" />
                   <span className="font-medium">{detail.origin}</span>
-                </div>
-              )}
-              {detail.createdAt && (
-                <div className="flex items-center gap-1 text-xs text-slate-500">
-                  <Clock className="w-3.5 h-3.5 text-slate-400" />
-                  <span className="font-medium">
-                    {new Date(detail.createdAt).toLocaleDateString()}
-                  </span>
                 </div>
               )}
             </div>

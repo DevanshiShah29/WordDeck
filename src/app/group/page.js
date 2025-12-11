@@ -37,18 +37,18 @@ export default function GroupPage() {
               />
             </div>
             <div className="col-span-12 md:col-span-8 lg:col-span-9">
-              <section className="map-area-vertical space-y-8">
-                {loadingGroups && <Loader fullscreen={false} title={"Loading groups..."} />}
+              <section className="map-area-vertical space-y-5">
+                {loadingGroups && <Loader fullscreen={false} title={"Loading..."} />}
 
                 {groupsError && (
                   <div className="p-4 text-sm text-red-700 bg-red-100 rounded-md">
-                    Error loading groups: {groupsError}
+                    Error loading: {groupsError}
                   </div>
                 )}
 
                 {visibleGroups.length === 0 && !loadingGroups && (
                   <div className="p-6 bg-white rounded-xl border border-[var(--slate-200)]">
-                    No groups found
+                    No data found
                   </div>
                 )}
 
