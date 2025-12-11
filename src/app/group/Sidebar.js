@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useCallback, useRef } from "react";
-// Lucide Icons
+// Library Imports
 import {
   Volume2,
   Languages,
@@ -14,12 +14,15 @@ import {
   X,
   Target,
 } from "lucide-react";
+import { toast } from "react-toastify";
 
+// Component Imports
 import Loader from "@/components/Loader";
 import ImageWithFallback from "@/components/ImageWithFallback";
-import { typeColorMap, difficultyColorMap } from "@/utils/constants";
 import Button from "@/components/buttons/Button";
-import { toast } from "react-toastify";
+
+// Utility Imports
+import { typeColorMap, difficultyColorMap } from "@/utils/constants";
 
 const SECTION_STYLES = {
   definition: "bg-white shadow-md",

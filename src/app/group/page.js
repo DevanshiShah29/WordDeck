@@ -1,7 +1,7 @@
 // page.js
 "use client";
 
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState } from "react";
 
 // Component Imports
 import Header from "./Header";
@@ -9,113 +9,35 @@ import FilterPanel from "./FilterPanel";
 import MiniWordMap from "./MiniWordMap";
 import Sidebar from "./Sidebar";
 import Loader from "@/components/Loader";
-import { transformSingleGroup } from "./utils";
-import { toast } from "react-toastify";
+
+// Helper Imports
+import { transformSingleGroup, applyGroupFilters } from "./utils";
+import { useGroupData } from "./userGroupData";
 
 export default function GroupPage() {
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState({});
-  const [groups, setGroups] = useState([]);
-  const [loadingGroups, setLoadingGroups] = useState(false);
-  const [groupsError, setGroupsError] = useState(null);
-
-  useEffect(() => {
-    const ac = new AbortController();
-
-    (async () => {
-      try {
-        setLoadingGroups(true);
-        setGroupsError(null);
-
-        const res = await fetch("/api/related", { signal: ac.signal });
-        if (!res.ok) {
-          const body = await res.json().catch(() => ({}));
-          throw new Error(body?.error || body?.message || `HTTP ${res.status}`);
-        }
-
-        const payload = await res.json();
-
-        if (!Array.isArray(payload)) {
-          throw new Error("Invalid API response");
-        }
-
-        const mapped = payload
-          .map((g, i) => {
-            // new object form: { words: [...], description: "..." }
-            if (g && typeof g === "object" && !Array.isArray(g)) {
-              const words = Array.isArray(g.words) ? g.words.map(String) : [];
-              return {
-                id: `g_api_${i}`,
-                title: words[0] || `Group ${i + 1}`,
-                words,
-                description: (g.description || "").trim(),
-              };
-            }
-
-            // legacy array form: ["a", "b", ...]
-            if (Array.isArray(g)) {
-              return {
-                id: `g_api_${i}`,
-                title: g[0] || `Group ${i + 1}`,
-                words: g.map(String),
-                description: "",
-              };
-            }
-
-            return null;
-          })
-          .filter(Boolean)
-          .filter((g) => Array.isArray(g.words) && g.words.length >= 2); // drop singletons
-
-        setGroups(mapped);
-      } catch (err) {
-        if (err.name === "AbortError") return;
-        toast.error("Failed to fetch related groups.");
-        setGroupsError(err.message || String(err));
-        setGroups([]); // ensure UI has deterministic state
-      } finally {
-        setLoadingGroups(false);
-      }
-    })();
-
-    return () => ac.abort();
-  }, []);
+  const { groups, loadingGroups, groupsError } = useGroupData();
 
   const visibleGroups = useMemo(() => {
-    const q = search.trim().toLowerCase();
-    return groups.filter((grp) => {
-      if (!q && !filters.difficulty && !filters.type) return true;
-      if (q) {
-        return (
-          grp.title?.toLowerCase().includes(q) ||
-          (grp.words || []).some((s) => String(s).toLowerCase().includes(q))
-        );
-      }
-      return true;
-    });
+    return applyGroupFilters(groups, search, filters);
   }, [groups, search, filters]);
 
   return (
     <>
       <Header title="Word Clusters" />
-
-      {/* mount Sidebar once so it can receive miniwordmap events */}
       <Sidebar />
-
       <main className="app-main w-full bg-white pt-6 pb-10">
         <div className="container mx-auto px-4 sm:px-8">
           <div className="grid grid-cols-12 gap-6">
-            {/* Left: Filters */}
             <div className="col-span-12 md:col-span-4 lg:col-span-3">
               <FilterPanel
-                onSearch={(q) => setSearch(q)}
+                onSearch={setSearch}
                 onFiltersChange={(f) => setFilters((prev) => ({ ...prev, ...f }))}
               />
             </div>
-
-            {/* Right: canvases */}
             <div className="col-span-12 md:col-span-8 lg:col-span-9">
-              <section className="map-area-vertical gap-8">
+              <section className="map-area-vertical space-y-8">
                 {loadingGroups && <Loader fullscreen={false} title={"Loading groups..."} />}
 
                 {groupsError && (
@@ -131,12 +53,19 @@ export default function GroupPage() {
                 )}
 
                 {visibleGroups.map((grp) => {
-                  const { nodes = [] } = transformSingleGroup(grp.words || [grp.title]);
+                  const { nodes = [] } = transformSingleGroup(
+                    grp.words || [grp.title],
+                    grp.difficulty
+                  );
 
                   return (
                     nodes.length > 1 && (
                       <div key={grp.id} className="mini-map-wrapper w-full h-[360px]">
-                        <MiniWordMap group={grp.words} description={grp.description} />
+                        <MiniWordMap
+                          group={grp.words}
+                          description={grp.description}
+                          groupDifficulty={grp.difficulty}
+                        />
                       </div>
                     )
                   );

@@ -17,7 +17,6 @@ export default function ImageWithFallback({ src, alt, width, height, ...rest }) 
   const [isFallback, setIsFallback] = useState(initialSrc === FALLBACK_IMAGE_SRC);
 
   const handleError = () => {
-    // Only switch to the fallback if we aren't already using it.
     if (imgSrc !== FALLBACK_IMAGE_SRC) {
       setImgSrc(FALLBACK_IMAGE_SRC);
       setIsFallback(true);

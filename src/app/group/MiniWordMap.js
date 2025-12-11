@@ -30,7 +30,12 @@ const CustomRelationshipEdge =
 const nodeTypes = { wordNode: CustomWordNode };
 const edgeTypes = { similar: CustomRelationshipEdge, opposite: CustomRelationshipEdge };
 
-export default function MiniWordMap({ group = [], onNodeSelect = () => {}, description = "" }) {
+export default function MiniWordMap({
+  group = [],
+  onNodeSelect = () => {},
+  description = "",
+  groupDifficulty,
+}) {
   const mapIdRef = useRef(`map-${Math.random().toString(36).slice(2, 9)}`);
   const mapId = mapIdRef.current;
   const rfRef = useRef(null);
@@ -42,7 +47,7 @@ export default function MiniWordMap({ group = [], onNodeSelect = () => {}, descr
   const pendingPositionsRef = useRef(new Map());
 
   // Custom Hooks
-  const initialData = transformSingleGroup(group || []);
+  const initialData = transformSingleGroup(group || [], groupDifficulty);
   const { nodes, setNodes, edges, isReady, error, markSelectedNode } = useWordMapLayout(
     initialData,
     rfRef
@@ -143,9 +148,7 @@ export default function MiniWordMap({ group = [], onNodeSelect = () => {}, descr
   return (
     <div className="mini-map-container relative">
       <div className="mini-map-header flex flex-col md:flex-row items-start md:items-center justify-between mb-3">
-        <h3 className="mini-map-title text-sm font-semibold mb-2 md:mb-0">
-          {groupTitle} : {description}
-        </h3>
+        <h3 className="mini-map-title text-sm font-semibold mb-2 md:mb-0">{description}</h3>
 
         <div className="mini-map-toolbar inline-flex items-center gap-2 flex-wrap w-full md:w-auto md:justify-start justify-between">
           <Button

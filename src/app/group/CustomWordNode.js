@@ -14,7 +14,7 @@ export default function CustomWordNode({ id, data, selected }) {
   const label = data?.label ?? data?.title ?? "word";
 
   // Use a default color if difficulty isn't set, otherwise use the specific color
-  const nodeColor = difficultyColors[data.difficulty] || "#64748B"; // Slate-500 for default
+  const nodeColor = difficultyColors[data.difficulty] || "#64748B";
 
   // Styles for the inner container (The circle itself)
   const containerStyle = {

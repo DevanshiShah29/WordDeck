@@ -2,7 +2,7 @@
 import { useState, useMemo, useRef, useEffect } from "react";
 
 // Library Imports
-import { Bookmark, Plus, ListFilter, Brain, LogOut } from "lucide-react";
+import { Bookmark, Plus, ListFilter, Brain, LogOut, Users } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 // Component Imports
@@ -155,6 +155,15 @@ export default function VocabularyHeader({
               >
                 <Brain size={18} className="mr-0 md:mr-2" />
                 <span className="hidden md:inline">Quiz</span>
+              </Button>
+
+              <Button
+                onClick={() => router.push("/group")}
+                className="flex flex-1 items-center justify-center md:justify-start bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 p-2 md:px-4 md:py-2"
+                variant="transparent"
+              >
+                <Users size={18} className="mr-0 md:mr-2" />
+                <span className="hidden md:inline">Groups</span>
               </Button>
 
               <Button
