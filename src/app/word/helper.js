@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 /**
  * Ensures a word detail property (like tags or synonyms) is a clean array of strings.
  * Handles cases where the input is null/undefined, a clean array, or a comma-separated string.
@@ -37,7 +39,7 @@ export async function fetchWordDetails(slug) {
     const data = await res.json();
     return data;
   } catch (error) {
-    console.error("Error fetching word:", error);
+    toast.error("Failed to fetch word details.");
     return null;
   }
 }
@@ -59,8 +61,7 @@ export async function fetchAllWords() {
     // Return an array, even if the API returns something unexpected
     return Array.isArray(data) ? data : [];
   } catch (err) {
-    console.error("Error fetching words:", err);
-    // Return an empty array on any failure
+    toast.error("Failed to load words.");
     return [];
   }
 }

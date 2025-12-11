@@ -52,7 +52,7 @@ export default function VocabDetail({ params }) {
     setLoading(true);
     fetchWordDetails(slug)
       .then((data) => setWord(data))
-      .catch((error) => console.error(error))
+      .catch((error) => toast.error(error))
       .finally(() => setLoading(false));
   }, [slug]);
 
@@ -101,8 +101,6 @@ export default function VocabDetail({ params }) {
   };
 
   const handleDeleteClick = async (e) => {
-    console.log("Delete clicked");
-
     if (!window.confirm(`Are you sure you want to delete the word ${slug}?`)) {
       return;
     }

@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 // Fetch all bookmarked words
 export const getBookmarkedWords = async () => {
   try {
@@ -5,7 +7,7 @@ export const getBookmarkedWords = async () => {
     if (!res.ok) throw new Error("Failed to fetch bookmarks");
     return await res.json();
   } catch (error) {
-    console.error("Error in getBookmarkedWords:", error);
+    toast.error("Failed to load bookmarked words.");
     throw error;
   }
 };
@@ -21,7 +23,7 @@ export const removeBookmark = async (wordId) => {
     if (!res.ok) throw new Error("Failed to remove bookmark");
     return await res.json();
   } catch (error) {
-    console.error("Error in removeBookmark:", error);
+    toast.error("Failed to remove bookmark.");
     throw error;
   }
 };

@@ -10,6 +10,7 @@ import MiniWordMap from "./MiniWordMap";
 import Sidebar from "./Sidebar";
 import Loader from "@/components/Loader";
 import { transformSingleGroup } from "./utils";
+import { toast } from "react-toastify";
 
 export default function GroupPage() {
   const [search, setSearch] = useState("");
@@ -69,7 +70,7 @@ export default function GroupPage() {
         setGroups(mapped);
       } catch (err) {
         if (err.name === "AbortError") return;
-        console.error("Failed to fetch related groups:", err);
+        toast.error("Failed to fetch related groups.");
         setGroupsError(err.message || String(err));
         setGroups([]); // ensure UI has deterministic state
       } finally {

@@ -2,6 +2,7 @@
 
 import { useState, useLayoutEffect, useCallback } from "react";
 import ELK from "elkjs/lib/elk.bundled.js";
+import { toast } from "react-toastify";
 
 const elk = new ELK();
 
@@ -80,7 +81,7 @@ const getLayoutedElements = async (nodes, edges) => {
       ...node,
       position: { x: (i % 3) * GRID_SPACING + 40, y: Math.floor(i / 3) * GRID_SPACING + 40 },
     }));
-    console.warn("ELK layout failed, using fallback grid:", err);
+    toast.warn("ELK layout failed, using fallback grid.");
     return { nodes: fallback, edges };
   }
 };
@@ -125,7 +126,7 @@ export function useWordMapLayout(initialData, rfRef) {
         setIsReady(true);
         setTimeout(() => rfRef.current?.fitView?.({ padding: 0.1 }), 80);
       } catch (err) {
-        console.error("MiniWordMap layout error:", err);
+        toast.error("Word map layout failed, displaying unarranged nodes.");
         setError(err?.message || "Layout failed");
         setNodes(normNodes);
         setEdges(initialEdges || []);

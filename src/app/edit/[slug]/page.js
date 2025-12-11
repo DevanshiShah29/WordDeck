@@ -116,7 +116,7 @@ const EditVocabularyForm = ({ params }) => {
         });
         setIsDataLoaded(true);
       } catch (e) {
-        console.error("Fetch Error:", e);
+        toast.error(e || "Failed to load word data.");
         setError(e);
       } finally {
         setIsLoading(false);

@@ -18,6 +18,7 @@ import * as CustomRelationshipEdgeModule from "./CustomRelationshipEdge";
 import { useWordMapLayout } from "./useWordMapLayout";
 import { useMapEvents } from "./useMapEvents";
 import Button from "@/components/buttons/Button";
+import { toast } from "react-toastify";
 
 const CustomWordNode =
   CustomWordNodeModule.default ?? CustomWordNodeModule.CustomWordNode ?? CustomWordNodeModule;
@@ -116,7 +117,7 @@ export default function MiniWordMap({ group = [], onNodeSelect = () => {}, descr
         );
         onNodeSelect(label);
       } catch (err) {
-        console.warn(err);
+        toast.error(err);
       }
     },
     [markSelectedNode, mapId, onNodeSelect]

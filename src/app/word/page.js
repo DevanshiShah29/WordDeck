@@ -11,6 +11,7 @@ import VocabCard from "@/components/VocabCard";
 import VocabularyHeader from "@/components/VocabularyHeader";
 import Loader from "@/components/Loader";
 import Pagination from "@/components/Pagination";
+import { toast } from "react-toastify";
 
 const LOCAL_STORAGE_KEY = "vocab_app_state";
 
@@ -52,7 +53,7 @@ const loadAppState = () => {
         };
       }
     } catch (e) {
-      console.error("Could not parse app state from localStorage", e);
+      toast.error("Could not load saved application state.");
     }
   }
   return DEFAULT_APP_STATE;
@@ -238,7 +239,7 @@ export default function HomePage() {
         });
       })
       .catch((error) => {
-        console.error("Fetch Error:", error);
+        toast.error("Failed to load");
         setVocabResponse((prev) => ({
           data: [],
           pagination: { ...prev.pagination, totalWords: 0, totalPages: 1 },

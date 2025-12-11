@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Loader2 } from "lucide-react"; // Using Loader2 for the rotating loading spinner
-
+import { Loader2 } from "lucide-react";
+import { toast } from "react-toastify";
 /**
  * A button component that handles an asynchronous generation task and displays a loading state.
  * It uses predefined CSS class names (`generate-ai-btn`, `ai-icon`, etc.) for styling.
@@ -20,7 +20,7 @@ const GenerateWithAIButton = ({ onGenerate }) => {
       // Execute the passed-in async function
       await onGenerate();
     } catch (error) {
-      console.error("AI generation failed:", error);
+      toast.error("AI generation failed:", error);
       // Optional: Handle UI feedback for errors here
     } finally {
       setLoading(false);
