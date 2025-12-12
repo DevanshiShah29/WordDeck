@@ -252,7 +252,7 @@ const QuizGenerator = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-50 to-indigo-50/20 font-sans">
+    <div className="min-h-screen bg-[var(--slate-100)] font-sans">
       <Header handleRestart={handleRestart} />
       {isReviewing ? (
         <ReviewScreen
@@ -310,7 +310,7 @@ const QuizGenerator = () => {
                   />
                 </Card>
               ) : (
-                <Card className="p-8 md:p-12 mb-6 shadow-xl">
+                <Card className="p-8 md:p-12 mb-6 shadow-md">
                   {/* Question section */}
                   <div className="mb-8">
                     <h2 className="text-2xl font-bold mb-3 text-[var(--slate-900)]">

@@ -2,6 +2,7 @@
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
+import "./variables.css";
 import "./generateAI.css";
 import "./relations.css";
 

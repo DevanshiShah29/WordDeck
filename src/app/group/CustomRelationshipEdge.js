@@ -58,7 +58,7 @@ export default function CustomRelationshipEdge({
         strokeLinecap="round"
         strokeLinejoin="round"
         style={{
-          pointerEvents: "none", // Reduced shadow for a flatter, subtler appearance
+          pointerEvents: "none",
           filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.05))",
           ...style,
         }}

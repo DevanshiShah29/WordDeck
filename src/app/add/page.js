@@ -122,7 +122,7 @@ const VocabularyForm = () => {
         onSubmit={handleSubmit}
       >
         {({ isSubmitting, values, handleSubmit, setFieldValue }) => (
-          <div className="bg-slate-50 min-h-screen pb-10">
+          <div className="bg-[var(--slate-100)] min-h-screen pb-10">
             <form onSubmit={handleSubmit} className="space-y-8 container mx-auto p-4 md:p-8">
               {/* Basic Information Section */}
               <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-100">

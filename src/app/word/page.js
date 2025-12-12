@@ -277,7 +277,7 @@ export default function HomePage() {
       {isContentLoading ? (
         <Loader message="Updating words..." fullScreen={false} />
       ) : (
-        <main className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
+        <main className="min-h-screen bg-[var(--slate-100)]">
           <div className="container mx-auto p-4 md:p-8">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {displayVocab.length > 0 ? (

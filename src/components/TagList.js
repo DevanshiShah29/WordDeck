@@ -59,7 +59,7 @@ export default function TagList({ icon, title, items, colors = "purple" }) {
     .trim();
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 border border-slate-100">
+    <div className="bg-white rounded-xl shadow-md p-6 border border-slate-100">
       {/* Header */}
       <div className="flex items-center gap-3 mb-4">
         <div className="text-[var(--slate-600)]">{icon}</div>{" "}

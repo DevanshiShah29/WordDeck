@@ -61,7 +61,7 @@ const FlippableWordCard = ({
       >
         {/* FRONT OF CARD  */}
         <Card
-          className={`absolute w-full h-full backface-hidden border-[var(--slate-200)] hover:shadow-xl transition-all`}
+          className={`absolute w-full h-full backface-hidden border-[var(--slate-200)] hover:shadow-md transition-all`}
           style={{ backfaceVisibility: "hidden" }}
         >
           <CardContent
@@ -177,7 +177,7 @@ const FlippableWordCard = ({
 
         {/* BACK OF CARD  */}
         <Card
-          className="absolute w-full h-full backface-hidden border-[var(--slate-100)] bg-white rounded-xl shadow-2xl p-6  hover:shadow-xl hover:shadow-[var(--primary-100)]/20 transition-all"
+          className="absolute w-full h-full backface-hidden border-[var(--slate-100)] bg-white rounded-xl shadow-md p-6  hover:shadow-xl hover:shadow-[var(--primary-100)]/20 transition-all"
           style={{
             backfaceVisibility: "hidden",
             transform: "rotateY(180deg)",

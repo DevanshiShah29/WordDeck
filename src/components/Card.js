@@ -1,6 +1,6 @@
 const Card = ({ children, className = "" }) => (
   <div
-    className={`bg-white/95 backdrop-blur border border-[var(--slate-200)]/50 rounded-xl shadow-lg ${className}`}
+    className={`bg-white/95 backdrop-blur border border-[var(--slate-200)]/50 rounded-xl shadow-md ${className}`}
   >
     {children}
   </div>

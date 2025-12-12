@@ -111,7 +111,7 @@ const Bookmarks = () => {
   }, [currentSort, filteredWords]);
 
   return (
-    <div className="min-h-screen bg-[var(--slate-50)]">
+    <div className="min-h-screen bg-[var(--slate-100)]">
       <Header
         bookmarkedWords={bookmarkedWords}
         onSearch={handleSearch}
@@ -153,7 +153,7 @@ const Bookmarks = () => {
               {!searchQuery && (
                 <Link href="/">
                   <Button
-                    className={`text-white h-12 px-8 text-base shadow-lg transition-all hover:-translate-y-1`}
+                    className={`text-white h-12 px-8 text-base shadow-md transition-all hover:-translate-y-1`}
                   >
                     <BookOpen className="mr-2 h-5 w-5" />
                     Explore Words

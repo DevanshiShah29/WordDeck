@@ -47,7 +47,7 @@ const SortSelect = ({ currentSort, onSortChange, options }) => {
     indicatorSeparator: () => "hidden",
 
     // Dropdown menu styling
-    menu: () => "rounded-lg overflow-hidden mt-1 bg-white shadow-xl w-48",
+    menu: () => "rounded-lg overflow-hidden mt-1 bg-white shadow-md w-48",
     option: () => `py-2 px-4 cursor-pointer`,
   };
 

@@ -134,7 +134,7 @@ export default function VocabCard({
 
   return (
     <Link href={`/word/${slug}`} className="block h-full">
-      <div className="flex flex-col h-full group relative bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-500 overflow-hidden cursor-pointer transform hover:-translate-y-1 border border-slate-100">
+      <div className="flex flex-col h-full group relative bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-500 overflow-hidden cursor-pointer transform hover:-translate-y-1 border border-slate-100">
         {/* Image Header Area */}
         <div className="relative h-40 sm:h-48 md:h-50 ">
           <ImageWithFallback
@@ -148,7 +148,7 @@ export default function VocabCard({
           <div className="absolute top-4 right-4 z-20">
             <div className="relative">
               <Button
-                className="p-2 cursor-pointer bg-white/90 backdrop-blur-sm text-[var(--slate-600)] rounded-xl hover:bg-white hover:text-[var(--primary-600)] transition-all duration-300 shadow-lg"
+                className="p-2 cursor-pointer bg-white/90 backdrop-blur-sm text-[var(--slate-600)] rounded-xl hover:bg-white hover:text-[var(--primary-600)] transition-all duration-300 shadow-md"
                 title="More Actions"
                 onClick={toggleMenu}
                 variant="transparent"
@@ -202,7 +202,7 @@ export default function VocabCard({
           {/* Bookmark Button */}
           <div className="absolute top-4 right-4 z-10">
             <Button
-              className={`p-2.5 cursor-pointer bg-white/90 backdrop-blur-sm text-[var(--slate-600)] rounded-xl hover:bg-white hover:text-blue-600 transition-all duration-300 shadow-lg ${
+              className={`p-2.5 cursor-pointer bg-white/90 backdrop-blur-sm text-[var(--slate-600)] rounded-xl hover:bg-white hover:text-blue-600 transition-all duration-300 shadow-md ${
                 isBookmarkedState
                   ? "text-[var(--red)] hover:text-red-600"
                   : "text-[var(--slate-600)] hover:bg-white hover:text-blue-600"
@@ -221,7 +221,7 @@ export default function VocabCard({
           {/* Type Badge */}
           <div className="absolute top-4 left-4 z-10">
             <span
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold shadow-lg bg-gradient-to-r ${typeGradient} text-white capitalize`}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold shadow-md bg-gradient-to-r ${typeGradient} text-white capitalize`}
             >
               {type}
             </span>

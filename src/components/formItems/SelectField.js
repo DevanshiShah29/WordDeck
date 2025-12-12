@@ -72,7 +72,7 @@ const SelectField = ({ label, id, options, required, isMulti = false, ...props }
     placeholder: () => "text-[var(--slate-500)]",
     singleValue: () => "text-[var(--slate-900)]",
     option: (state) => `py-2 px-4 cursor-pointer`,
-    menu: () => "rounded-lg overflow-hidden mt-1 bg-white shadow-xl",
+    menu: () => "rounded-lg overflow-hidden mt-1 bg-white shadow-md",
     menuList: () => "thin-scrollbar",
     dropdownIndicator: () => "text-[var(--slate-300)] hover:text-[var(--slate-600)] transition",
     clearIndicator: () => "text-[var(--slate-300)] hover:text-[var(--red)] transition",

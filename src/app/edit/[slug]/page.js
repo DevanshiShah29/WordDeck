@@ -200,8 +200,7 @@ const EditForm = () => {
   return (
     <>
       <PageHeader title={headerWord || "Loading..."} subtitle={"Modify entry"} />
-      {/* Main Content Wrapper: Always rendered */}
-      <div className="bg-slate-50 min-h-screen pb-10">
+      <div className="bg-[var(--slate-100)] min-h-screen pb-10">
         {/* Conditional Content Rendering */}
         {error ? (
           <div className="text-center p-10 text-[var(--red)] container mx-auto">

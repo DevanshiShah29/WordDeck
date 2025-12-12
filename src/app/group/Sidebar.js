@@ -26,7 +26,7 @@ import { typeColorMap, difficultyColorMap } from "@/utils/constants";
 import { speakWord } from "@/utils/helper";
 
 const SECTION_STYLES = {
-  definition: "bg-white shadow-md",
+  definition: "bg-white shadow-sm",
   example: "bg-blue-50/70 shadow-sm",
   etymology: "bg-purple-50/70 shadow-sm",
   mnemonics: "bg-yellow-50/70 shadow-sm",
@@ -159,7 +159,7 @@ export default function Sidebar() {
 
   return (
     <aside
-      className={`fixed top-0 right-0 h-screen w-full md:w-[26rem] lg:w-[28rem] bg-white border-l border-slate-100 shadow-2xl z-[60] transform transition-transform duration-300 ease-in-out ${
+      className={`fixed top-0 right-0 h-screen w-full md:w-[26rem] lg:w-[28rem] bg-white border-l border-slate-100 shadow-md z-[60] transform transition-transform duration-300 ease-in-out ${
         open ? "translate-x-0" : "translate-x-full"
       } overscroll-y-contain`}
       aria-hidden={!open}
@@ -222,7 +222,7 @@ export default function Sidebar() {
           {detail && (
             <div className="space-y-6">
               {detail?.imageUrl && (
-                <div className="relative w-full h-45 rounded-xl overflow-hidden shadow-lg bg-slate-200 flex items-center justify-center text-slate-500 text-xs">
+                <div className="relative w-full h-45 rounded-xl overflow-hidden shadow-md bg-slate-200 flex items-center justify-center text-slate-500 text-xs">
                   <ImageWithFallback
                     src={detail.imageUrl}
                     alt={`Illustration for ${word}`}
@@ -233,7 +233,7 @@ export default function Sidebar() {
 
                   <div className="absolute right-4 top-4 z-20">
                     <span
-                      className={`px-3 py-1.5 rounded-xl text-xs font-bold shadow-lg bg-gradient-to-r ${typeGradient} text-white capitalize`}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold shadow-md bg-gradient-to-r ${typeGradient} text-white capitalize`}
                     >
                       {detail?.type || "Term"}
                     </span>

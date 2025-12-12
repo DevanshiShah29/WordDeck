@@ -11,9 +11,9 @@ import React from "react";
  */
 export default function InfoCard({ icon, title, children, iconGradient }) {
   return (
-    <div className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6 transition-transform">
+    <div className="bg-white rounded-2xl shadow-md border border-slate-100 p-6 transition-transform">
       <div className="flex items-center gap-4 mb-5">
-        <div className={`p-3 rounded-xl text-white shadow-lg  bg-gradient-to-r  ${iconGradient}`}>
+        <div className={`p-3 rounded-xl text-white shadow-md bg-gradient-to-r  ${iconGradient}`}>
           {icon}
         </div>
         <h2 className="text-xl font-bold text-[var(--slate-800)] tracking-tight">{title}</h2>
