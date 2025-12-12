@@ -77,7 +77,7 @@ const DetailHeader = ({
 
         {isMenuOpen && (
           <div
-            className="absolute right-0 mt-2 w-40 origin-top-right rounded-md shadow-2xl bg-white divide-y divide-slate-100 focus:outline-none z-50"
+            className="absolute right-0 mt-2 w-40 origin-top-right rounded-md shadow-xl bg-white divide-y divide-slate-100 focus:outline-none z-50"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="py-1">

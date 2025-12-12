@@ -74,7 +74,7 @@ export default function FilterModal({
   }, []);
 
   const MODAL_CONTAINER_CLASSES =
-    "bg-white rounded-2xl shadow-2xl w-full max-w-2xl h-[90vh] md:h-[80vh] flex flex-col relative transform transition-all duration-300 scale-95 md:scale-100";
+    "bg-white rounded-2xl shadow-xl w-full max-w-2xl h-[90vh] md:h-[80vh] flex flex-col relative transform transition-all duration-300 scale-95 md:scale-100";
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
