@@ -95,7 +95,7 @@ export default function FilterPanel({ onSearch = () => {}, onFiltersChange = () 
   };
 
   return (
-    <aside className="h-auto md:h-[90vh] filter-panel flex flex-col bg-white rounded-xl shadow-sm border border-[var(--slate-200)] sticky top-6">
+    <aside className="h-auto md:h-[90vh] filter-panel flex flex-col bg-white rounded-lg shadow-sm border border-[var(--slate-200)] sticky top-6">
       {/* Scrollable Content Wrapper */}
       <div className="flex-grow overflow-y-auto p-5 thin-scrollbar">
         <div className="flex justify-between items-center mb-4 pb-2 border-b border-[var(--slate-200)]">

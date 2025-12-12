@@ -218,7 +218,7 @@ const EditForm = () => {
             {({ isSubmitting, values, handleSubmit, setFieldValue }) => (
               <form onSubmit={handleSubmit} className="space-y-8 container mx-auto p-4 md:p-8">
                 {/* Basic Information Section */}
-                <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
+                <div className="bg-white rounded-lg shadow-sm p-6 border border-slate-100">
                   <div className="flex items-center gap-3 mb-6">
                     <BookIcon className="w-6 h-6 text-[var(--primary-600)]" />
 
@@ -272,7 +272,7 @@ const EditForm = () => {
                   </div>
                 </div>
                 {/* Etymology & Origin Section */}
-                <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
+                <div className="bg-white rounded-lg shadow-sm p-6 border border-slate-100">
                   <div className="flex items-center gap-3 mb-6">
                     <GlobeIcon className="w-6 h-6 text-green-600" />
 
@@ -318,7 +318,7 @@ const EditForm = () => {
                   </div>
                 </div>
                 {/* Memory Aids & Media Section */}
-                <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
+                <div className="bg-white rounded-lg shadow-sm p-6 border border-slate-100">
                   <div className="flex items-center gap-3 mb-6">
                     <LightbulbIcon className="w-6 h-6 text-yellow-600" />
 

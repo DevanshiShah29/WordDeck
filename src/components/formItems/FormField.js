@@ -58,7 +58,7 @@ const FormField = ({ label, id, type = "text", placeholder, icon, required }) =>
           px-4 
           py-3 
           border 
-          rounded-xl 
+          rounded-lg 
           text-md
           text-[var(--slate-900)] 
           placeholder-[var(--slate-500)] 

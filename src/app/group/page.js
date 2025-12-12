@@ -47,7 +47,7 @@ export default function GroupPage() {
                 )}
 
                 {visibleGroups.length === 0 && !loadingGroups && (
-                  <div className="p-6 bg-white rounded-xl border border-[var(--slate-200)]">
+                  <div className="p-6 bg-white rounded-lg border border-[var(--slate-200)]">
                     No data found
                   </div>
                 )}

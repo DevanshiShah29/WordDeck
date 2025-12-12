@@ -65,7 +65,7 @@ const FlippableWordCard = ({
           style={{ backfaceVisibility: "hidden" }}
         >
           <CardContent
-            className={`flex flex-col items-center justify-center h-full p-8 relative pt-6 rounded-xl ${
+            className={`flex flex-col items-center justify-center h-full p-8 relative pt-6 rounded-lg ${
               shouldShowImage ? "bg-[var(--slate-900)]" : "bg-white"
             }`}
             style={hintStyles}
@@ -136,7 +136,7 @@ const FlippableWordCard = ({
               </div>
             </div>
             {shouldShowImage && (
-              <div className="absolute inset-0 bg-black/50 backdrop-blur-[0px] rounded-xl transition-opacity duration-500 z-0"></div>
+              <div className="absolute inset-0 bg-black/50 backdrop-blur-[0px] rounded-lg transition-opacity duration-500 z-0"></div>
             )}
             {/* Main Content */}
             <div className="text-center space-y-4 flex-1 flex flex-col items-center justify-center">
@@ -177,7 +177,7 @@ const FlippableWordCard = ({
 
         {/* BACK OF CARD  */}
         <Card
-          className="absolute w-full h-full backface-hidden border-[var(--slate-100)] bg-white rounded-xl shadow-md p-6  hover:shadow-xl hover:shadow-[var(--primary-100)]/20 transition-all"
+          className="absolute w-full h-full backface-hidden border-[var(--slate-100)] bg-white rounded-lg shadow-md p-6  hover:shadow-xl hover:shadow-[var(--primary-100)]/20 transition-all"
           style={{
             backfaceVisibility: "hidden",
             transform: "rotateY(180deg)",

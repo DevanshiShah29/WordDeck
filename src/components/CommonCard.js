@@ -19,17 +19,17 @@ export default function Card({
   contentBorderColor = "border-blue-100",
 }) {
   return (
-    <div className="bg-white rounded-xl shadow-md p-6 sm:p-8 border border-slate-100">
+    <div className="bg-white rounded-lg shadow-md p-6 sm:p-8 border border-slate-100">
       {/* Card Header */}
       <div className="flex items-center gap-4 mb-6">
         {/* Icon Container */}
-        <div className={`p-3 bg-gradient-to-r ${iconGradient} rounded-xl text-white`}>{icon}</div>
+        <div className={`p-3 bg-gradient-to-r ${iconGradient} rounded-lg text-white`}>{icon}</div>
         <h2 className="text-xl font-bold text-[var(--slate-900)]">{title}</h2>
       </div>
 
       {/* Card Content Area */}
       <div
-        className={`bg-gradient-to-r ${contentBackground} p-5 rounded-xl border ${contentBorderColor}`}
+        className={`bg-gradient-to-r ${contentBackground} p-5 rounded-lg border ${contentBorderColor}`}
       >
         {children}
       </div>

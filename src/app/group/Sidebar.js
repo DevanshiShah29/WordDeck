@@ -178,7 +178,7 @@ export default function Sidebar() {
                 title={isBookmarked ? "Remove bookmark" : "Add bookmark"}
                 variant="transparent"
                 aria-pressed={isBookmarked}
-                className={`p-2 md:p-2.5 bg-white/90 rounded-xl mr-2 hover:bg-[var(--primary-100)] hover:text-[var(--primary-600)] hover:scale-110 ${
+                className={`p-2 md:p-2.5 bg-white/90 rounded-lg mr-2 hover:bg-[var(--primary-100)] hover:text-[var(--primary-600)] hover:scale-110 ${
                   isBookmarked ? "text-[var(--primary-600)]" : "text-slate-600"
                 } `}
               >
@@ -188,7 +188,7 @@ export default function Sidebar() {
                 aria-label="Close details"
                 onClick={close}
                 variant="transparent"
-                className="p-2 md:2.5 bg-white/90  rounded-xl hover:bg-[var(--primary-100)] hover:text-[var(--primary-600)] hover:scale-110 "
+                className="p-2 md:2.5 bg-white/90  rounded-lg hover:bg-[var(--primary-100)] hover:text-[var(--primary-600)] hover:scale-110 "
               >
                 <X className="w-4 h-4" />
               </Button>
@@ -215,14 +215,14 @@ export default function Sidebar() {
         <div className="p-5 overflow-y-auto flex-grow bg-slate-50/50 thin-scrollbar">
           {loading && <Loader fullScreen={false} title="loading" />}
           {error && (
-            <div className="text-sm text-red-700 bg-red-100 p-4 rounded-xl border border-red-300">
+            <div className="text-sm text-red-700 bg-red-100 p-4 rounded-lg border border-red-300">
               Error: {error}
             </div>
           )}
           {detail && (
             <div className="space-y-6">
               {detail?.imageUrl && (
-                <div className="relative w-full h-45 rounded-xl overflow-hidden shadow-md bg-slate-200 flex items-center justify-center text-slate-500 text-xs">
+                <div className="relative w-full h-45 rounded-lg overflow-hidden shadow-md bg-slate-200 flex items-center justify-center text-slate-500 text-xs">
                   <ImageWithFallback
                     src={detail.imageUrl}
                     alt={`Illustration for ${word}`}
@@ -233,7 +233,7 @@ export default function Sidebar() {
 
                   <div className="absolute right-4 top-4 z-20">
                     <span
-                      className={`px-3 py-1.5 rounded-xl text-xs font-bold shadow-md bg-gradient-to-r ${typeGradient} text-white capitalize`}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-bold shadow-md bg-gradient-to-r ${typeGradient} text-white capitalize`}
                     >
                       {detail?.type || "Term"}
                     </span>

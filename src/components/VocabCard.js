@@ -202,7 +202,7 @@ export default function VocabCard({
           {/* Bookmark Button */}
           <div className="absolute top-4 right-4 z-10">
             <Button
-              className={`p-2.5 cursor-pointer bg-white/90 backdrop-blur-sm text-[var(--slate-600)] rounded-xl hover:bg-white hover:text-blue-600 transition-all duration-300 shadow-md ${
+              className={`p-2.5 cursor-pointer bg-white/90 backdrop-blur-sm text-[var(--slate-600)] rounded-lg hover:bg-white hover:text-blue-600 transition-all duration-300 shadow-md ${
                 isBookmarkedState
                   ? "text-[var(--red)] hover:text-red-600"
                   : "text-[var(--slate-600)] hover:bg-white hover:text-blue-600"
@@ -221,7 +221,7 @@ export default function VocabCard({
           {/* Type Badge */}
           <div className="absolute top-4 left-4 z-10">
             <span
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold shadow-md bg-gradient-to-r ${typeGradient} text-white capitalize`}
+              className={`px-3 py-1.5 rounded-full text-xs font-bold shadow-md bg-gradient-to-r ${typeGradient} text-white capitalize`}
             >
               {type}
             </span>
@@ -240,7 +240,7 @@ export default function VocabCard({
               onClick={(e) => handleActionClick(e, "speak")}
               variant="transparent"
               title="Play pronunciation"
-              className="p-2 hover:bg-[var(--primary-100)] rounded-xl cursor-pointer transition-all duration-300 text-[var(--slate-600)] hover:text-[var(--primary-600)] transform hover:scale-110"
+              className="p-2 hover:bg-[var(--primary-100)] rounded-lg cursor-pointer transition-all duration-300 text-[var(--slate-600)] hover:text-[var(--primary-600)] transform hover:scale-110"
             >
               <Volume2 className="w-5 h-5" />
             </Button>

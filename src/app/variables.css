@@ -37,3 +37,7 @@
 
 /* Shadows must be : 
 shadow-sm, shadow-md and rarely shadow-xl for hover effects */
+
+/* Rounded corners must be :
+/* rounded-md, rounded-lg and rarely rounded-xl */
+/* Use rounded-full only for circular elements like avatars or buttons */

@@ -142,7 +142,7 @@ export default function VocabDetail({ params }) {
           {/* Left Column: Core Content */}
           <div className="lg:col-span-2 space-y-8">
             {/* Image + Word Type */}
-            <div className="relative bg-white rounded-xl shadow-md overflow-hidden group border border-slate-100">
+            <div className="relative bg-white rounded-lg shadow-md overflow-hidden group border border-slate-100">
               <div className="aspect-video relative">
                 <Image
                   src={image || "/placeholder.jpg"}
@@ -153,7 +153,7 @@ export default function VocabDetail({ params }) {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
                 <div className="absolute top-4 right-4 z-10">
                   <div
-                    className={`px-3 py-1.5 rounded-xl text-sm font-bold shadow-md bg-gradient-to-r ${gradient} text-white capitalize`}
+                    className={`px-3 py-1.5 rounded-lg text-sm font-bold shadow-md bg-gradient-to-r ${gradient} text-white capitalize`}
                   >
                     {type}
                   </div>

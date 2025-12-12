@@ -11,7 +11,7 @@ import { ShieldX } from "lucide-react";
 export default function NotFound({ message }) {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-[var(--slate-100)] p-8 text-center">
-      <div className="max-w-md w-full bg-white p-10 rounded-2xl shadow-md border border-slate-100">
+      <div className="max-w-md w-full bg-white p-10 rounded-lg shadow-md border border-slate-100">
         <div className="mb-6 mx-auto w-16 h-16 rounded-full bg-red-100 flex items-center justify-center">
           <ShieldX className="w-8 h-8 text-red-600" />
         </div>

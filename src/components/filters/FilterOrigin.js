@@ -54,8 +54,7 @@ const OriginFilter = ({ selectedOrigins, setSelectedOrigins, allOrigins }) => {
                 key={origin}
                 onClick={() => toggleSelection(origin)} // Conditional class application to merge styles and behavior
                 className={`
-                        flex items-center // Essential for aligning text and icon
-                        px-3 py-1 text-sm rounded-full transition 
+                        flex items-center px-3 py-1 text-sm rounded-full transition 
                         ${
                           isSelected
                             ? "bg-[var(--primary-100)] text-[var(--primary-700)] hover:bg-[var(--primary-200)]"

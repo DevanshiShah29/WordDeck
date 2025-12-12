@@ -63,7 +63,7 @@ const AuthForm = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[var(--slate-100)] p-4 font-sans">
-      <div className="w-full max-w-sm bg-white p-8 md:p-10 rounded-xl shadow-md border border-[var(--slate-100)]">
+      <div className="w-full max-w-sm bg-white p-8 md:p-10 rounded-lg shadow-md border border-[var(--slate-100)]">
         {/* Header */}
         <div className="flex flex-col items-center mb-8">
           <div className="flex items-center">

@@ -322,12 +322,12 @@ const QuizGenerator = () => {
                   {/* Options section */}
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     {currentQuiz.options.map((option, index) => (
-                      <button
+                      <Button
                         key={index}
                         onClick={() => handleAnswerClick(option)}
                         disabled={!isLastGeneratedQuestion || isAnswered}
                         className={`
-                        w-full justify-between h-auto py-5 px-6 text-left text-md font-medium rounded-xl border-2 
+                        w-full justify-between h-auto py-5 px-6 text-left text-md font-medium rounded-lg border-2 
                         flex items-center text-left
                         ${getOptionClass(option)}
                       `}
@@ -353,7 +353,7 @@ const QuizGenerator = () => {
                               )}
                           </>
                         )}
-                      </button>
+                      </Button>
                     ))}
                   </div>
 
