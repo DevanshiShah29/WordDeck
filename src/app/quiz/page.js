@@ -258,7 +258,7 @@ const QuizGenerator = () => {
         <ReviewScreen
           quizHistory={quizHistory}
           totalScore={totalScore}
-          totalQuestions={quizWords.length}
+          totalQuestions={quizHistory.length}
           onReviewSelect={handleReviewSelect}
           onRestart={handleRestart}
         />

@@ -46,17 +46,13 @@ const Header = ({
         />
 
         <Button
-          variant="secondary"
-          className={`!py-3 w-1/2 md:w-auto ${
-            isHintActive
-              ? "bg-yellow-500 hover:bg-yellow-600 text-white"
-              : "bg-[var(--slate-100)] hover:bg-[var(--slate-200)] text-[var(--slate-700)]"
+          variant="transparent"
+          className={`p-3 w-1/2 md:w-auto ${
+            isHintActive ? "bg-yellow-500 text-white" : "bg-[var(--primary)] text-white"
           }`}
           onClick={handleHintClick}
         >
-          <Lightbulb
-            className={`h-4 w-4 mr-2 ${isHintActive ? "text-white" : "text-yellow-500"}`}
-          />
+          <Lightbulb className={`h-4 w-4 mr-2 text-white`} />
           Hint
         </Button>
       </div>

@@ -21,7 +21,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 // Utility Imports
-import { speakWord, formattedDate } from "@/utils/helper";
+import { speakWord, formattedDate, capitalizeFirstLetter } from "@/utils/helper";
 import { typeColorMap } from "@/utils/constants";
 import { formatWordListProp, fetchWordDetails } from "../helper";
 
@@ -122,7 +122,8 @@ export default function VocabDetail({ params }) {
     }
   };
 
-  const safeSynonyms = formatWordListProp(synonyms);
+  const uppercaseSynonyms = synonyms.map((syn) => capitalizeFirstLetter(syn));
+  const safeSynonyms = formatWordListProp(uppercaseSynonyms);
   const safeTags = formatWordListProp(tags);
 
   return (

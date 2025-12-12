@@ -45,12 +45,10 @@ const DUMMY_INITIAL_VALUES = {
   tags: "",
 };
 
-const EditVocabularyForm = ({ params }) => {
-  const { slug } = params;
+const EditForm = () => {
+  const [urlSlug, setUrlSlug] = useState(null);
   const router = useRouter();
-
-  // State for data and loading/error status
-  const [initialValues, setInitialValues] = useState(DUMMY_INITIAL_VALUES);
+  const [initialValues, setInitialValues] = useState(DUMMY_INITIAL_VALUES); // Initial loading state set to true until we get the slug
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
@@ -60,21 +58,41 @@ const EditVocabularyForm = ({ params }) => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Fetch data using useEffect
   useEffect(() => {
-    if (!slug) return;
+    if (typeof window !== "undefined") {
+      const pathSegments = window.location.pathname.split("/").filter(Boolean); // filter(Boolean) removes empty strings // Look for the segment immediately after 'edit'
+
+      const editIndex = pathSegments.indexOf("edit");
+      let extractedSlug = null;
+
+      if (editIndex !== -1 && editIndex + 1 < pathSegments.length) {
+        extractedSlug = pathSegments[editIndex + 1];
+      }
+
+      setUrlSlug(extractedSlug);
+
+      if (!extractedSlug) {
+        setIsLoading(false);
+        setError(new Error("Missing dynamic route segment (slug)."));
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!urlSlug) {
+      return;
+    }
 
     const fetchWordData = async () => {
       setIsLoading(true);
       setError(null);
       try {
-        const response = await fetch(`/api/words?slug=${slug}`);
+        const response = await fetch(`/api/words?slug=${urlSlug}`);
         const data = await response.json();
 
         if (!response.ok) {
           throw new Error(data.error || "Failed to fetch word.");
         }
-
         // Format the fetched data for Formik
         setInitialValues({
           _id: data._id,
@@ -94,7 +112,7 @@ const EditVocabularyForm = ({ params }) => {
         });
         setIsDataLoaded(true);
       } catch (e) {
-        toast.error(e || "Failed to load word data.");
+        toast.error(e.message || "Failed to load word data.");
         setError(e);
       } finally {
         setIsLoading(false);
@@ -102,7 +120,7 @@ const EditVocabularyForm = ({ params }) => {
     };
 
     fetchWordData();
-  }, [slug]);
+  }, [urlSlug]);
 
   const handleSubmit = useCallback(
     async (values, { setSubmitting }) => {
@@ -124,7 +142,7 @@ const EditVocabularyForm = ({ params }) => {
         toast.success(`Word ${values.word} updated successfully!`);
 
         const newSlug = result.slug || values.slug;
-        if (newSlug && newSlug !== slug) {
+        if (newSlug && newSlug !== urlSlug) {
           router.replace(`/word/${newSlug}`);
         } else {
           router.push("/word");
@@ -135,7 +153,7 @@ const EditVocabularyForm = ({ params }) => {
         setSubmitting(false);
       }
     },
-    [router, slug]
+    [router, urlSlug]
   );
 
   const handleGenerateAnswer = async (word, setFieldValue) => {
@@ -171,7 +189,6 @@ const EditVocabularyForm = ({ params }) => {
       setIsGenerating(false);
     }
   };
-
   // Determine the word for the header
   let headerWord = "Loading...";
   if (error) {
@@ -179,12 +196,10 @@ const EditVocabularyForm = ({ params }) => {
   } else if (isDataLoaded) {
     headerWord = initialValues.word;
   }
-
   // Form Render (Using consistent structure to prevent hydration errors)
   return (
     <>
       <PageHeader title={headerWord || "Loading..."} subtitle={"Modify entry"} />
-
       {/* Main Content Wrapper: Always rendered */}
       <div className="bg-slate-50 min-h-screen pb-10">
         {/* Conditional Content Rendering */}
@@ -207,30 +222,36 @@ const EditVocabularyForm = ({ params }) => {
                 <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
                   <div className="flex items-center gap-3 mb-6">
                     <BookIcon className="w-6 h-6 text-[var(--primary-600)]" />
+
                     <h2 className="text-xl font-semibold text-[var(--slate-900)]">
                       1. Basic Information
                     </h2>
                   </div>
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <FormField id="word" label="Word" placeholder="Enter the word" required />
+
                     <SelectField
                       id="type"
                       label="Word Type"
                       options={TYPE_OPTIONS_DROPDOWN}
                       required
                     />
+
                     <FormField
                       id="pronunciation"
                       label="Pronunciation"
                       placeholder="/prəˌnʌnsiˈeɪʃən/ (IPA)"
                       required
                     />
+
                     <SelectField
                       id="difficulty"
                       label="Difficulty Level"
                       options={LEVEL_OPTIONS_DROPDOWN}
                     />
                   </div>
+
                   <div className="mt-6">
                     <TextareaField
                       id="definition"
@@ -240,6 +261,7 @@ const EditVocabularyForm = ({ params }) => {
                       required
                     />
                   </div>
+
                   <div className="mt-6">
                     <TextareaField
                       id="example"
@@ -250,15 +272,16 @@ const EditVocabularyForm = ({ params }) => {
                     />
                   </div>
                 </div>
-
                 {/* Etymology & Origin Section */}
                 <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
                   <div className="flex items-center gap-3 mb-6">
                     <GlobeIcon className="w-6 h-6 text-green-600" />
+
                     <h2 className="text-xl font-semibold text-[var(--slate-900)]">
                       2. Origin & Story
                     </h2>
                   </div>
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <FormField
                       id="origin"
@@ -266,6 +289,7 @@ const EditVocabularyForm = ({ params }) => {
                       placeholder="e.g., Latin, Greek, French"
                       required
                     />
+
                     <FormField
                       id="synonyms"
                       label="Synonyms"
@@ -273,6 +297,7 @@ const EditVocabularyForm = ({ params }) => {
                       required
                     />
                   </div>
+
                   <div className="mt-6">
                     <TextareaField
                       id="etymology"
@@ -282,6 +307,7 @@ const EditVocabularyForm = ({ params }) => {
                       required
                     />
                   </div>
+
                   <div className="mt-6">
                     <TextareaField
                       id="etymologyStory"
@@ -292,15 +318,16 @@ const EditVocabularyForm = ({ params }) => {
                     />
                   </div>
                 </div>
-
                 {/* Memory Aids & Media Section */}
                 <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
                   <div className="flex items-center gap-3 mb-6">
                     <LightbulbIcon className="w-6 h-6 text-yellow-600" />
+
                     <h2 className="text-xl font-semibold text-[var(--slate-900)]">
                       3. Memory & Media
                     </h2>
                   </div>
+
                   <div className="space-y-6">
                     <TextareaField
                       id="mnemonics"
@@ -309,6 +336,7 @@ const EditVocabularyForm = ({ params }) => {
                       placeholder="Create a memorable way to remember this word (e.g., rhyme, association)"
                       required
                     />
+
                     <FormField
                       id="imageUrl"
                       label="Image URL"
@@ -316,6 +344,7 @@ const EditVocabularyForm = ({ params }) => {
                       icon={ImageIcon}
                       placeholder="https://example.com/image.jpg"
                     />
+
                     <FormField
                       id="tags"
                       label="Tags"
@@ -325,7 +354,6 @@ const EditVocabularyForm = ({ params }) => {
                     />
                   </div>
                 </div>
-
                 {/* Action Buttons */}
                 <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between pt-4 gap-4">
                   <GenerateWithAIButton
@@ -333,6 +361,7 @@ const EditVocabularyForm = ({ params }) => {
                     loading={isGenerating}
                     className="w-full md:w-auto"
                   />
+
                   <div className="flex w-full md:w-auto items-center gap-4">
                     <Link
                       href="/word"
@@ -340,6 +369,7 @@ const EditVocabularyForm = ({ params }) => {
                     >
                       Cancel
                     </Link>
+
                     <Button
                       type="submit"
                       size="lg"
@@ -361,4 +391,4 @@ const EditVocabularyForm = ({ params }) => {
   );
 };
 
-export default EditVocabularyForm;
+export default EditForm;

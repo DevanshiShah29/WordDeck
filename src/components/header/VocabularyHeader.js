@@ -136,11 +136,10 @@ export default function VocabularyHeader({
 
               <Button
                 onClick={() => setIsFilterModalOpen(true)}
-                className="relative flex flex-1 items-center justify-center md:justify-start bg-purple-600 text-white hover:bg-purple-700  p-2 md:px-4 md:py-2"
+                className="relative flex flex-1 items-center justify-center md:justify-start bg-purple-600 text-white hover:bg-purple-700 p-2 md:px-4 md:py-2"
               >
                 <ListFilter size={18} className="mr-0 md:mr-2" />
                 <span className="hidden md:inline">Filters</span>
-                {/* Active Filter Count Badge */}
                 {activeFilterCount > 0 && (
                   <span className="absolute -top-2 -right-2 bg-[var(--red)] text-white text-xs px-2 py-0.5 rounded-full font-bold">
                     {activeFilterCount}
@@ -151,7 +150,6 @@ export default function VocabularyHeader({
               <Button
                 onClick={() => router.push("/quiz")}
                 className="flex flex-1 items-center justify-center md:justify-start bg-teal-600 text-white rounded-lg hover:bg-teal-700 p-2 md:px-4 md:py-2"
-                variant="transparent"
               >
                 <Brain size={18} className="mr-0 md:mr-2" />
                 <span className="hidden md:inline">Quiz</span>
@@ -160,7 +158,6 @@ export default function VocabularyHeader({
               <Button
                 onClick={() => router.push("/group")}
                 className="flex flex-1 items-center justify-center md:justify-start bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 p-2 md:px-4 md:py-2"
-                variant="transparent"
               >
                 <Users size={18} className="mr-0 md:mr-2" />
                 <span className="hidden md:inline">Groups</span>
@@ -169,7 +166,6 @@ export default function VocabularyHeader({
               <Button
                 onClick={() => router.push("/add")}
                 className="flex flex-1 items-center justify-center md:justify-start bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--primary-700)] p-2 md:px-4 md:py-2"
-                variant="transparent"
               >
                 <Plus size={18} className="mr-0 md:mr-2" />
                 <span className="hidden md:inline">Add</span>
@@ -178,7 +174,6 @@ export default function VocabularyHeader({
               <Button
                 onClick={handleLogout}
                 className="flex flex-1 items-center justify-center md:justify-start bg-orange-500 text-white  rounded-lg hover:bg-orange-700  p-2 md:px-4 md:py-2"
-                variant="transparent"
                 aria-label="Logout"
               >
                 <LogOut size={18} className="mr-0 md:mr-2" />
@@ -188,8 +183,6 @@ export default function VocabularyHeader({
           </div>
 
           <div className="flex flex-col md:flex-row items-stretch mt-3 gap-4">
-            {/* Search Bar */}
-
             <SearchBar
               value={localSearchTerm}
               onChange={handleInputChange}

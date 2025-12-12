@@ -49,7 +49,7 @@ const FlippableWordCard = ({
   return (
     <div
       key={index}
-      className="perspective-1000 h-[400px] cursor-pointer group"
+      className="perspective-1000 h-[400px] cursor-pointer"
       onClick={() => toggleFlip(index)}
     >
       <div
@@ -71,14 +71,14 @@ const FlippableWordCard = ({
             style={hintStyles}
           >
             <div
-              className={`absolute top-4 right-14 flex gap-2  z-10 ${
+              className={`absolute top-4 right-14 flex gap-2 z-10 transition-opacity duration-300 ${
                 isFlipped ? "opacity-0 pointer-events-none" : ""
               }`}
             >
               <Button
                 variant="transparent"
                 size="icon"
-                className={`h-8 w-8 hover:scale-110 ${
+                className={`h-8 w-8 hover:scale-110 group ${
                   shouldShowImage ? "bg-white/10 hover:bg-white/20" : "hover:bg-green-100"
                 }`}
                 onClick={(e) => {
@@ -88,20 +88,22 @@ const FlippableWordCard = ({
               >
                 <Eye
                   className={`h-4 w-4 ${
-                    shouldShowImage ? "text-white" : "text-[var(--slate-300)] hover:text-green-600"
+                    shouldShowImage
+                      ? "text-white"
+                      : "text-[var(--slate-300)] group-hover:text-green-600"
                   }`}
                 />
               </Button>
             </div>
             <div
-              className={`absolute top-4 right-4 flex gap-2 z-10 ${
+              className={`absolute top-4 right-4 flex gap-2 z-10 transition-opacity duration-300 ${
                 isFlipped ? "opacity-0 pointer-events-none" : ""
               }`}
             >
               <Button
                 variant="transparent"
                 size="icon"
-                className={`h-8 w-8 hover:scale-110  ${
+                className={`h-8 w-8 hover:scale-110 group  ${
                   shouldShowImage ? "bg-white/10 hover:bg-white/20" : "hover:bg-red-100"
                 }`}
                 onClick={(e) => {
@@ -111,12 +113,13 @@ const FlippableWordCard = ({
               >
                 <BookmarkMinus
                   className={`h-4 w-4 ${
-                    shouldShowImage ? "text-white" : "text-[var(--slate-300)] hover:text-red-600"
+                    shouldShowImage
+                      ? "text-white"
+                      : "text-[var(--slate-300)] group-hover:text-red-600"
                   }`}
                 />
               </Button>
             </div>
-
             {/* Difficulty Badge - Top Left */}
             <div
               className={`absolute top-4 left-4 ${shouldShowImage ? "z-10 opacity-80" : ""} ${
@@ -132,11 +135,9 @@ const FlippableWordCard = ({
                 {capitalizeFirstLetter(wordData.difficulty)}
               </div>
             </div>
-
             {shouldShowImage && (
               <div className="absolute inset-0 bg-black/50 backdrop-blur-[0px] rounded-xl transition-opacity duration-500 z-0"></div>
             )}
-
             {/* Main Content */}
             <div className="text-center space-y-4 flex-1 flex flex-col items-center justify-center">
               <h3 className={`text-3xl font-bold ${textColorClass} drop-shadow-md`}>
@@ -155,7 +156,6 @@ const FlippableWordCard = ({
                 {capitalizeFirstLetter(wordData.type)}
               </div>
             </div>
-
             {/* Tags - Bottom */}
             <div className="flex flex-wrap gap-2 justify-center mt-auto ">
               {safeTags?.slice(0, 3).map((tag, index) => (

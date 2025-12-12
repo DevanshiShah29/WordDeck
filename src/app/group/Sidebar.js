@@ -23,6 +23,7 @@ import Button from "@/components/buttons/Button";
 
 // Utility Imports
 import { typeColorMap, difficultyColorMap } from "@/utils/constants";
+import { speakWord } from "@/utils/helper";
 
 const SECTION_STYLES = {
   definition: "bg-white shadow-md",
@@ -41,20 +42,12 @@ export default function Sidebar() {
   const [meta, setMeta] = useState({ label: "", slug: "", emitterId: null });
   const [isBookmarked, setIsBookmarked] = useState(false);
 
-  const audioRef = useRef(null);
-
   const close = useCallback(() => {
     setOpen(false);
     setDetail(null);
     setError(null);
     setMeta({ label: "", slug: "", emitterId: null });
 
-    if (audioRef.current) {
-      try {
-        audioRef.current.pause();
-        audioRef.current = null;
-      } catch {}
-    }
     if (typeof window !== "undefined" && window.speechSynthesis) {
       window.speechSynthesis.cancel();
     }
@@ -141,52 +134,6 @@ export default function Sidebar() {
     return () => window.removeEventListener("miniwordmap:open", onOpen);
   }, []);
 
-  const playPronunciation = useCallback(() => {
-    if (audioRef.current) {
-      try {
-        audioRef.current.pause();
-      } catch {}
-      audioRef.current = null;
-    }
-    if (typeof window === "undefined") return;
-
-    const audioUrl = detail?.audioUrl || detail?.pronunciationAudioUrl || null;
-    if (audioUrl) {
-      const audio = new Audio(audioUrl);
-      audioRef.current = audio;
-      audio.play().catch(() => {
-        if (window.speechSynthesis) {
-          const u = new SpeechSynthesisUtterance(detail?.word || meta?.label || "");
-          u.lang = detail?.lang || "en-US";
-          window.speechSynthesis.cancel();
-          window.speechSynthesis.speak(u);
-        }
-      });
-      return;
-    }
-
-    if ("speechSynthesis" in window) {
-      const utter = new SpeechSynthesisUtterance(detail?.word || meta?.label || "");
-      utter.lang = detail?.lang || "en-US";
-      window.speechSynthesis.cancel();
-      window.speechSynthesis.speak(utter);
-    }
-  }, [detail, meta]);
-
-  useEffect(() => {
-    return () => {
-      if (audioRef.current) {
-        try {
-          audioRef.current.pause();
-          audioRef.current = null;
-        } catch {}
-      }
-      if (typeof window !== "undefined" && window.speechSynthesis) {
-        window.speechSynthesis.cancel();
-      }
-    };
-  }, []);
-
   useEffect(() => {
     if (typeof window === "undefined" || !document.body) return;
 
@@ -253,7 +200,7 @@ export default function Sidebar() {
                 {detail.pronunciation}
               </p>
               <Button
-                onClick={playPronunciation}
+                onClick={() => speakWord(detail.word)}
                 aria-label="Play pronunciation"
                 title="Play pronunciation"
                 variant="transparent"
