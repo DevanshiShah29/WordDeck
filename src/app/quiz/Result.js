@@ -65,7 +65,7 @@ const ReviewScreen = ({ quizHistory, totalScore, totalQuestions, onReviewSelect,
                 <span className="font-medium text-red-600">{totalQuestions - totalScore}</span>
               </p>
               <p>
-                Accuracy:
+                Accuracy:{" "}
                 <span className="font-medium text-[var(--primary)]">{scorePercentage}%</span>
               </p>
             </div>

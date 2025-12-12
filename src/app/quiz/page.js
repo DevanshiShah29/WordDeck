@@ -264,14 +264,14 @@ const QuizGenerator = () => {
         />
       ) : (
         <div className="container mx-auto py-4 px-4 md:px-8">
-          {/*  Loading List  */}
+          {/*  Loading List  */}
           {isWordsLoading && (
             <Card className="text-center py-20 w-full mb-8">
               <Loader message="Loading the list..." fullScreen={false} />
             </Card>
           )}
 
-          {/* Generating First Question  */}
+          {/* Generating First Question  */}
           {isFirstQuestionGenerating && (
             <Card className="text-center py-20 w-full mb-8">
               <Loader message="Generating first question..." fullScreen={false} />

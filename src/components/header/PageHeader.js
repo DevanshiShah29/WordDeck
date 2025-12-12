@@ -20,8 +20,8 @@ export default function PageHeader({ title, subtitle, actions, controls }) {
   const router = useRouter();
 
   return (
-    <header className="bg-white backdrop-blur-sm shadow-sm border-b border-[var(--slate-200)]/50 z-40 sticky top-0">
-      <div className="container mx-auto p-6">
+    <header className="bg-white backdrop-blur-sm shadow-sm border-b border-[var(--slate-200)]/50 z-40 top-0">
+      <div className="container mx-auto px-6 py-4">
         {/*  Back Button, Title/Subtitle, Actions */}
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-4">
@@ -41,7 +41,7 @@ export default function PageHeader({ title, subtitle, actions, controls }) {
               <p className="text-md text-[var(--slate-500)]"> {subtitle}</p>
             </div>
           </div>
-          {/* Top-Row Actions (e.g., Quiz Restart) */} <div>{actions}</div>
+          <div>{actions}</div>
         </div>
         {/* --- ROW 2: Controls (Search, Sort, Hint) --- */}
         {controls && (
