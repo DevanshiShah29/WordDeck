@@ -12,6 +12,7 @@ import VocabularyHeader from "@/components/header/VocabularyHeader";
 import Loader from "@/components/Loader";
 import Pagination from "@/components/Pagination";
 import { toast } from "react-toastify";
+import Sidebar from "@/app/group/Sidebar";
 
 const LOCAL_STORAGE_KEY = "vocab_app_state";
 
@@ -98,14 +99,14 @@ export default function HomePage() {
     (newSort) => {
       updateAppState({ sort: newSort }, false);
     },
-    [updateAppState]
+    [updateAppState],
   );
 
   const handleSearch = useCallback(
     (newSearchTerm) => {
       updateAppState({ search: newSearchTerm || "" }, true);
     },
-    [updateAppState]
+    [updateAppState],
   );
 
   const handleFilterChange = useCallback(
@@ -122,7 +123,7 @@ export default function HomePage() {
       };
       updateAppState(filterUpdates, true);
     },
-    [updateAppState]
+    [updateAppState],
   );
 
   const handlePageChange = useCallback(
@@ -130,7 +131,7 @@ export default function HomePage() {
       window.scrollTo({ top: 0, behavior: "smooth" });
       updateAppState({ page: newPage }, false);
     },
-    [updateAppState]
+    [updateAppState],
   );
 
   const onBookmarkClick = useCallback(() => {
@@ -193,7 +194,7 @@ export default function HomePage() {
 
   const bookmarkCount = useMemo(
     () => displayVocab.filter((v) => v.bookmarked).length,
-    [displayVocab]
+    [displayVocab],
   );
 
   // Initialize state from Local Storage once on client side
@@ -273,6 +274,8 @@ export default function HomePage() {
         onSortChange={handleSortChange}
         onBookmarkClick={onBookmarkClick}
       />
+
+      <Sidebar />
 
       {isContentLoading ? (
         <Loader message="Updating words..." fullScreen={false} />

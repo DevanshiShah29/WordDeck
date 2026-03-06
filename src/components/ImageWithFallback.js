@@ -32,7 +32,9 @@ export default function ImageWithFallback({ src, alt, width, height, ...rest }) 
       height={height}
       onError={handleError}
       className={
-        isFallback ? `${rest.className || ""} opacity-70 border-2 border-red-300` : rest.className
+        isFallback
+          ? `${rest.className || ""} opacity-70 border-2 rounded-tl-xl rounded-tr-xl border-red-300`
+          : rest.className
       }
     />
   );
