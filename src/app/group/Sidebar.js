@@ -10,7 +10,6 @@ import {
   MessageSquare,
   Lightbulb,
   Globe,
-  Clock,
   X,
   Target,
 } from "lucide-react";
@@ -89,14 +88,14 @@ export default function Sidebar() {
         window.dispatchEvent(
           new CustomEvent("miniwordmap:bookmark-changed", {
             detail: { slug, isBookmarked: Boolean(payload?.bookmarked ?? nextState) },
-          })
+          }),
         );
       } catch (err) {
         toast.error(`Error updating bookmark: ${err?.message || err}`);
         setIsBookmarked((v) => !nextState);
       }
     },
-    [isBookmarked, detail, meta]
+    [isBookmarked, detail, meta],
   );
 
   useEffect(() => {
@@ -134,19 +133,27 @@ export default function Sidebar() {
     return () => window.removeEventListener("miniwordmap:open", onOpen);
   }, []);
 
+  // Freeze page scroll when sidebar opens without jumping to top.
   useEffect(() => {
-    if (typeof window === "undefined" || !document.body) return;
+    if (typeof window === "undefined") return;
+
+    const originalStyle = window.getComputedStyle(document.body).overflow;
+    const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
 
     if (open) {
-      document.body.classList.add("no-scroll");
+      // Prevent scrolling
+      document.body.style.overflow = "hidden";
+      // Prevent layout shift/shivering by adding padding where scrollbar was
+      document.body.style.paddingRight = `${scrollBarWidth}px`;
     } else {
-      document.body.classList.remove("no-scroll");
+      // Restore scrolling
+      document.body.style.overflow = originalStyle;
+      document.body.style.paddingRight = "0px";
     }
 
     return () => {
-      if (typeof window !== "undefined" && document.body) {
-        document.body.classList.remove("no-scroll");
-      }
+      document.body.style.overflow = originalStyle;
+      document.body.style.paddingRight = "0px";
     };
   }, [open]);
 
@@ -154,7 +161,7 @@ export default function Sidebar() {
   const difficultyClasses = difficultyColorMap[detail?.difficulty?.toLowerCase() || "default"];
   const typeGradient = typeColorMap[detail?.type?.toLowerCase()] || typeColorMap.default;
   const allRelatedTerms = [...(detail?.synonyms || []), ...(detail?.tags || [])].filter(
-    (v, i, a) => a.indexOf(v) === i
+    (v, i, a) => a.indexOf(v) === i,
   );
 
   return (
