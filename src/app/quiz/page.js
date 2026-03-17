@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect, useCallback, useMemo } from "react";
+import { notFound } from "next/navigation";
 
 // Library Imports
 import { ChevronLeft, ChevronRight, CheckCircle, XCircle, Eye } from "lucide-react";
@@ -16,6 +17,7 @@ import ReviewScreen from "./Result";
 import { fetchWithBackoff, selectRandomWords } from "./helper";
 
 const QUIZ_LENGTH = 5;
+const FAILURE_THRESHOLD = 5;
 
 const Progress = ({ value, className = "" }) => {
   return (
@@ -40,6 +42,9 @@ const QuizGenerator = () => {
   const [isWordsLoading, setIsWordsLoading] = useState(true);
   const [isReviewing, setIsReviewing] = useState(false);
   const [wordBeingFetched, setWordBeingFetched] = useState(null);
+
+  // Track consecutive fetch failures
+  const [consecutiveFailures, setConsecutiveFailures] = useState(0);
 
   // Derived State
   const currentQuiz = useMemo(() => quizHistory[currentIndex], [quizHistory, currentIndex]);
@@ -80,15 +85,27 @@ const QuizGenerator = () => {
           const selected = selectRandomWords(wordsArray, QUIZ_LENGTH);
           setQuizWords(selected);
         }
+        // Success: Reset failure count
+        setConsecutiveFailures(0);
       } else {
         throw new Error(wordsArray.error || "Failed to fetch word list from server.");
       }
     } catch (err) {
       toast.error(err.message || "Could not load the list.");
+      // Failure: Increment failure count
+      setConsecutiveFailures((prev) => prev + 1);
     } finally {
       setIsWordsLoading(false);
     }
   }, []);
+
+  // EFFECT: Check if the failure threshold has been reached
+  useEffect(() => {
+    if (consecutiveFailures >= FAILURE_THRESHOLD) {
+      // Call the Next.js notFound function
+      notFound();
+    }
+  }, [consecutiveFailures]);
 
   const fetchQuizQuestion = useCallback(async (word) => {
     const payload = { word: word };
@@ -176,6 +193,7 @@ const QuizGenerator = () => {
     setCurrentIndex(-1);
     setError(null);
     setIsReviewing(false);
+    setConsecutiveFailures(0);
     fetchAllWords();
   };
 
@@ -233,8 +251,8 @@ const QuizGenerator = () => {
   const actionButtonText = isQuizCompleted
     ? "View Results"
     : currentIndex < quizHistory.length - 1
-    ? "Next Question"
-    : "Generate Next Word";
+      ? "Next Question"
+      : "Generate Next Word";
 
   const isTotalLoading = loading || isWordsLoading || isFirstQuestionGenerating;
 
@@ -323,14 +341,13 @@ const QuizGenerator = () => {
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     {currentQuiz.options.map((option, index) => (
                       <Button
+                        variant="transparent"
                         key={index}
                         onClick={() => handleAnswerClick(option)}
                         disabled={!isLastGeneratedQuestion || isAnswered}
-                        className={`
-                        w-full justify-between h-auto py-5 px-6 text-left text-md font-medium rounded-lg border-2 
-                        flex items-center text-left
-                        ${getOptionClass(option)}
-                      `}
+                        className={`w-full h-auto py-5 px-6 text-md rounded-lg border-2 justify-start disabled:opacity-90 ${
+                          isAnswered && "!justify-between"
+                        }  ${getOptionClass(option)}`}
                       >
                         <span className="flex items-center gap-3">
                           <span
