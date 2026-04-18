@@ -70,9 +70,9 @@ const Bookmarks = () => {
         (word) =>
           word.word.toLowerCase().includes(searchQuery.toLowerCase()) ||
           word.difficulty.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          word.type.toLowerCase().includes(searchQuery.toLowerCase())
+          word.type.toLowerCase().includes(searchQuery.toLowerCase()),
       ),
-    [bookmarkedWords, searchQuery]
+    [bookmarkedWords, searchQuery],
   );
 
   const sortedVocab = useMemo(() => {
@@ -151,7 +151,7 @@ const Bookmarks = () => {
                   : "Start bookmarking words from your collection to build your personalized study list."}
               </p>
               {!searchQuery && (
-                <Link href="/">
+                <Link href="/" prefetch={false}>
                   <Button
                     className={`text-white h-12 px-8 text-base shadow-md transition-all hover:-translate-y-1`}
                   >

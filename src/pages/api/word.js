@@ -30,7 +30,7 @@ export default async function handler(req, res) {
   } finally {
     // Ensure the client is closed after operation
     if (client) {
-      // client.close(); // Uncomment this line if you use serverless functions
+      client.close(); // Uncomment this line if you use serverless functions
     }
   }
 }

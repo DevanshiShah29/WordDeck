@@ -72,7 +72,7 @@ const VocabularyForm = () => {
         setSubmitting(false);
       }
     },
-    [router]
+    [router],
   );
 
   const handleGenerateAnswer = async (word, setFieldValue) => {
@@ -257,6 +257,7 @@ const VocabularyForm = () => {
 
                 <div className="flex w-full md:w-auto items-center gap-4">
                   <Link
+                    prefetch={false}
                     href="/word"
                     className="px-6 py-3 border text-center border-[var(--slate-300)] text-[var(--slate-700)] bg-white rounded-lg hover:bg-[var(--slate-100)] transition-colors font-medium w-1/2 md:w-auto"
                   >

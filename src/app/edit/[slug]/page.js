@@ -153,7 +153,7 @@ const EditForm = () => {
         setSubmitting(false);
       }
     },
-    [router, urlSlug]
+    [router, urlSlug],
   );
 
   const handleGenerateAnswer = async (word, setFieldValue) => {
@@ -363,6 +363,7 @@ const EditForm = () => {
 
                   <div className="flex w-full md:w-auto items-center gap-4">
                     <Link
+                      prefetch={false}
                       href="/word"
                       className="px-6 py-3 border border-[var(--slate-300)] text-center text-[var(--slate-700)] bg-white rounded-lg hover:bg-[var(--slate-100)] transition-colors font-medium w-1/2 md:w-auto"
                     >

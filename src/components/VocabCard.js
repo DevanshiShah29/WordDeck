@@ -158,7 +158,7 @@ export default function VocabCard({
 
   return (
     <>
-      <Link href={`/word/${slug}`} className="block h-full">
+      <Link href={`/word/${slug}`} className="block h-full" prefetch={false}>
         <div className="flex flex-col h-full group relative bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-500 overflow-hidden cursor-pointer transform hover:-translate-y-1 border border-slate-100">
           {/* Image Header Area */}
           <div className="relative h-40 sm:h-48 md:h-50 ">

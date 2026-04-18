@@ -146,12 +146,12 @@ function buildMongoSort(sortParam = "date_desc") {
       sort.word = -1;
       break;
     case "date_asc":
-      sort.createdAt = 1;
+      sort.updatedAt = 1;
       break;
     case "random":
     case "date_desc":
     default:
-      sort.createdAt = -1;
+      sort.updatedAt = -1;
       break;
   }
   return sort;
@@ -220,7 +220,7 @@ async function handleGet(req, res, collection) {
         {
           $sort: {
             levelOrder: sortDirection,
-            word: 1,
+            updatedAt: -1,
           },
         },
         { $skip: skip },
@@ -289,6 +289,7 @@ async function handlePost(req, res, collection) {
     ...dataToInsert,
     word, // Use trimmed word
     createdAt: new Date(),
+    updatedAt: new Date(),
     bookmarked: false,
     slug: slugify(word),
     tags: parseCommaSeparatedString(dataToInsert.tags),
