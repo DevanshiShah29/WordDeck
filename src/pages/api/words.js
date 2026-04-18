@@ -180,6 +180,7 @@ async function handleGet(req, res, collection) {
         bookmarked: !!word.bookmarked,
         slug: word.slug || slugify(word.word),
       };
+      res.setHeader("Cache-Control", "s-maxage=60, stale-while-revalidate=59");
       return res.status(200).json(wordWithSlug);
     } catch (dbError) {
       console.error("MongoDB Single Fetch Failed:", dbError);

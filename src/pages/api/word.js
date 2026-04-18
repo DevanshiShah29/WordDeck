@@ -29,8 +29,8 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: "Failed to fetch words from database." });
   } finally {
     // Ensure the client is closed after operation
-    if (client) {
-      client.close(); // Uncomment this line if you use serverless functions
-    }
+    // if (client) {
+    //client.close(); // Uncomment this line if you use serverless functions
+    // }
   }
 }

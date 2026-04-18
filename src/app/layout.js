@@ -40,14 +40,14 @@ export const metadata = {
     title: "WordSmith: Ignite Your Vocabulary Power",
     description:
       "Rapidly expand your word knowledge with fast, engaging quizzes and personalized tracking.",
-    url: "https://www.wordsmithtool.netlify.app",
+    url: "https://wordsmithtool.netlify.app",
     siteName: "WordSmith",
     images: [
       {
         url: "https://your-app-domain.com/og-banner.jpg", //  REPLACE with a link to your app's banner image (1200x630px recommended)
         width: 1200,
         height: 630,
-        alt: "WordSmith Vocabulary App Screenshot",
+        alt: "WordSmith logo",
       },
     ],
     locale: "en_US",
