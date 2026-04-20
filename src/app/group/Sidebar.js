@@ -108,22 +108,34 @@ export default function Sidebar() {
       setError(null);
       setLoading(true);
       setMeta({ label: label ?? "", slug, emitterId: emitterId ?? null });
-      setIsBookmarked(false);
 
       try {
+        // 1. CHECK CACHE FIRST
+        const cached = typeof window !== "undefined" ? window.__VOCAB_CACHE__?.[slug] : null;
+
+        if (cached) {
+          setDetail(cached);
+          setIsBookmarked(Boolean(cached.bookmarked));
+          setLoading(false);
+          return; // NO API CALL
+        }
+
+        // 2. FALLBACK API CALL
         const res = await fetch(`/api/words?slug=${encodeURIComponent(slug)}`);
-        if (!res.ok) {
-          const body = await res.json().catch(() => ({}));
-          throw new Error(body?.message || `Fetch failed (${res.status})`);
-        }
+        if (!res.ok) throw new Error("Failed");
+
         const payload = await res.json();
-        if (!payload || Object.keys(payload).length === 0) {
-          throw new Error(`No details for "${label}"`);
-        }
+
         setDetail(payload);
         setIsBookmarked(Boolean(payload?.isBookmarked));
+
+        // SAVE INTO CACHE
+        if (typeof window !== "undefined") {
+          window.__VOCAB_CACHE__ = window.__VOCAB_CACHE__ || {};
+          window.__VOCAB_CACHE__[slug] = payload;
+        }
       } catch (err) {
-        setError(err?.message ?? "Failed to load details");
+        setError("Failed to load details");
       } finally {
         setLoading(false);
       }

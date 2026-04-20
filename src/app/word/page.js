@@ -53,7 +53,7 @@ const loadAppState = () => {
           isBookmarked: parsedState.isBookmarked === "true" || parsedState.isBookmarked === true,
         };
       }
-    } catch (e) {
+    } catch {
       toast.error("Could not load saved application state.");
     }
   }
@@ -79,17 +79,9 @@ export default function HomePage() {
   const [isContentLoading, setIsContentLoading] = useState(false);
 
   const updateAppState = useCallback((updates, shouldResetPage = true) => {
-    setAppState((prevState) => {
-      const newState = {
-        ...prevState,
-        ...updates,
-      };
-
-      // Reset page to 1 if necessary (for search, sort, or filter changes)
-      if (shouldResetPage) {
-        newState.page = 1;
-      }
-
+    setAppState((prev) => {
+      const newState = { ...prev, ...updates };
+      if (shouldResetPage) newState.page = 1;
       saveAppState(newState);
       return newState;
     });
@@ -231,6 +223,14 @@ export default function HomePage() {
           newTotalPages = 1;
         }
 
+        // ✅ CACHE
+        if (typeof window !== "undefined") {
+          window.__VOCAB_CACHE__ = window.__VOCAB_CACHE__ || {};
+          responseData.forEach((word) => {
+            window.__VOCAB_CACHE__[word.slug] = word;
+          });
+        }
+
         setVocabResponse({
           data: responseData.map((word) => ({ ...word, bookmarked: !!word.bookmarked })),
           pagination: {
@@ -239,7 +239,7 @@ export default function HomePage() {
           },
         });
       })
-      .catch((error) => {
+      .catch(() => {
         toast.error("Failed to load");
         setVocabResponse((prev) => ({
           data: [],
@@ -252,9 +252,7 @@ export default function HomePage() {
       });
   }, [apiParams, loading, appState]);
 
-  if (appState === null) {
-    return <Loader message="Initializing state..." />;
-  }
+  if (appState === null) return <Loader message="Initializing state..." />;
 
   const { totalPages, currentPage, totalWords } = vocabResponse.pagination;
 
@@ -290,6 +288,13 @@ export default function HomePage() {
                     {...vocab}
                     phonetic={vocab.pronunciation}
                     isBookmarked={vocab.bookmarked}
+                    onClick={() => {
+                      window.dispatchEvent(
+                        new CustomEvent("miniwordmap:open", {
+                          detail: { slug: vocab.slug, label: vocab.word },
+                        }),
+                      );
+                    }}
                   />
                 ))
               ) : (
