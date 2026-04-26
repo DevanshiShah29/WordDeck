@@ -19,29 +19,22 @@ import { fetchWithBackoff, selectRandomWords } from "./helper";
 const QUIZ_LENGTH = 5;
 const FAILURE_THRESHOLD = 5;
 
-const Progress = ({ value, className = "" }) => {
-  return (
-    <div className={`w-full bg-[var(--slate-200)] rounded-full h-3 ${className}`}>
-      <div
-        className={`bg-[var(--primary-600)] h-3 rounded-full transition-all duration-500`}
-        style={{ width: `${value}%` }}
-      ></div>
-    </div>
-  );
-};
+const Progress = ({ value, className = "" }) => (
+  <div className={`w-full bg-[var(--slate-200)] rounded-full h-3 ${className}`}>
+    <div
+      className={`bg-[var(--primary-600)] h-3 rounded-full transition-all duration-500`}
+      style={{ width: `${value}%` }}
+    ></div>
+  </div>
+);
 
 const QuizGenerator = () => {
-  const [allWords, setAllWords] = useState([]);
   const [quizWords, setQuizWords] = useState([]);
   const [quizHistory, setQuizHistory] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(-1);
-  const [usedWords, setUsedWords] = useState([]);
-
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
   const [isWordsLoading, setIsWordsLoading] = useState(true);
   const [isReviewing, setIsReviewing] = useState(false);
-  const [wordBeingFetched, setWordBeingFetched] = useState(null);
 
   // Track consecutive fetch failures
   const [consecutiveFailures, setConsecutiveFailures] = useState(0);
@@ -49,10 +42,8 @@ const QuizGenerator = () => {
   // Derived State
   const currentQuiz = useMemo(() => quizHistory[currentIndex], [quizHistory, currentIndex]);
   const isAnswered = currentQuiz?.isAnswered;
-  const isLastGeneratedQuestion = currentIndex === quizHistory.length - 1;
-
-  const isGenerationComplete = usedWords.length === quizWords.length && quizWords.length > 0;
-  const isQuizCompleted = isGenerationComplete && isAnswered && isLastGeneratedQuestion;
+  const isLastQuestion = currentIndex === quizHistory.length - 1;
+  const isQuizCompleted = isLastQuestion && isAnswered;
 
   const totalQuestionsAnswered = quizHistory.filter((q) => q.isAnswered).length;
   const totalScore = useMemo(() => {
@@ -62,42 +53,54 @@ const QuizGenerator = () => {
   const progressPercentage =
     quizWords.length === 0 ? 0 : Math.round((totalQuestionsAnswered / quizWords.length) * 100);
 
-  // Checks if we are transitioning from word loading to first question generation
-  const isFirstQuestionGenerating =
-    !isWordsLoading && quizWords.length > 0 && quizHistory.length === 0 && loading;
-
-  // Data Fetching and Selection Logic
-  const fetchAllWords = useCallback(async () => {
-    setQuizWords([]);
-    setAllWords([]);
-    setIsWordsLoading(true);
-
+  const fetchBatchQuestions = useCallback(async (selectedWords) => {
+    setLoading(true);
     try {
-      setError(null);
+      const response = await fetchWithBackoff("/api/quiz", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ words: selectedWords }),
+      });
+
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error);
+
+      const initializedQuestions = data.map((q) => ({
+        ...q,
+        userAnswer: null,
+        isAnswered: false,
+      }));
+
+      setQuizHistory(initializedQuestions);
+      setCurrentIndex(0);
+      setConsecutiveFailures(0);
+    } catch (err) {
+      toast.error("Failed to generate quiz content.");
+      setConsecutiveFailures((prev) => prev + 1);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const fetchAllWords = useCallback(async () => {
+    setIsWordsLoading(true);
+    try {
       const response = await fetchWithBackoff("/api/word", { method: "GET" });
       const wordsArray = await response.json();
-      if (response.ok && Array.isArray(wordsArray)) {
-        setAllWords(wordsArray);
-        if (wordsArray.length === 0) {
-          toast.error("The database is empty. Please add words to start the quiz.");
-          setQuizWords([]);
-        } else {
-          const selected = selectRandomWords(wordsArray, QUIZ_LENGTH);
-          setQuizWords(selected);
-        }
-        // Success: Reset failure count
-        setConsecutiveFailures(0);
+
+      if (response.ok && Array.isArray(wordsArray) && wordsArray.length > 0) {
+        const selected = selectRandomWords(wordsArray, QUIZ_LENGTH);
+        setQuizWords(selected);
+        fetchBatchQuestions(selected);
       } else {
-        throw new Error(wordsArray.error || "Failed to fetch word list from server.");
+        toast.error("The database is empty.");
       }
     } catch (err) {
-      toast.error(err.message || "Could not load the list.");
-      // Failure: Increment failure count
       setConsecutiveFailures((prev) => prev + 1);
     } finally {
       setIsWordsLoading(false);
     }
-  }, []);
+  }, [fetchBatchQuestions]);
 
   // EFFECT: Check if the failure threshold has been reached
   useEffect(() => {
@@ -106,115 +109,36 @@ const QuizGenerator = () => {
       notFound();
     }
   }, [consecutiveFailures]);
-
-  const fetchQuizQuestion = useCallback(async (word) => {
-    const payload = { word: word };
-
-    try {
-      setLoading(true);
-      setError(null);
-      const response = await fetchWithBackoff("/api/quiz", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      const result = await response.json();
-      if (!response.ok) {
-        const errorMessage = result.error?.message || "Failed to generate quiz content.";
-        throw new Error(errorMessage);
-      }
-
-      const parsedData = result;
-      const newQuestion = { ...parsedData, userAnswer: null, isAnswered: false, word: word };
-
-      // FIX: Update history AND index synchronously on success
-      setQuizHistory((prev) => {
-        const newHistory = [...prev, newQuestion];
-        // If this is the very first question, set index to 0
-        if (prev.length === 0) {
-          setCurrentIndex(0);
-        } else {
-          // Otherwise, move to the newly added index
-          setCurrentIndex(prev.length);
-        }
-        return newHistory;
-      });
-    } catch (err) {
-      toast.error(err.message || "An unexpected error occurred during quiz generation.");
-    } finally {
-      setLoading(false);
-      setWordBeingFetched(null);
-    }
-  }, []);
-
-  const generateNewQuestion = useCallback(() => {
-    if (usedWords.length === quizWords.length) {
-      setLoading(false);
-      return;
-    }
-
-    scrollToTop();
-
-    const availableWords = quizWords.filter((word) => !usedWords.includes(word));
-    const randomIndex = Math.floor(Math.random() * availableWords.length);
-    const nextWord = availableWords[randomIndex];
-
-    setUsedWords((prev) => [...prev, nextWord]);
-    setWordBeingFetched(nextWord);
-    fetchQuizQuestion(nextWord);
-  }, [usedWords, quizWords, fetchQuizQuestion]);
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   useEffect(() => {
-    if (allWords.length === 0 && !error && isWordsLoading) {
-      fetchAllWords();
-    }
-  }, [allWords.length, error, fetchAllWords, isWordsLoading]);
-
-  useEffect(() => {
-    if (!isWordsLoading && quizWords.length > 0 && quizHistory.length === 0 && !loading && !error) {
-      generateNewQuestion();
-    }
-  }, [isWordsLoading, quizWords.length, quizHistory.length, loading, error, generateNewQuestion]);
+    fetchAllWords();
+  }, [fetchAllWords]);
 
   const handleRestart = () => {
-    setUsedWords([]);
     setQuizHistory([]);
     setCurrentIndex(-1);
-    setError(null);
     setIsReviewing(false);
-    setConsecutiveFailures(0);
     fetchAllWords();
   };
 
   const handlePrevious = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex((prev) => prev - 1);
-    }
+    if (currentIndex > 0) setCurrentIndex((prev) => prev - 1);
   };
 
   const handleNext = () => {
     if (currentIndex < quizHistory.length - 1) {
       setCurrentIndex((prev) => prev + 1);
       scrollToTop();
-    } else if (isLastGeneratedQuestion && isAnswered && !isQuizCompleted) {
-      generateNewQuestion();
     }
   };
 
   const handleAnswerClick = (option) => {
-    if (!isLastGeneratedQuestion || isAnswered) return;
-
+    if (isAnswered) return;
     setQuizHistory((prevHistory) => {
       const newHistory = [...prevHistory];
       newHistory[currentIndex] = {
@@ -234,7 +158,7 @@ const QuizGenerator = () => {
 
   const getOptionClass = (option) => {
     // If not answered, use hover/default styling
-    if (!isAnswered && isLastGeneratedQuestion) {
+    if (!isAnswered) {
       return "bg-white border-[var(--slate-300)] text-[var(--slate-800)] hover:bg-[var(--primary-50)] hover:border-[var(--primary)] shadow-sm transition-all hover:scale-[1.01]";
     }
 
@@ -254,20 +178,25 @@ const QuizGenerator = () => {
       ? "Next Question"
       : "Generate Next Word";
 
-  const isTotalLoading = loading || isWordsLoading || isFirstQuestionGenerating;
+  const isTotalLoading = isWordsLoading || (loading && quizHistory.length === 0);
 
-  const isActionButtonDisabled =
-    isTotalLoading ||
-    !currentQuiz ||
-    (!isAnswered && isLastGeneratedQuestion && !isGenerationComplete);
+  const isActionButtonDisabled = isTotalLoading || !currentQuiz || !isAnswered;
 
   const handleMainButtonClick = () => {
-    if (isQuizCompleted || (isGenerationComplete && isLastGeneratedQuestion && isAnswered)) {
+    if (isQuizCompleted) {
       setIsReviewing(true);
-      return;
+    } else {
+      handleNext();
     }
-    handleNext();
   };
+
+  if (isWordsLoading || (loading && quizHistory.length === 0)) {
+    return (
+      <Card className="text-center py-20 w-full mb-8">
+        <Loader message="Loading the list..." fullScreen={false} />
+      </Card>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[var(--slate-100)] font-sans">
@@ -282,24 +211,13 @@ const QuizGenerator = () => {
         />
       ) : (
         <div className="container mx-auto py-4 px-4 md:px-8">
-          {/*  Loading List  */}
           {isWordsLoading && (
             <Card className="text-center py-20 w-full mb-8">
               <Loader message="Loading the list..." fullScreen={false} />
             </Card>
           )}
-
-          {/* Generating First Question  */}
-          {isFirstQuestionGenerating && (
-            <Card className="text-center py-20 w-full mb-8">
-              <Loader message="Generating first question..." fullScreen={false} />
-            </Card>
-          )}
-
-          {/* Main Quiz Content (Only renders if a question is available AND not in the initial loading states) */}
-          {currentQuiz && !isWordsLoading && !isFirstQuestionGenerating && (
+          {currentQuiz && (
             <>
-              {/* Progress & Score Metrics */}
               <div className="mb-8 space-y-4">
                 <div className="flex items-end justify-between">
                   <div className="space-y-1">
@@ -320,88 +238,72 @@ const QuizGenerator = () => {
                 <Progress value={progressPercentage} className="h-3" />
               </div>
 
-              {loading ? (
-                <Card className="text-center p-8 mb-8">
-                  <Loader
-                    message={`Generating question for ${wordBeingFetched}`}
-                    fullScreen={false}
-                  />
-                </Card>
-              ) : (
-                <Card className="p-8 md:p-12 mb-6 shadow-md">
-                  {/* Question section */}
-                  <div className="mb-8">
-                    <h2 className="text-2xl font-bold mb-3 text-[var(--slate-900)]">
-                      {currentQuiz.word}
-                    </h2>
-                    <p className="text-lg text-[var(--slate-600)]">{currentQuiz.question}</p>
-                  </div>
+              <Card className="p-8 md:p-12 mb-6 shadow-md">
+                <div className="mb-8">
+                  <h2 className="text-2xl font-bold mb-3 text-[var(--slate-900)]">
+                    {currentQuiz.word}
+                  </h2>
+                  <p className="text-lg text-[var(--slate-600)]">{currentQuiz.question}</p>
+                </div>
 
-                  {/* Options section */}
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                    {currentQuiz.options.map((option, index) => (
-                      <Button
-                        variant="transparent"
-                        key={index}
-                        onClick={() => handleAnswerClick(option)}
-                        disabled={!isLastGeneratedQuestion || isAnswered}
-                        className={`w-full h-auto py-5 px-6 text-md rounded-lg border-2 justify-start disabled:opacity-90 ${
-                          isAnswered && "!justify-between"
-                        }  ${getOptionClass(option)}`}
-                      >
-                        <span className="flex items-center gap-3">
-                          <span
-                            className={`flex h-6 w-6 items-center justify-center rounded-full bg-[var(--slate-100)] text-sm ${
-                              isAnswered ? "bg-white" : "border-[var(--slate-300)]"
-                            }`}
-                          >
-                            {String.fromCharCode(65 + index)}
-                          </span>
-                          <span className="flex-1 text-base text-md">{option}</span>
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  {currentQuiz.options.map((option, index) => (
+                    <Button
+                      variant="transparent"
+                      key={index}
+                      onClick={() => handleAnswerClick(option)}
+                      disabled={isAnswered}
+                      className={`w-full h-auto py-5 px-6 text-md rounded-lg border-2 justify-start disabled:opacity-90 ${
+                        isAnswered && "!justify-between"
+                      }  ${getOptionClass(option)}`}
+                    >
+                      <span className="flex items-center gap-3">
+                        <span
+                          className={`flex h-6 w-6 items-center justify-center rounded-full bg-[var(--slate-100)] text-sm ${
+                            isAnswered ? "bg-white" : "border-[var(--slate-300)]"
+                          }`}
+                        >
+                          {String.fromCharCode(65 + index)}
                         </span>
-                        {isAnswered && (
-                          <>
-                            {option === currentQuiz.correct_option && (
-                              <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0" />
-                            )}
-                            {option === currentQuiz.userAnswer &&
-                              option !== currentQuiz.correct_option && (
-                                <XCircle className="h-5 w-5 text-[var(--red)] flex-shrink-0" />
-                              )}
-                          </>
+                        <span className="flex-1 text-base text-md">{option}</span>
+                      </span>
+                      {isAnswered && option === currentQuiz.correct_option && (
+                        <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0" />
+                      )}
+                      {isAnswered &&
+                        option === currentQuiz.userAnswer &&
+                        option !== currentQuiz.correct_option && (
+                          <XCircle className="h-5 w-5 text-[var(--red)] flex-shrink-0" />
                         )}
-                      </Button>
-                    ))}
-                  </div>
-
-                  {/* Navigation Section */}
-                  <div className="mt-10 pt-6 border-t border-[var(--slate-200)] flex flex-col gap-4 md:flex-row md:justify-between">
-                    <Button
-                      onClick={handlePrevious}
-                      disabled={currentIndex === 0 || isTotalLoading}
-                      className="px-5 py-4 bg-[var(--slate-100)] border-[var(--slate-300)] !text-[var(--slate-700)] hover:bg-[var(--slate-200)] w-full md:w-auto flex items-center justify-center"
-                    >
-                      <ChevronLeft className="w-5 h-5 mr-1" />
-                      Previous
                     </Button>
-                    <Button
-                      varient="primary"
-                      onClick={handleMainButtonClick}
-                      disabled={isActionButtonDisabled}
-                      className={`w-full md:w-auto flex items-center justify-center py-4`}
-                    >
-                      {actionButtonText}
-                      {actionButtonText.includes("Next") ? (
-                        <ChevronRight className="w-5 h-5 ml-1" />
-                      ) : null}
+                  ))}
+                </div>
 
-                      {actionButtonText.includes("Results") ? (
-                        <Eye className="w-5 h-5 ml-1" />
-                      ) : null}
-                    </Button>
-                  </div>
-                </Card>
-              )}
+                {/* Navigation Section */}
+                <div className="mt-10 pt-6 border-t border-[var(--slate-200)] flex flex-col gap-4 md:flex-row md:justify-between">
+                  <Button
+                    onClick={handlePrevious}
+                    disabled={currentIndex === 0}
+                    className="px-5 py-4 bg-[var(--slate-100)] border-[var(--slate-300)] !text-[var(--slate-700)] hover:bg-[var(--slate-200)] w-full md:w-auto flex items-center justify-center"
+                  >
+                    <ChevronLeft className="w-5 h-5 mr-1" />
+                    Previous
+                  </Button>
+                  <Button
+                    variant="primary"
+                    onClick={handleMainButtonClick}
+                    disabled={!isAnswered}
+                    className={`w-full md:w-auto flex items-center justify-center py-4`}
+                  >
+                    {isQuizCompleted ? "View Results" : "Next Question"}
+                    {isQuizCompleted ? (
+                      <Eye className="w-5 h-5 ml-1" />
+                    ) : (
+                      <ChevronRight className="w-5 h-5 ml-1" />
+                    )}
+                  </Button>
+                </div>
+              </Card>
             </>
           )}
         </div>
