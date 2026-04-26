@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { notFound } from "next/navigation";
 
 // Library Imports
@@ -19,14 +19,23 @@ import { fetchWithBackoff, selectRandomWords } from "./helper";
 const QUIZ_LENGTH = 5;
 const FAILURE_THRESHOLD = 5;
 
-const Progress = ({ value, className = "" }) => (
-  <div className={`w-full bg-[var(--slate-200)] rounded-full h-3 ${className}`}>
+const Progress = ({ value, className = "" }) => {
+  return (
     <div
-      className={`bg-[var(--primary-600)] h-3 rounded-full transition-all duration-500`}
-      style={{ width: `${value}%` }}
-    ></div>
-  </div>
-);
+      role="progressbar"
+      aria-valuenow={value}
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-label="Quiz progress"
+      className={`w-full bg-[var(--slate-200)] rounded-full h-3 ${className}`}
+    >
+      <div
+        className={`bg-[var(--primary-600)] h-3 rounded-full transition-all duration-500`}
+        style={{ width: `${value}%` }}
+      ></div>
+    </div>
+  );
+};
 
 const QuizGenerator = () => {
   const [quizWords, setQuizWords] = useState([]);
@@ -35,23 +44,32 @@ const QuizGenerator = () => {
   const [loading, setLoading] = useState(false);
   const [isWordsLoading, setIsWordsLoading] = useState(true);
   const [isReviewing, setIsReviewing] = useState(false);
-
-  // Track consecutive fetch failures
   const [consecutiveFailures, setConsecutiveFailures] = useState(0);
+
+  // Prevent double API calls in dev
+  const hasFetched = useRef(false);
 
   // Derived State
   const currentQuiz = useMemo(() => quizHistory[currentIndex], [quizHistory, currentIndex]);
+
   const isAnswered = currentQuiz?.isAnswered;
   const isLastQuestion = currentIndex === quizHistory.length - 1;
   const isQuizCompleted = isLastQuestion && isAnswered;
 
-  const totalQuestionsAnswered = quizHistory.filter((q) => q.isAnswered).length;
-  const totalScore = useMemo(() => {
-    return quizHistory.filter((q) => q.userAnswer === q.correct_option).length;
+  const { totalAnswered, totalScore } = useMemo(() => {
+    let totalAnswered = 0;
+    let totalScore = 0;
+
+    quizHistory.forEach((q) => {
+      if (q.isAnswered) totalAnswered++;
+      if (q.userAnswer === q.correct_option) totalScore++;
+    });
+
+    return { totalAnswered, totalScore };
   }, [quizHistory]);
 
   const progressPercentage =
-    quizWords.length === 0 ? 0 : Math.round((totalQuestionsAnswered / quizWords.length) * 100);
+    quizWords.length === 0 ? 0 : Math.round((totalAnswered / quizWords.length) * 100);
 
   const fetchBatchQuestions = useCallback(async (selectedWords) => {
     setLoading(true);
@@ -83,9 +101,15 @@ const QuizGenerator = () => {
   }, []);
 
   const fetchAllWords = useCallback(async () => {
+    if (hasFetched.current) return;
+    hasFetched.current = true;
+
     setIsWordsLoading(true);
     try {
-      const response = await fetchWithBackoff("/api/word", { method: "GET" });
+      const response = await fetchWithBackoff("/api/word", {
+        method: "GET",
+      });
+
       const wordsArray = await response.json();
 
       if (response.ok && Array.isArray(wordsArray) && wordsArray.length > 0) {
@@ -95,7 +119,7 @@ const QuizGenerator = () => {
       } else {
         toast.error("The database is empty.");
       }
-    } catch (err) {
+    } catch {
       setConsecutiveFailures((prev) => prev + 1);
     } finally {
       setIsWordsLoading(false);
@@ -109,17 +133,19 @@ const QuizGenerator = () => {
       notFound();
     }
   }, [consecutiveFailures]);
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   useEffect(() => {
     fetchAllWords();
   }, [fetchAllWords]);
 
+  // Focus question on change (non-visual improvement)
+  useEffect(() => {
+    const el = document.getElementById("question-heading");
+    el?.focus();
+  }, [currentIndex]);
+
   const handleRestart = () => {
+    hasFetched.current = false;
     setQuizHistory([]);
     setCurrentIndex(-1);
     setIsReviewing(false);
@@ -133,12 +159,13 @@ const QuizGenerator = () => {
   const handleNext = () => {
     if (currentIndex < quizHistory.length - 1) {
       setCurrentIndex((prev) => prev + 1);
-      scrollToTop();
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
   const handleAnswerClick = (option) => {
     if (isAnswered) return;
+
     setQuizHistory((prevHistory) => {
       const newHistory = [...prevHistory];
       newHistory[currentIndex] = {
@@ -153,7 +180,7 @@ const QuizGenerator = () => {
   const handleReviewSelect = (index) => {
     setIsReviewing(false);
     setCurrentIndex(index);
-    scrollToTop();
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const getOptionClass = (option) => {
@@ -172,14 +199,7 @@ const QuizGenerator = () => {
     return "bg-[var(--slate-100)] border-[var(--slate-200)] text-[var(--slate-500)] cursor-default transition-all";
   };
 
-  const actionButtonText = isQuizCompleted
-    ? "View Results"
-    : currentIndex < quizHistory.length - 1
-      ? "Next Question"
-      : "Generate Next Word";
-
   const isTotalLoading = isWordsLoading || (loading && quizHistory.length === 0);
-
   const isActionButtonDisabled = isTotalLoading || !currentQuiz || !isAnswered;
 
   const handleMainButtonClick = () => {
@@ -193,14 +213,17 @@ const QuizGenerator = () => {
   if (isWordsLoading || (loading && quizHistory.length === 0)) {
     return (
       <Card className="text-center py-20 w-full mb-8">
-        <Loader message="Loading the list..." fullScreen={false} />
+        <Loader message="Loading the list..." fullScreen={false} aria-live="polite" />
       </Card>
     );
   }
 
   return (
     <div className="min-h-screen bg-[var(--slate-100)] font-sans">
+      <h1 className="sr-only">Vocabulary Quiz</h1>
+
       <Header handleRestart={handleRestart} />
+
       {isReviewing ? (
         <ReviewScreen
           quizHistory={quizHistory}
@@ -211,13 +234,14 @@ const QuizGenerator = () => {
         />
       ) : (
         <div className="container mx-auto py-4 px-4 md:px-8">
-          {isWordsLoading && (
-            <Card className="text-center py-20 w-full mb-8">
-              <Loader message="Loading the list..." fullScreen={false} />
-            </Card>
-          )}
           {currentQuiz && (
             <>
+              {/* Screen reader live region */}
+              <div aria-live="polite" className="sr-only">
+                {totalScore} correct answers out of {quizHistory.length}
+              </div>
+
+              {/* Progress */}
               <div className="mb-8 space-y-4">
                 <div className="flex items-end justify-between">
                   <div className="space-y-1">
@@ -229,7 +253,7 @@ const QuizGenerator = () => {
                     </p>
                   </div>
                   <div className="text-right">
-                    <div className={`text-4xl font-bold text-[var(--primary-600)]`}>
+                    <div className="text-4xl font-bold text-[var(--primary-600)]">
                       {progressPercentage}%
                     </div>
                     <p className="text-xs text-[var(--slate-500)]">Quiz Progress</p>
@@ -240,46 +264,62 @@ const QuizGenerator = () => {
 
               <Card className="p-8 md:p-12 mb-6 shadow-md">
                 <div className="mb-8">
-                  <h2 className="text-2xl font-bold mb-3 text-[var(--slate-900)]">
-                    {currentQuiz.word}
+                  <h2
+                    id="question-heading"
+                    tabIndex={-1}
+                    className="text-2xl font-bold mb-3 text-[var(--slate-900)]"
+                  >
+                    {currentQuiz.question}
                   </h2>
-                  <p className="text-lg text-[var(--slate-600)]">{currentQuiz.question}</p>
                 </div>
 
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  {currentQuiz.options.map((option, index) => (
-                    <Button
-                      variant="transparent"
-                      key={index}
-                      onClick={() => handleAnswerClick(option)}
-                      disabled={isAnswered}
-                      className={`w-full h-auto py-5 px-6 text-md rounded-lg border-2 justify-start disabled:opacity-90 ${
-                        isAnswered && "!justify-between"
-                      }  ${getOptionClass(option)}`}
-                    >
-                      <span className="flex items-center gap-3">
-                        <span
-                          className={`flex h-6 w-6 items-center justify-center rounded-full bg-[var(--slate-100)] text-sm ${
-                            isAnswered ? "bg-white" : "border-[var(--slate-300)]"
-                          }`}
-                        >
-                          {String.fromCharCode(65 + index)}
+                <div role="radiogroup" className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  {currentQuiz.options.map((option, index) => {
+                    const isSelected = currentQuiz.userAnswer === option;
+
+                    return (
+                      <Button
+                        key={index}
+                        type="button"
+                        role="radio"
+                        aria-checked={isSelected}
+                        variant="transparent"
+                        onClick={() => handleAnswerClick(option)}
+                        disabled={isAnswered}
+                        className={`w-full h-auto py-5 px-6 text-md rounded-lg border-2 justify-start disabled:opacity-90 ${
+                          isAnswered && "!justify-between"
+                        } ${getOptionClass(option)}`}
+                      >
+                        <span className="flex items-center gap-3">
+                          <span
+                            className={`flex h-6 w-6 items-center justify-center rounded-full bg-[var(--slate-100)] text-sm ${
+                              isAnswered ? "bg-white" : "border-[var(--slate-300)]"
+                            }`}
+                          >
+                            {String.fromCharCode(65 + index)}
+                          </span>
+                          <span className="flex-1 text-base text-md">{option}</span>
                         </span>
-                        <span className="flex-1 text-base text-md">{option}</span>
-                      </span>
-                      {isAnswered && option === currentQuiz.correct_option && (
-                        <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0" />
-                      )}
-                      {isAnswered &&
-                        option === currentQuiz.userAnswer &&
-                        option !== currentQuiz.correct_option && (
-                          <XCircle className="h-5 w-5 text-[var(--red)] flex-shrink-0" />
+
+                        {isAnswered && option === currentQuiz.correct_option && (
+                          <CheckCircle
+                            aria-label="Correct answer"
+                            className="h-5 w-5 text-green-500 flex-shrink-0"
+                          />
                         )}
-                    </Button>
-                  ))}
+                        {isAnswered &&
+                          option === currentQuiz.userAnswer &&
+                          option !== currentQuiz.correct_option && (
+                            <XCircle
+                              aria-label="Incorrect answer"
+                              className="h-5 w-5 text-[var(--red)] flex-shrink-0"
+                            />
+                          )}
+                      </Button>
+                    );
+                  })}
                 </div>
 
-                {/* Navigation Section */}
                 <div className="mt-10 pt-6 border-t border-[var(--slate-200)] flex flex-col gap-4 md:flex-row md:justify-between">
                   <Button
                     onClick={handlePrevious}
@@ -289,10 +329,11 @@ const QuizGenerator = () => {
                     <ChevronLeft className="w-5 h-5 mr-1" />
                     Previous
                   </Button>
+
                   <Button
                     variant="primary"
                     onClick={handleMainButtonClick}
-                    disabled={!isAnswered}
+                    disabled={isActionButtonDisabled}
                     className={`w-full md:w-auto flex items-center justify-center py-4`}
                   >
                     {isQuizCompleted ? "View Results" : "Next Question"}
