@@ -22,7 +22,7 @@ const Bookmarks = () => {
   const [bookmarkedWords, setBookmarkedWords] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-  const [currentSort, setCurrentSort] = useState("random");
+  const [currentSort, setCurrentSort] = useState("date_desc");
   const [isHintActive, setIsHintActive] = useState(false);
 
   useEffect(() => {
@@ -62,6 +62,12 @@ const Bookmarks = () => {
 
   const handleHintToggle = useCallback(() => {
     setIsHintActive((prev) => !prev);
+  }, []);
+
+  const handleStatusChange = useCallback((wordId, newStatus) => {
+    setBookmarkedWords((prev) =>
+      prev.map((word) => (word._id === wordId ? { ...word, knowledgeStatus: newStatus } : word)),
+    );
   }, []);
 
   const filteredWords = useMemo(
@@ -126,7 +132,8 @@ const Bookmarks = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             {sortedVocab.map((wordData, index) => (
               <FlippableWordCard
-                key={index}
+                key={wordData._id}
+                handleStatusChange={handleStatusChange}
                 wordData={wordData}
                 index={index}
                 isFlipped={!!flippedCards[index]}

@@ -29,8 +29,8 @@ const SortSelect = ({ currentSort, onSortChange, options }) => {
       backgroundColor: state.isSelected
         ? "var(--primary)"
         : state.isFocused
-        ? "var(--primary-50)"
-        : "white",
+          ? "var(--primary-50)"
+          : "white",
       cursor: "pointer",
       ":active": {
         backgroundColor: state.isSelected ? "var(--primary)" : "var(--primary-50)",
@@ -47,7 +47,7 @@ const SortSelect = ({ currentSort, onSortChange, options }) => {
     indicatorSeparator: () => "hidden",
 
     // Dropdown menu styling
-    menu: () => "rounded-lg overflow-hidden mt-1 bg-white shadow-md w-48",
+    menu: () => "rounded-lg overflow-hidden mt-1 bg-white shadow-md w-48 z-10 relative",
     option: () => `py-2 px-4 cursor-pointer`,
   };
 

@@ -50,8 +50,8 @@ const SelectField = ({ label, id, options, required, isMulti = false, ...props }
       backgroundColor: state.isSelected
         ? "var(--primary)"
         : state.isFocused
-        ? "var(--primary-50)"
-        : "white",
+          ? "var(--primary-50)"
+          : "white",
       cursor: "pointer",
       ":active": {
         backgroundColor: state.isSelected ? "var(--primary)" : "var(--primary-50)",
@@ -66,13 +66,13 @@ const SelectField = ({ label, id, options, required, isMulti = false, ...props }
         state.isFocused
           ? "border-[var(--primary)] ring-1 ring-[var(--primary)] shadow-md"
           : isInvalid
-          ? "border-[var(--red)] ring-1 ring-[var(--red)]"
-          : "border-[var(--slate-300)]"
+            ? "border-[var(--red)] ring-1 ring-[var(--red)]"
+            : "border-[var(--slate-300)]"
       }`,
     placeholder: () => "text-[var(--slate-500)]",
     singleValue: () => "text-[var(--slate-900)]",
     option: (state) => `py-2 px-4 cursor-pointer`,
-    menu: () => "rounded-lg overflow-hidden mt-1 bg-white shadow-md",
+    menu: () => "rounded-lg overflow-hidden mt-1 bg-white shadow-md z-10 relative",
     menuList: () => "thin-scrollbar",
     dropdownIndicator: () => "text-[var(--slate-300)] hover:text-[var(--slate-600)] transition",
     clearIndicator: () => "text-[var(--slate-300)] hover:text-[var(--red)] transition",

@@ -35,10 +35,11 @@ async function handleGet(req, res, collection) {
  */
 async function handlePatch(req, res, collection) {
   const { _id, slug } = req.query;
-  const { bookmarked } = req.body;
+  const { bookmarked, knowledgeStatus } = req.body;
 
-  if (typeof bookmarked !== "boolean") {
-    return res.status(400).json({ error: "Bookmark status must be a boolean value." });
+  // Validation: Ensure at least one field is provided
+  if (typeof bookmarked === "undefined" && typeof knowledgeStatus === "undefined") {
+    return res.status(400).json({ error: "Missing update data (bookmarked or knowledgeStatus)." });
   }
 
   const filter = {};
@@ -48,27 +49,30 @@ async function handlePatch(req, res, collection) {
   } else if (slug) {
     filter.slug = slug;
   } else {
-    return res
-      .status(400)
-      .json({ error: "Either _id or slug must be provided for bookmark update." });
+    return res.status(400).json({ error: "Missing _id or slug." });
   }
 
   try {
+    // Dynamically build the update object
+    const updateFields = { updatedAt: new Date() };
+    if (typeof bookmarked !== "undefined") updateFields.bookmarked = bookmarked;
+    if (typeof knowledgeStatus !== "undefined") updateFields.knowledgeStatus = knowledgeStatus;
+
     const updateResult = await collection.updateOne(filter, {
-      $set: { bookmarked, updatedAt: new Date() },
+      $set: updateFields,
     });
 
     if (updateResult.matchedCount === 0) {
-      return res.status(404).json({ error: "Word not found for bookmark update." });
+      return res.status(404).json({ error: "Word not found." });
     }
 
     return res.status(200).json({
-      message: `Bookmark status updated to ${bookmarked}`,
-      bookmarked,
+      message: "Update successful",
+      ...updateFields,
     });
   } catch (error) {
-    console.error("MongoDB Bookmark Update Failed:", error);
-    return res.status(500).json({ error: "Failed to update bookmark status." });
+    console.error("MongoDB Update Failed:", error);
+    return res.status(500).json({ error: "Internal server error during update." });
   }
 }
 

@@ -3,6 +3,7 @@ import React from "react";
 // Library Imports
 import { RotateCcw, BookmarkMinus, Eye } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 // Component Imports
 import Card from "./Card";
@@ -12,6 +13,7 @@ import Button from "@/components/buttons/Button";
 // Utility Imports
 import { typeColorMap, difficultyColorMap } from "@/utils/constants";
 import { capitalizeFirstLetter, formatWordListProp } from "@/utils/helper";
+import { updateWordStatus } from "./helper";
 
 const FlippableWordCard = ({
   wordData,
@@ -20,6 +22,7 @@ const FlippableWordCard = ({
   toggleFlip,
   isHintActive,
   handleDeleteBookmark,
+  handleStatusChange,
 }) => {
   const router = useRouter();
   const getDifficultyClasses = (difficulty) => {
@@ -46,12 +49,36 @@ const FlippableWordCard = ({
 
   const textColorClass = shouldShowImage ? "text-white" : "text-[var(--slate-900)]";
 
+  const statusColorMap = {
+    "dont-know": "bg-red-50",
+    skip: "bg-slate-50",
+    know: "bg-green-50",
+    default: "bg-white",
+  };
+
+  const getBackgroundColor = () => {
+    if (shouldShowImage) return "bg-[var(--slate-900)]";
+
+    // Check if knowledgeStatus exists on wordData
+    return statusColorMap[wordData.knowledgeStatus] || statusColorMap.default;
+  };
+
+  const handleStatusUpdate = async (e, status) => {
+    e.stopPropagation();
+    try {
+      await updateWordStatus(wordData._id, status);
+
+      // Update the parent's state so the UI reflects the change everywhere
+      handleStatusChange(wordData._id, status);
+
+      toast.success(`Marked as ${status.replace("-", " ")}`);
+    } catch (err) {
+      toast.error("Failed to update status.");
+    }
+  };
+
   return (
-    <div
-      key={index}
-      className="perspective-1000 h-[400px] cursor-pointer"
-      onClick={() => toggleFlip(index)}
-    >
+    <div className="perspective-1000 h-[450px] cursor-pointer" onClick={() => toggleFlip(index)}>
       <div
         className={`relative w-full h-full transition-transform duration-700`}
         style={{
@@ -65,9 +92,7 @@ const FlippableWordCard = ({
           style={{ backfaceVisibility: "hidden" }}
         >
           <CardContent
-            className={`flex flex-col items-center justify-center h-full p-8 relative pt-6 rounded-lg ${
-              shouldShowImage ? "bg-[var(--slate-900)]" : "bg-white"
-            }`}
+            className={`flex flex-col items-center justify-center h-full p-8 relative pt-6 rounded-lg ${getBackgroundColor()}`}
             style={hintStyles}
           >
             <div
@@ -129,7 +154,7 @@ const FlippableWordCard = ({
               <div
                 variant="secondary"
                 className={`font-semibold border ${getDifficultyClasses(
-                  wordData.difficulty
+                  wordData.difficulty,
                 )} px-3 py-1 text-xs rounded-full`}
               >
                 {capitalizeFirstLetter(wordData.difficulty)}
@@ -149,7 +174,7 @@ const FlippableWordCard = ({
                   shouldShowImage
                     ? `bg-white/20 z-10 border`
                     : `shadow-[var(--slate-900)]/10 bg-gradient-to-br ${getTypeGradient(
-                        wordData.type
+                        wordData.type,
                       )}`
                 } ${isFlipped ? "!opacity-0" : ""}`}
               >
@@ -171,6 +196,29 @@ const FlippableWordCard = ({
                   {capitalizeFirstLetter(tag)}
                 </span>
               ))}
+            </div>
+            <div className="m-[-12] mt-6 pt-4 border-t border-[var(--slate-100)] grid grid-cols-3 gap-2">
+              <Button
+                variant="transparent"
+                className="text-sm bg-red-50 text-red-600 hover:bg-red-100 border-red-200 py-2 px-1"
+                onClick={(e) => handleStatusUpdate(e, "dont-know")}
+              >
+                Don't know
+              </Button>
+              <Button
+                variant="transparent"
+                className="text-sm bg-slate-100 text-slate-600 hover:bg-slate-200 border-slate-200 py-2 px-1"
+                onClick={(e) => handleStatusUpdate(e, "skip")}
+              >
+                Skip
+              </Button>
+              <Button
+                variant="transparent"
+                className="text-sm bg-green-50 text-green-600 hover:bg-green-100 border-green-200 py-2 px-1"
+                onClick={(e) => handleStatusUpdate(e, "know")}
+              >
+                Know it
+              </Button>
             </div>
           </CardContent>
         </Card>
