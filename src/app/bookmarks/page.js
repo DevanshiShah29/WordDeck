@@ -18,12 +18,19 @@ import { getBookmarkedWords, removeBookmark } from "./helper";
 import { LEVEL_ORDER } from "@/utils/constants";
 
 const Bookmarks = () => {
-  const [flippedCards, setFlippedCards] = useState({});
   const [bookmarkedWords, setBookmarkedWords] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
   const [currentSort, setCurrentSort] = useState("date_desc");
   const [isHintActive, setIsHintActive] = useState(false);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 300);
+    return () => clearTimeout(handler);
+  }, [searchQuery]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,14 +54,11 @@ const Bookmarks = () => {
     try {
       await removeBookmark(wordId);
       setBookmarkedWords((prev) => prev.filter((word) => word._id !== wordId));
+      toast.success("Bookmark removed");
     } catch (error) {
       toast.error(error);
     }
   };
-
-  const toggleFlip = useCallback((index) => {
-    setFlippedCards((prev) => ({ ...prev, [index]: !prev[index] }));
-  }, []);
 
   const handleSortChange = useCallback((newSort) => {
     setCurrentSort(newSort);
@@ -74,11 +78,11 @@ const Bookmarks = () => {
     () =>
       bookmarkedWords.filter(
         (word) =>
-          word.word.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          word.difficulty.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          word.type.toLowerCase().includes(searchQuery.toLowerCase()),
+          word.word.toLowerCase().includes(debouncedSearchQuery.toLowerCase()) ||
+          word.difficulty.toLowerCase().includes(debouncedSearchQuery.toLowerCase()) ||
+          word.type.toLowerCase().includes(debouncedSearchQuery.toLowerCase()),
       ),
-    [bookmarkedWords, searchQuery],
+    [bookmarkedWords, debouncedSearchQuery],
   );
 
   const sortedVocab = useMemo(() => {
@@ -120,6 +124,7 @@ const Bookmarks = () => {
     <div className="min-h-screen bg-[var(--slate-100)]">
       <Header
         bookmarkedWords={bookmarkedWords}
+        searchQuery={searchQuery}
         onSearch={handleSearch}
         currentSort={currentSort}
         onSortChange={handleSortChange}
@@ -129,15 +134,12 @@ const Bookmarks = () => {
 
       <div className="container mx-auto px-4 py-8 ">
         {sortedVocab.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            {sortedVocab.map((wordData, index) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+            {sortedVocab.map((wordData) => (
               <FlippableWordCard
                 key={wordData._id}
                 handleStatusChange={handleStatusChange}
                 wordData={wordData}
-                index={index}
-                isFlipped={!!flippedCards[index]}
-                toggleFlip={toggleFlip}
                 isHintActive={isHintActive}
                 handleDeleteBookmark={handleDeleteBookmark}
               />
@@ -157,7 +159,14 @@ const Bookmarks = () => {
                   ? "Try adjusting your search terms or clear the search to see all bookmarks."
                   : "Start bookmarking words from your collection to build your personalized study list."}
               </p>
-              {!searchQuery && (
+              {searchQuery ? (
+                <Button
+                  className={`text-white h-12 px-8 text-base shadow-md transition-all hover:-translate-y-1`}
+                  onClick={() => handleSearch("")}
+                >
+                  Clear Search
+                </Button>
+              ) : (
                 <Link href="/" prefetch={false}>
                   <Button
                     className={`text-white h-12 px-8 text-base shadow-md transition-all hover:-translate-y-1`}

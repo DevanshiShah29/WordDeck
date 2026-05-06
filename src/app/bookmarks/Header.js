@@ -13,6 +13,7 @@ import PageHeader from "@/components/header/PageHeader";
 import { SORT_OPTIONS } from "@/utils/constants";
 const Header = ({
   bookmarkedWords,
+  searchQuery,
   onSearch,
   currentSort = "date_desc",
   onSortChange,
@@ -35,7 +36,7 @@ const Header = ({
 
   const bookmarkControls = (
     <>
-      <SearchBar onChange={handleSearch} placeholder="Search words, difficulty, or type..." />
+      <SearchBar value={searchQuery} onChange={handleSearch} placeholder="Search words, difficulty, or type..." />
 
       <div className="flex gap-4 w-full md:w-auto">
         <SortSelect

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 // Library Imports
 import { RotateCcw, BookmarkMinus, Eye } from "lucide-react";
@@ -17,13 +17,13 @@ import { updateWordStatus } from "./helper";
 
 const FlippableWordCard = ({
   wordData,
-  index,
-  isFlipped,
-  toggleFlip,
   isHintActive,
   handleDeleteBookmark,
   handleStatusChange,
 }) => {
+  const [isFlipped, setIsFlipped] = useState(false);
+  const toggleFlip = () => setIsFlipped(!isFlipped);
+
   const router = useRouter();
   const getDifficultyClasses = (difficulty) => {
     return difficultyColorMap[difficulty?.toLowerCase()];
@@ -78,7 +78,7 @@ const FlippableWordCard = ({
   };
 
   return (
-    <div className="perspective-1000 h-[450px] cursor-pointer" onClick={() => toggleFlip(index)}>
+    <div className="perspective-1000 h-[450px] cursor-pointer" onClick={() => toggleFlip()}>
       <div
         className={`relative w-full h-full transition-transform duration-700`}
         style={{
