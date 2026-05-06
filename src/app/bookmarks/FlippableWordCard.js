@@ -78,18 +78,31 @@ const FlippableWordCard = ({
   };
 
   return (
-    <div className="perspective-1000 h-[450px] cursor-pointer" onClick={() => toggleFlip()}>
+    <article
+      className="perspective-1000 h-[450px] cursor-pointer focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:outline-none rounded-lg"
+      onClick={() => toggleFlip()}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          toggleFlip();
+        }
+      }}
+      tabIndex={0}
+      role="button"
+      aria-expanded={isFlipped}
+    >
       <div
         className={`relative w-full h-full transition-transform duration-700`}
         style={{
           transformStyle: "preserve-3d",
+          WebkitTransformStyle: "preserve-3d",
           transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
         }}
       >
         {/* FRONT OF CARD  */}
         <Card
           className={`absolute w-full h-full backface-hidden border-[var(--slate-200)] hover:shadow-md transition-all`}
-          style={{ backfaceVisibility: "hidden" }}
+          style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
         >
           <CardContent
             className={`flex flex-col items-center justify-center h-full p-8 relative pt-6 rounded-lg ${getBackgroundColor()}`}
@@ -110,8 +123,10 @@ const FlippableWordCard = ({
                   e.stopPropagation();
                   router.push(`/word/${wordData.slug}`);
                 }}
+                aria-label="View word details"
               >
                 <Eye
+                  aria-hidden="true"
                   className={`h-4 w-4 ${
                     shouldShowImage
                       ? "text-white"
@@ -135,8 +150,10 @@ const FlippableWordCard = ({
                   e.stopPropagation();
                   handleDeleteBookmark(wordData._id);
                 }}
+                aria-label="Remove from bookmarks"
               >
                 <BookmarkMinus
+                  aria-hidden="true"
                   className={`h-4 w-4 ${
                     shouldShowImage
                       ? "text-white"
@@ -228,6 +245,7 @@ const FlippableWordCard = ({
           className="absolute w-full h-full backface-hidden border-[var(--slate-100)] bg-white rounded-lg shadow-md p-6  hover:shadow-xl hover:shadow-[var(--primary-100)]/20 transition-all"
           style={{
             backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
             transform: "rotateY(180deg)",
           }}
         >
@@ -289,7 +307,7 @@ const FlippableWordCard = ({
           </div>
         </Card>
       </div>
-    </div>
+    </article>
   );
 };
 

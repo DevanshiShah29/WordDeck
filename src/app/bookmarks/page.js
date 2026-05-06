@@ -121,7 +121,7 @@ const Bookmarks = () => {
   }, [currentSort, filteredWords]);
 
   return (
-    <div className="min-h-screen bg-[var(--slate-100)]">
+    <main className="min-h-screen bg-[var(--slate-100)]">
       <Header
         bookmarkedWords={bookmarkedWords}
         searchQuery={searchQuery}
@@ -132,8 +132,14 @@ const Bookmarks = () => {
         onHintToggle={handleHintToggle}
       />
 
-      <div className="container mx-auto px-4 py-8 ">
-        {sortedVocab.length > 0 ? (
+      <section aria-label="Bookmarked Words" className="container mx-auto px-4 py-8 ">
+        {loading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+            {[...Array(8)].map((_, i) => (
+              <div key={i} className="animate-pulse bg-white h-[450px] rounded-lg w-full"></div>
+            ))}
+          </div>
+        ) : sortedVocab.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
             {sortedVocab.map((wordData) => (
               <FlippableWordCard
@@ -205,8 +211,8 @@ const Bookmarks = () => {
             </div>
           </Card>
         )}
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 
