@@ -30,13 +30,17 @@ const Header = ({
 
   const bookmarkSubtitle = (
     <p className="text-[var(--slate-500)] text-sm">
-      {bookmarkedWords.length} {bookmarkedWords.length === 1 ? "word" : "words"}
+      Revise {bookmarkedWords.length} {bookmarkedWords.length === 1 ? "word" : "words"}
     </p>
   );
 
   const bookmarkControls = (
     <>
-      <SearchBar value={searchQuery} onChange={handleSearch} placeholder="Search words, difficulty, or type..." />
+      <SearchBar
+        value={searchQuery}
+        onChange={handleSearch}
+        placeholder="Search words, difficulty, or type..."
+      />
 
       <div className="flex gap-4 w-full md:w-auto">
         <SortSelect
