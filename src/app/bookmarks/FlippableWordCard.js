@@ -79,7 +79,7 @@ const FlippableWordCard = ({
 
   return (
     <article
-      className="perspective-1000 h-[450px] cursor-pointer focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:outline-none rounded-lg"
+      className="group perspective-1000 h-[450px] cursor-pointer focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:outline-none rounded-lg transition-all duration-500 hover:-translate-y-1 hover:shadow-md"
       onClick={() => toggleFlip()}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
@@ -178,11 +178,11 @@ const FlippableWordCard = ({
               </div>
             </div>
             {shouldShowImage && (
-              <div className="absolute inset-0 bg-black/50 backdrop-blur-[0px] rounded-lg transition-opacity duration-500 z-0"></div>
+              <div className="absolute inset-0 bg-black/50 backdrop-blur-sm rounded-lg transition-opacity duration-500 z-0"></div>
             )}
             {/* Main Content */}
             <div className="text-center space-y-4 flex-1 flex flex-col items-center justify-center">
-              <h3 className={`text-3xl font-bold ${textColorClass} drop-shadow-md`}>
+              <h3 className={`text-3xl font-bold tracking-tight ${textColorClass} drop-shadow-md`}>
                 {wordData.word}
               </h3>
 
@@ -199,22 +199,22 @@ const FlippableWordCard = ({
               </div>
             </div>
             {/* Tags - Bottom */}
-            <div className="flex flex-wrap gap-2 justify-center mt-auto ">
+            <div className="flex flex-wrap gap-2 justify-center mt-auto z-10">
               {safeTags?.slice(0, 3).map((tag, index) => (
                 <span
                   key={index}
-                  className={`text-sm px-2.5 py-1 rounded-lg ${
+                  className={`text-sm px-3 py-1 rounded-lg ${
                     shouldShowImage
                       ? "bg-white/20 text-white shadow-md z-10"
                       : "bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700"
                   } ${isFlipped ? "opacity-0" : ""}`}
                 >
-                  <span className="opacity-70 mr-0.5">#</span>
+                  <span className="opacity-50 mr-0.5">#</span>
                   {capitalizeFirstLetter(tag)}
                 </span>
               ))}
             </div>
-            <div className="m-[-12] mt-6 pt-4 border-t border-[var(--slate-100)] grid grid-cols-3 gap-2">
+            <div className="mt-6 w-full z-10 gap-2 grid-cols-3 grid">
               <Button
                 variant="transparent"
                 className="text-sm bg-red-50 text-red-600 hover:bg-red-100 border-red-200 py-2 px-1"
