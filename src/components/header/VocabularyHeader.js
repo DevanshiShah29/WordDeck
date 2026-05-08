@@ -125,7 +125,7 @@ export default function VocabularyHeader({
             </div>
 
             {/* Action Buttons */}
-            <div className="flex w-full md:w-auto gap-3">
+            <div className="flex flex-wrap w-full md:w-auto gap-2 md:gap-3">
               <Button
                 onClick={onBookmarkClick}
                 className="flex flex-1 items-center justify-center md:justify-start bg-[var(--secondary)] text-white hover:bg-[var(--secondary-600)] p-2 md:px-4 md:py-2"

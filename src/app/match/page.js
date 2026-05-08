@@ -52,7 +52,7 @@ const MATCH_COLORS = [
 ];
 
 const ACTIVE_COLOR =
-  "border-[var(--primary)] bg-[var(--primary-50)] text-[var(--primary-900)] ring-4 ring-[var(--primary-200)] scale-[1.02] z-10 shadow-lg";
+  "border-[2px] border-dashed border-slate-600 bg-slate-50 text-slate-900 ring-4 ring-slate-200 scale-[1.05] z-20 shadow-lg";
 const STANDARD_COLOR =
   "glass-panel text-slate-700 hover:bg-white hover:border-indigo-200 card-hover";
 
@@ -131,7 +131,7 @@ const MatchGame = () => {
 
           newData.word.push({ id: w._id, text: w.word, type: "word" });
           newData.definition.push({ id: w._id, text: w.definition || "N/A", type: "definition" });
-          newData.etymology.push({ id: w._id, text: w.etymology || "N/A", type: "etymology" });
+          newData.etymology.push({ id: w._id, text: w.etymologyStory || "N/A", type: "etymology" });
           newData.example.push({ id: w._id, text: w.example || "N/A", type: "example" });
           newData.type.push({ id: w._id, text: w.type || "N/A", type: "type" });
 
@@ -252,8 +252,10 @@ const MatchGame = () => {
 
   const renderColumn = (colConfig, items, colType) => {
     const Icon = colConfig.icon;
+    const isEtymology = colType === "etymology";
+    const colWidth = isEtymology ? "w-88 md:w-96 lg:w-[28rem]" : "w-56 md:w-64 lg:w-72";
     return (
-      <div key={colType} className="flex flex-col gap-4 w-56 md:w-64 lg:w-72 shrink-0">
+      <div key={colType} className={`flex flex-col gap-4 shrink-0 ${colWidth}`}>
         <div className="flex items-center gap-3 mb-2 pb-3 border-b-2 border-slate-200/60 sticky top-0 z-20 bg-gradient-to-b from-white/90 to-white/60 backdrop-blur-xl rounded-2xl px-4 py-3 shadow-sm">
           <div
             className={`p-2 rounded-lg bg-gradient-to-br ${colConfig.color} text-white shadow-sm`}
@@ -341,14 +343,14 @@ const MatchGame = () => {
 
       <div className="w-full py-8">
         {loading ? (
-          <div className="flex flex-col justify-center items-center h-80 w-full glass-panel rounded-xl  mx-4 shadow-sm border border-indigo-100">
+          <div className="flex flex-col justify-center items-center h-80 bg-white rounded-lg p-8 mx-8 shadow-sm border border-indigo-100">
             <Loader2 className="w-10 h-10 text-indigo-500 animate-spin mb-4" />
             <p className="text-lg font-medium text-slate-600 animate-pulse">
               Preparing the massive puzzle...
             </p>
           </div>
         ) : wordCount === 0 ? (
-          <div className="text-center py-20 glass-panel rounded-2xl w-full mx-4">
+          <div className="text-center py-20 glass-panel rounded-xl w-full mx-4">
             <h2 className="text-2xl font-bold text-[var(--slate-700)]">No words available</h2>
           </div>
         ) : (
